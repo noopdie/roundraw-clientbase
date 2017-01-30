@@ -1,0 +1,58 @@
+body {
+margin:0;
+background: #fcfcfc;
+    font-family: Ubuntu Light, Segoe UI Light, Arial !important;
+}
+.title {
+text-align: center;
+padding: 10px 0;
+font-size: larger;
+width: 100%;
+border-bottom: solid 1px #ddd;
+background: #fafafa;
+}
+.back {
+display: none;
+border-top: solid 1px #ddd;
+border-bottom: solid 1px #ddd;
+background: #fafafa;
+}
+.tab {
+border: dashed 2px #ddd;
+    background: #f0f0f0;
+    display: inline;
+    padding: 5px;
+width: 100%;
+    line-height: 3;
+}
+.back:target {
+display: block;
+padding: 20px;
+margin-top: -20px;
+}
+.mintitle {
+font-size: 12px;
+text-align: center;
+width: 100%;
+}
+a {
+    text-decoration: none;
+position: relative;
+display: table;
+border-bottom: dashed 2px #ddd;
+text-align: center;
+    padding: 7px 10px;
+    color: #333;
+    margin: 20px auto;
+}
+table {
+margin: auto;
+border-spacing: 10px;
+}
+td {
+border: solid 1px #ddd;
+text-align: center;
+    background: #f0f0f0;
+    padding: 7px;
+    color: #333;
+}
