@@ -562,7 +562,7 @@ document.onkeydown = function(e) {
 if (get(0)) {
 get('import').onchange = function(e) {
   var read = new FileReader();
-  read.readAsDataurl(get('import').files[0]);
+  read.readAsDataUrl(get('import').files[0]);
   read.onload = function() {
     get('imstyle').style.background = 'url(img/' + read.result + ') no-repeat 100%';
     get('imstyle').style.backgroundSize = '100%';
@@ -604,7 +604,7 @@ function movesel() {
 }
 save = function() {
   clearsel();
-  get('save').href = stage.canvas.toDataurl();
+  get('save').href = stage.canvas.toDataURL()
 }
 
 function updsel() {
