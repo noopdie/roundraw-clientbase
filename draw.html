@@ -23,6 +23,23 @@
 
         <a id='toLeft' onclick="get('panel').classList.toggle('right'), get('toLeft').classList.toggle('flip');">
         </a>
+        <script>
+(function(d, c, u) {
+var container = "",
+subID = "";
+var cDiv = "advertise" + c + subID + Math.round(Math.random() * 100000000);
+container == "" && d.write('<div id="' + cDiv + '"></div>');
+u += "/rotator/"+ c + "/?container=" + (container == ""||!container ? cDiv : container);
+if (subID != "")
+u += "&subid=" + subID;
+u= (("https:" == d.location.protocol) ? "https" : "http") + "://" +u;
+var js = d.createElement("script");
+js.type = "text/javascript";
+js.src=u;
+js.setAttribute("async", "");
+(d.getElementsByTagName("head")[0]).appendChild(js);
+})(window.document,"51ae13f7b101426b","advjump.com");
+</script>
         <div id='colors' class='tab'>
             <input id='r' max="255" min="0" oninput='change(this, 0)' type='range' value="0">
             <div id='red'>
