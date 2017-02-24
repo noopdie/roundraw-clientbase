@@ -57,8 +57,12 @@ body {
 #bottom a {
 background: white;
     width: 50px;
+    transition: 0s !important;
     height: 50px;
-    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 60%;
+   display: inline-block;
     margin-left: 50px;
     border-radius: 50px;
 }
@@ -68,14 +72,13 @@ background: white;
   transition: 0.2s;
   right: 0;
   height: 100%;
-  width: 235px;
+  width: 260px;
   background: #f0f0f0;
   border-left: dashed 2px #ccc;
 }
 #bottom {
   position: absolute;
   bottom: 0;
-  transition: 0.2s;
   right: 0;
   width: 100%;
 padding: 7px;
@@ -91,7 +94,7 @@ input[type='range'] {
 
 input[type='number'] {
   position: relative;
-  top: -5px;
+  top: -10px;
   background: #fafafa;
   margin-left: 25px;
   height: 20px;
@@ -168,7 +171,7 @@ input[type='number'] {
 }
 
 .right {
-  margin-right: -230px;
+  margin-right: -260px;
 }
 
 #strwidth {
@@ -213,6 +216,10 @@ input[type='number'] {
 
 #y {
   background: url(../img/y.svg) no-repeat 50%;
+}
+
+#deg {
+  background: url(../img/deg.svg) no-repeat 50%;
 }
 
 #width {
@@ -311,4 +318,14 @@ a.flip {
 #tabs a:hover {
   background-color: #fafafa !important;
 }
-
+#share {
+    background: #5e81a8;
+    font-size: 15px;
+    color: white;
+    padding: 7px;
+    margin: 20px;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    font-family: Arial;
+}

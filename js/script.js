@@ -1,12 +1,13 @@
 document.addEventListener('touchmove', function(e) {
   e.preventDefault();
 });
+run = !1;
 document.onselectstart = function() {
   return false
 };
 var removed = [],
   isel = !1,
-  select = selpoint = !1,
+  select = selpoint = selact = !1,
   sx, sy,
   images = [{}],
   paths = [],
@@ -123,7 +124,7 @@ var change = function(el, num) {
   if (num == 'width') elem.width = el.value * 1;
   if (num == 'y') elem.y = el.value * 1;
   if (num == 'height') elem.height = el.value * 1;
-  if (num == 'sm') elem.smooth(ls.smooth);
+  if (num == 'sm' && elem) elem.smooth(ls.smooth);
   else colors[ls.sf][num] = el.value;
   colInit();
 }
@@ -197,10 +198,10 @@ var move = !1,
       }
       isel = stage.childs.length;
       init();
-      var seg = elem.segments;
+      var seg = elem._segments || elem.segments;
       var segs = [];
       var width = (attrs.strokeWidth > 50) ? 50 : attrs.strokeWidth + 1;
-      var seg = elem.segments;
+      var seg = elem._segments || elem.segments;
       for (var i = 0; i < seg.length; i++) {
         for (var k = 0; k < seg[i].length; k += 2) {
           var ltopoint = (k > 1) ? new KeepDraw.Line({
@@ -234,6 +235,25 @@ var move = !1,
           });
         }
       }
+	if (elem.acts) for (var i = 0; i < elem.acts.length; i++) {
+		if (elem.acts[i][0] >= 0) {
+		var c = elem.center();
+		var point = new KeepDraw.Circle({
+		x: c[0] + elem.x,
+		y: c[1] + elem.y,
+		image: imgs[elem.acts[i][0]],
+		radius: 30,
+		act: i,
+		stage: stage
+		});
+          point.on('mousedown', function(e, obj) {
+            sx = obj.x;
+            sy = obj.y;
+            selact = obj;
+          });
+	actinit[elem.acts[i][0]](point, elem.acts[i]);
+}
+	}
       updsel();
     }
     paths = [];
@@ -483,6 +503,7 @@ window.onbeforeunload = function() {
 }
 }
 get('main').onmousedown = function(e) {
+if (!selact && !run) {
   if (!move) {
     if (!selpoint) {
       if (ls.brush != 6) clearsel();
@@ -491,33 +512,41 @@ get('main').onmousedown = function(e) {
       if (brushes[ls.brush][0]) brushes[ls.brush][0](e);
     }
   }
+if (elem) _seg = JSON.parse(JSON.stringify(elem._segments || elem.segments));
+}
 }
 get('main').onmousemove = get('toolbar').onmousemove = function(e) {
-  if (move && !selpoint) {
+  if (move && !selpoint && !selact) {
     if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5) elem.smooth(ls.smooth);
     if (brushes[ls.brush][1]) brushes[ls.brush][1](e);
   } else if (selpoint) {
+    var seg = elem._segments || elem.segments;
     var j = (selpoint.selsegc > 3) ? 1 : 0;
     if (selpoint.selsegc < 2) {
-      if (elem.segments[selpoint.selseg].length > 2) {
-        elem.segments[selpoint.selseg][2] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
-        elem.segments[selpoint.selseg][3] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
+      if (seg[selpoint.selseg].length > 2) {
+        seg[selpoint.selseg][2] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
+        seg[selpoint.selseg][3] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
       }
-      if (elem.segments[selpoint.selseg - 1])
-        if (elem.segments[selpoint.selseg - 1].length > 4) {
-          elem.segments[selpoint.selseg - 1][4] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
-          elem.segments[selpoint.selseg - 1][5] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
+      if (seg[selpoint.selseg - 1])
+        if (seg[selpoint.selseg - 1].length > 4) {
+          seg[selpoint.selseg - 1][4] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
+          seg[selpoint.selseg - 1][5] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
         }
     }
     selpoint.x = e.clientX;
     selpoint.y = e.clientY;
-    elem.segments[selpoint.selseg][selpoint.selsegc] = (e.clientX - sx) - (elem.x - sx);
-    elem.segments[selpoint.selseg][selpoint.selsegc + 1] = (e.clientY - sy) - (elem.y - sy);
+    seg[selpoint.selseg][selpoint.selsegc] = (e.clientX - sx) - (elem.x - sx);
+    seg[selpoint.selseg][selpoint.selsegc + 1] = (e.clientY - sy) - (elem.y - sy);
     updsel();
-  }
+  } else if (selact) {
+	selact.x = e.clientX;
+	selact.y = e.clientY;
+actmove[elem.acts[selact.act][0]](e);	
+}
 }
 get('main').onmouseup = get('toolbar').onmouseup = function(e) {
-  if (elem) _seg = JSON.parse(JSON.stringify(elem.segments));
+    if (selact) selact = !1;
+ else {
   if (e.which == 3 && move) add = !0;
   else if (move) {
     move = !1;
@@ -526,6 +555,7 @@ get('main').onmouseup = get('toolbar').onmouseup = function(e) {
   } else {
     if (selpoint) selpoint = !1;
   }
+}
 }
 var back = function() {
   if (stage.childs.length > 0) {
@@ -583,7 +613,7 @@ get('save').onmousemove = function() {
 
 function clearsel() {
   if (elem) {
-    if (!selpoint && select && elem.segments) {
+    if (!selact && !selpoint && select && elem.segments) {
       select = false;
       stage.childs.length -= stage.childs.length - isel + ((elem.noline) ? 1 : 0);
       elem.noline = !1;
@@ -595,7 +625,7 @@ function clearsel() {
 
 function movesel() {
   if (!selpoint && select) {
-    var seg = elem.segments;
+    var seg = elem._segments || elem.segments;
     for (var i = stage.childs.length - seg.length; i < stage.childs.length; i++) {
       stage.childs[i].x = seg[stage.childs[i].selseg][0] + elem.x;
       stage.childs[i].y = seg[stage.childs[i].selseg][1] + elem.y;
@@ -611,8 +641,8 @@ function updsel() {
   if (isel) {
     for (var i = isel; i < stage.childs.length; i++) {
       var ch = stage.childs[i];
-      var seg = elem.segments;
-      if (ch.cons == KeepDraw.Circle) {
+      var seg = elem._segments || elem.segments;
+      if (ch.cons == KeepDraw.Circle && ch.selseg) {
         ch.x = seg[ch.selseg][ch.selsegc] + elem.x;
         ch.y = seg[ch.selseg][ch.selsegc + 1] + elem.y;
         if (ch.line) {
