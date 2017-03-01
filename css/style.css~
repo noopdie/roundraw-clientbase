@@ -218,10 +218,18 @@ input[type='number'] {
   background: url(../img/y.svg) no-repeat 50%;
 }
 
-#deg {
+.deg {
   background: url(../img/deg.svg) no-repeat 50%;
 }
-
+.speedx {
+  background: url(../img/speedx.svg) no-repeat 50%;
+}
+.speedy {
+  background: url(../img/speedy.svg) no-repeat 50%;
+}
+.speedm {
+  background: url(../img/speed.svg) no-repeat 50%;
+}
 #width {
   background: url(../img/width.svg) no-repeat 50%;
 }

@@ -9,7 +9,7 @@ font-size: larger;
 background: #f0f0f0;
 margin: 0;
 }
-a {
+p a {
 text-decoration: none;
 padding: 10px;
 background: #777;
@@ -20,6 +20,11 @@ margin: 10px;
 #bar {
 background: #fff;
 padding: 10px;
+box-shadow: 0 0 50px 0 #ddd;
+}
+#footer {
+background: #fff;
+height: 20px;
 box-shadow: 0 0 50px 0 #ddd;
 }
 #bar p {
@@ -77,4 +82,19 @@ box-shadow: 0 0 50px 0 #ddd;
 <p>5. Осталось последнее - нарисовать лягушке верхние лапы. Желательно рисовать их внутри туловища. Эти лапы можно рисовать на свое усмотение.</p>
 <img src='img/frog5.png'></img>
 </div>
-<p class='block text' >Рисунок готов. Мы нарисовали лягушку. Свои навыки можно опробовать в нашей <a href='/draw'>онлайн рисовалке</a>.</p>
+<p class='block text' >Рисунок готов. Мы нарисовали лягушку. Свои навыки можно опробовать в нашей <a href='/draw.html'>онлайн рисовалке</a>.</p>
+<div id='footer'>
+<script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.11;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")
+</script>
+</div>
+</body>
+</html>

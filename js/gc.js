@@ -3,6 +3,13 @@ var curX = 0;
 var curY = 0;
 document.onmousemove = function(e) {
 curX = e.clientX, curY = e.clientY;
+for (var i=0; i < funcs.length; i++) {
+if (get('frd'+i)) get('frd'+i).value = funcs[i][2] = get('rd'+i).value;
+if (get('fsx'+i)) get('fsx'+i).value = funcs[i][2] = get('sx'+i).value;
+if (get('fsy'+i)) get('fsy'+i).value = funcs[i][3] = get('sy'+i).value;
+if (get('fscx'+i)) get('fscx'+i).value = funcs[i][2] = get('scx'+i).value;
+if (get('fscy'+i)) get('fscy'+i).value = funcs[i][3] = get('scy'+i).value;
+}
 }
 var funcs = [];
 var imgs = [new KeepDraw.Image({
@@ -32,11 +39,11 @@ elem.rotate(deg, x, y);
 function(elem, sx, sy, seg) {
 if (seg) {
 seg = elem._segments[seg - 1] || elem.segments[seg - 1];
-seg[0] += sx;
-seg[1] += sy;
+seg[0] += sx * 1;
+seg[1] += sy * 1;
 } else {
-elem.x += sx;
-elem.y += sy;
+elem.x += sx * 1;
+elem.y += sy * 1;
 }
 },
 function(elem, sx, sy, seg, x, y) {
@@ -45,8 +52,8 @@ seg = elem._segments[seg - 1] || elem.segments[seg - 1];
 seg[0] = curX - elem.x;
 seg[1] = curY - elem.y;
 } else {
-elem.x = curX - x;
-elem.y = curY - y;
+elem.x += ((curX - x) - elem.x) * (sx / 100);
+elem.y += ((curY - y) - elem.y) * (sy / 100);
 }
 }];
 var actinit = [
@@ -177,16 +184,22 @@ stage.childs.length -= stage.childs.length - isel;
 stage.events.mousedown = [];
 brushesup();
 var id = funcs.length - 1;
-get('panel').innerHTML += "<div id='t" + id + "' class='tab'><div class='ttab'>Rotation<a id='d" + id + "' class='del'>X</a></div><input id='rd" + id + "' max='180' min='0' type='range' value='2'><div class='deg'><input min='0' type='number' value='2'></div></div></div>";
-get('rd'+id).onchange = function() {
-funcs[id][2] = get('rd'+id).value;
-}
+var tab = document.createElement('div');
+tab.id = 't' + id;
+tab.classList.add('tab');
+tab.innerHTML = "<div class='ttab'>Rotation<a id='d" + id + "' class='del'>X</a></div><input id='rd" + id + "' max='90' min='-90' type='range' step='0.01' value='2'><div class='deg'><input id='frd" + id + "' type='number' value='2'></div></div>";
+get('panel').appendChild(tab);
 get('d' + id).onmousedown = function() {
-funcs[funcs.length - 1][0] = -1;
+funcs[id][0] = -1;
 clearsel();
-get('t' + (funcs.length - 1)).remove();
+get('t' + id).remove();
 }
+get('frd'+id).oninput = function() {
+console.log('a');
+funcs[id][2] = get('rd'+id).value = get('frd'+id).value;
+};
 }
+
 get('move').onclick = function() {
 var act = [1, elem.index, 2, 0, 0];
 funcs.push(act);
@@ -195,6 +208,25 @@ elem.acts.push(act);
 stage.childs.length -= stage.childs.length - isel;
 stage.events.mousedown = [];
 brushesup();
+var id = funcs.length - 1;
+var tab = document.createElement('div');
+tab.id = 't' + id;
+tab.classList.add('tab');
+tab.innerHTML = "<div class='ttab'>Move<a id='d" + id + "' class='del'>X</a></div><input id='sx" + id + "' max='100' min='-100' type='range' step='0.01' value='2'><div class='speedx'><input id='fsx" + id + "' type='number' value='2'></div><input id='sy" + id + "' max='100' min='-100' type='range' step='0.01' value='2'><div class='speedy'><input id='fsy" + id + "' type='number' value='2'></div></div>";
+get('panel').appendChild(tab);
+get('d' + id).onmousedown = function() {
+funcs[id][0] = -1;
+clearsel();
+get('t' + id).remove();
+}
+get('fsx'+id).oninput = function() {
+console.log('a');
+funcs[id][2] = get('sx'+id).value = get('fsx'+id).value;
+};
+get('fsy'+id).oninput = function() {
+console.log('a');
+funcs[id][3] = get('sy'+id).value = get('fsy'+id).value;
+};
 }
 get('curmove').onclick = function() {
 var act = [2, elem.index, 2, 0, 0];
@@ -204,6 +236,25 @@ elem.acts.push(act);
 stage.childs.length -= stage.childs.length - isel;
 stage.events.mousedown = [];
 brushesup();
+var id = funcs.length - 1;
+var tab = document.createElement('div');
+tab.id = 't' + id;
+tab.classList.add('tab');
+tab.innerHTML = "<div class='ttab'>Move to cursor<a id='d" + id + "' class='del'>X</a></div><input id='scx" + id + "' max='100' type='range' step='0.01' value='2'><div class='speedx'><input id='fscx" + id + "' type='number' value='2'></div><input id='scy" + id + "' max='100' type='range' step='0.01' value='2'><div class='speedy'><input id='fscy" + id + "' type='number' value='2'></div></div>";
+get('panel').appendChild(tab);
+get('d' + id).onmousedown = function() {
+funcs[id][0] = -1;
+clearsel();
+get('t' + id).remove();
+}
+get('fscx'+id).oninput = function() {
+console.log('a');
+funcs[id][2] = get('scx'+id).value = get('fscx'+id).value;
+};
+get('fscy'+id).oninput = function() {
+console.log('a');
+funcs[id][3] = get('scy'+id).value = get('fscy'+id).value;
+};
 }
 document.addEventListener('mouseup', function() {
 for (var i = 0; i < funcs.length; i++) {

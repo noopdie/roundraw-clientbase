@@ -124,7 +124,7 @@ var change = function(el, num) {
   if (num == 'width') elem.width = el.value * 1;
   if (num == 'y') elem.y = el.value * 1;
   if (num == 'height') elem.height = el.value * 1;
-  if (num == 'sm') elem.smooth(ls.smooth);
+  if (num == 'sm' && elem) elem.smooth(ls.smooth);
   else colors[ls.sf][num] = el.value;
   colInit();
 }
@@ -572,7 +572,7 @@ var forward = function() {
 
   }
 }
-document.onkeydown = function(e) {
+get('main').onkeydown = function(e) {
 
   if (e.ctrlKey) {
     if (e.keyCode == 90) back();

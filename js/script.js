@@ -572,7 +572,7 @@ var forward = function() {
 
   }
 }
-document.onkeydown = function(e) {
+get('main').onkeydown = function(e) {
 
   if (e.ctrlKey) {
     if (e.keyCode == 90) back();
