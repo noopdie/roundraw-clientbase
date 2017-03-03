@@ -666,6 +666,13 @@ function updsel() {
     }
   }
 }
+function reset() {
+for (var key in localStorage) {
+delete localStorage[key];
+ls = {};
+location.reload();
+}
+}
 document.oncontextmenu = function() {
   return false
 };
