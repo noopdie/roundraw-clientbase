@@ -130,7 +130,7 @@ var change = function(el, num) {
 if (num == 'sl') ls.slow = el.value; 
   if (num == 'sm') {
 ls.smooth = el.value;
-if (elem) elem.smooth(ls.smooth)
+if (elem && ls.brush != 0) elem.smooth(ls.smooth)
 }
   else colors[ls.sf][num] = el.value;
   colInit();
@@ -144,7 +144,7 @@ get('strw').oninput = function() {
 }
 get('sm').oninput = function() {
   ls.smooth = this.value;
-  if (elem) elem.smooth(this.value);
+  if (elem && ls.brush != 0) elem.smooth(this.value);
   colInit();
 }
 get('ix').oninput = function() {
@@ -528,7 +528,7 @@ if (elem) _seg = JSON.parse(JSON.stringify(elem._segments || elem.segments));
 }
 get('main').onmousemove = get('toolbar').onmousemove = function(e) {
   if (move && !selpoint && !selact) {
-    if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5) elem.smooth(ls.smooth);
+    if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5 && ls.brush != 0) elem.smooth(ls.smooth);
     if (brushes[ls.brush][1]) brushes[ls.brush][1](e);
   } else if (selpoint) {
     var seg = elem._segments || elem.segments;
