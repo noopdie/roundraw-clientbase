@@ -35,6 +35,7 @@ var colors = (ls.colors) ? JSON.parse(ls.colors) : [
   [0, 0, 0, 1],
   [0, 0, 0, 1]
 ];
+ls.slow = ls.slow || 1;
 get(ls.brush).classList.add('select');
 var setBrush = function(c) {
   get(ls.brush).classList.remove('select');
@@ -78,6 +79,7 @@ if (get(0)) {
   get('sm').value = ls.smooth;
   get('opacity').childNodes[1].value = colors[ls.sf][3]
   get('smooth').childNodes[1].value = ls.smooth || 0;
+  get('sl').value = get('slow').childNodes[1].value = ls.slow;
   get('strw').value = get('strwidth').childNodes[1].value = attrs.strokeWidth;
   get('sh').value = get('shadow').childNodes[1].value = attrs.shadowWidth;
   images[images.length - 1].width = get('imgwidth').childNodes[1].value = get('iw').value = ls.imgwidth;
@@ -115,6 +117,7 @@ get('color').style.border = '0';
 get('color').style.zIndex = '-1';
 var change = function(el, num) {
   if (num == 'sh') attrs.shadowWidth = el.value;
+  if (num == 'w') attrs.strokeWidth = el.value;
   if (num == 'strw') attrs.strokeWidth = el.value;
   if (num == 'iw') ls.imgwidth = images[images.length - 1].width = el.value;
   if (num == 'ih') ls.imgheight = images[images.length - 1].height = el.value;
@@ -124,7 +127,11 @@ var change = function(el, num) {
   if (num == 'width') elem.width = el.value * 1;
   if (num == 'y') elem.y = el.value * 1;
   if (num == 'height') elem.height = el.value * 1;
-  if (num == 'sm' && elem) elem.smooth(ls.smooth);
+if (num == 'sl') ls.slow = el.value; 
+  if (num == 'sm') {
+ls.smooth = el.value;
+if (elem) elem.smooth(ls.smooth)
+}
   else colors[ls.sf][num] = el.value;
   colInit();
 }
@@ -154,6 +161,10 @@ get('xc').oninput = function() {
 }
 get('hc').oninput = function() {
   if (elem) elem.height = this.value * 1;
+  colInit();
+}
+get('sl').oninput = function() {
+  ls.slow = this.value * 1;
   colInit();
 }
 get('yc').oninput = function() {
@@ -276,7 +287,7 @@ brushes = [
     },
     function(e) {
       var seg = elem.segments[elem.segments.length - 1];
-      var segs = [(seg[0] + (e.clientX - (seg[0] + x)) / 10), (seg[1] + (e.clientY - (seg[1] + y)) / 10)];
+      var segs = [(seg[0] + (e.clientX - (seg[0] + x)) / (ls.slow * 1)), (seg[1] + (e.clientY - (seg[1] + y)) / (ls.slow * 1))];
       elem.segments.push(segs);
     },
     function() {

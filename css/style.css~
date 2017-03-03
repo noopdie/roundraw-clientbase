@@ -227,9 +227,6 @@ input[type='number'] {
 .speedy {
   background: url(../img/speedy.svg) no-repeat 50%;
 }
-.speedm {
-  background: url(../img/speed.svg) no-repeat 50%;
-}
 #width {
   background: url(../img/width.svg) no-repeat 50%;
 }

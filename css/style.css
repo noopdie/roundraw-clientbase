@@ -235,6 +235,10 @@ input[type='number'] {
   background: url(../img/height.svg) no-repeat 50%;
 }
 
+#slow {
+  background: url(../img/slow.svg) no-repeat 50%;
+}
+
 #toLeft {
   border: dashed 2px #ccc;
   width: 30px;
