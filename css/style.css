@@ -9,7 +9,16 @@ body {
   font-size: 0;
   z-index: -2;
 }
-
+#delimg {
+padding: 3px;
+    font-family: arial;
+    text-align: center;
+    color: white;
+    background: orangered;
+    right: 0;
+    position: relative;
+    margin: 5px;
+}
 * {
   transition: 0.5s;
 }
@@ -279,7 +288,7 @@ a.flip {
   display: block;
   background: url(../img/image.svg);
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% !important;
   margin-bottom: 10px;
   background-position: 50%;
   border-radius: 10px;
