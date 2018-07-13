@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   id="svg3818"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="y.svg">
+  <metadata
+     id="metadata3830">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3828" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="680"
+     id="namedview3826"
+     showgrid="false"
+     inkscape:zoom="23.025165"
+     inkscape:cx="5.3814724"
+     inkscape:cy="9.0722212"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3820" />
+  <g
+     fill="none"
+     stroke="#303030"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="g3820">
+    <path
+       d="M 13.845541,7.9089606 4.535336,7.860861 7.6551744,5.1537035 M 4.535336,7.8608615 7.6231229,10.463925"
+       id="path3824"
+       inkscape:connector-curvature="0"
+       style="stroke-width:0.69999999;stroke-miterlimit:4;stroke-dasharray:none" />
+    <path
+       d="M 2.1591681,12.457789 2.1975408,3.1478722"
+       id="path3824-2"
+       inkscape:connector-curvature="0"
+       style="stroke-width:0.70004535;stroke-miterlimit:4;stroke-dasharray:none"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
