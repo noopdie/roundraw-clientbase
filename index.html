@@ -47,12 +47,18 @@ color: rgba(255,255,255,0.7);
     padding-bottom: 2em;
     padding-top: 2em;
  background: url(title.png) no-repeat rgba(0,0,0,0.3);
+background-position-top: -5px;
 box-shadow: inset 0 0 150px 0 rgba(0,0,0,0.3), 0 0 50px 0 rgba(0,0,0,0.1);
 background-position-y: 0px;
 }
 .text {
 padding: 20px;
 color: #555;
+}
+#hello {
+padding: 20px;
+color: #f0f0f0;
+background: #2255aa
 }
 #top2 {
  background: url(title2.png) repeat;
@@ -91,8 +97,15 @@ border-radius: 7px;
 <div class='bar' id='toolbar'>
 <p>Roundraw</p>
 <a href='draw.html'>Рисовать!</a>
-<a href='#top3'>Рисунки</a>
+<a href='gallery.html'>Галерея</a>
+<a href='versions.html'>Версии</a>
 <a href='#top2'>Что это?</a>
+</div>
+<div id='hello'>
+<br>
+<br>
+Привет всем. Я, создатель сайта, не бывал здесь целый год (с марта 2017). Но несмотря на отсутствие обновлений, здесь кое-что изменилось. Количество людей, заходящих на сайт выросло. И теперь это не дает мне покоя.
+Давайте вместе создавать этот редактор изображений. Теперь, с помощью чата вы можете писать об ошибках, багах и тех вещах, которые вы бы хотели видеть в редакторе. А я постараюсь это реализовать.
 </div>
 <div class='title top' id='top'>Roundraw - рисовать онлайн бесплатно</div>
 <div class='title' id='top2'>Что это?</div>
@@ -105,12 +118,6 @@ border-radius: 7px;
 <h2>Бесплатный</h2> - Можно рисовать онлайн бесплатно, без регистрации;
 <h2>Заливка</h2> - Умная заливка зальет фигуру, которую вы выделили.
 <h2>Изображения</h2> - Возможно залить фигуру изображением.
-</div>
-<div class='title' id='top3'>Примеры рисунков</div>
-<div class='text' id='images'>
-<img src='i3.jpg' alt='Курица, нарисованная в Roundraw'></img>
-<img src='i1.jpg' alt='Кот Вжух, нарисованный в Roundraw'></img>
-<img src='i2.jpg' alt='Пушистая белка, нарисованная в Roundraw'></img>
 </div>
 <div class='title top'><a href='draw.html'>Начать рисовать!</a></div>
 <div class='footer'>
@@ -130,7 +137,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
 <script>
 var get = function(e) {return document.getElementById(e)};
 document.body.onscroll = function() {
-get('top').style.backgroundPositionY = (document.body.scrollTop / 1.5) + 'px';
+get('top').style.backgroundPositionY = ((document.body.scrollTop - get('hello'). offsetHeight) / 1.5) + 'px';
 get('top2').style.backgroundPositionY = get('top3').style.backgroundPositionY = (document.body.scrollTop / 2) + 'px';
 get('t1').style.backgroundPositionY = (document.body.scrollTop / 2.5) + 'px';
 var col = document.body.scrollTop / document.body.offsetHeight;
@@ -177,4 +184,10 @@ get('toolbar').style.background = 'rgba(0,0,0,' + (col - 0.1) + ')';
         ga('create', 'UA-88405053-1', 'auto');
         ga('send', 'pageview');
     </script>
+<script id="chatBroEmbedCode">
+/* Chatbro Widget Embed Code Start */
+function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}
+/* Chatbro Widget Embed Code End */
+ChatbroLoader({encodedChatId: '82G8X'});
+</script>
 </html>
