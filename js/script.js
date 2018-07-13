@@ -2,6 +2,7 @@ document.addEventListener('touchmove', function(e) {
   e.preventDefault();
 });
 run = !1;
+var event = !1;
 document.onselectstart = function() {
   return false
 };
@@ -9,7 +10,6 @@ var removed = [],
   isel = !1,
   select = selpoint = selact = !1,
   sx, sy,
-  images = [{}],
   paths = [],
   stage = new KeepDraw.Stage({
     width: innerWidth,
@@ -28,8 +28,19 @@ get('toolbar').onselectstart = function() {
 };
 var ls = localStorage;
 var add = !1;
+var images = (ls.images) ? JSON.parse(ls.images) : [false];
+for (var i = 0; i < images.length; i++) {
+if (images[i]) images[i] = new KeepDraw.Image(images[i]);
+}
+    if (images[images.length-1])get('imstyle').style.background = 'url(' + images[images.length-1].src + ') no-repeat', img = images[images.length-1];
 if (!get(0)) ls.brush = 5;
-if (!ls.brush) ls.brush = ls.sf = ls.cap = ls.imgwidth = ls.imgheight = ls.imgx = ls.imgy = 0;
+if (!ls.brush) { ls.brush = ls.sf = ls.cap = 0;
+ls.imgwidth = 1000;
+ls.imgheight = 1000;
+ls.imgx = -500;
+ls.imgy = -500;
+}
+if(!images[images.length-1]) get('delimg').style.display = 'none';
 var colors = (ls.colors) ? JSON.parse(ls.colors) : [
   [0, 0, 0, 0],
   [0, 0, 0, 1],
@@ -68,6 +79,7 @@ var attrs = (ls.attrs) ? JSON.parse(ls.attrs) : {
 };
 var init = function() {
 if (get(0)) {
+  ls.images = JSON.stringify(images);
   get('sf').value = ls.sf;
   get('stroke').childNodes[1].innerText = (ls.sf > 1) ? '❂' : (ls.sf > 0) ? '○' : '●';
   get('cap').childNodes[1].innerText = (ls.cap > 1) ? '▶' : (ls.cap > 0) ? '■' : '◗';
@@ -144,8 +156,7 @@ get('strw').oninput = function() {
 }
 get('sm').oninput = function() {
   ls.smooth = this.value;
-  if (elem && ls.brush != 0) elem.smooth(this.value);
-  colInit();
+  if (elem && ls.brush != 0) elem.smooth(this.value), brushesup();
 }
 get('ix').oninput = function() {
   images[images.length - 1].x = ls.imgx = this.value;
@@ -201,9 +212,13 @@ get('sf').oninput = function() {
 var move = !1,
   elem, x, y,
   brushesup = function(e) {
+if (isel) {
+clearsel();
+}
     if (elem) {
+elem.img = images.length-1;
       var c = elem.index;
-      if (ls.brush > 1 && ls.brush != 5) {
+      if (ls.brush > 1 && ls.brush != 5 && elem.cons != KeepDraw.Line) {
         elem = elem.toLine();
         if (elem) elem.noline = !0;
       }
@@ -240,6 +255,8 @@ var move = !1,
             stage: stage
           });
           point.on('mousedown', function(e, obj) {
+console.log(obj.selsegc, obj.line); 
+sa = obj.line;
             sx = obj.x;
             sy = obj.y;
             selpoint = obj;
@@ -262,7 +279,6 @@ var move = !1,
             sy = obj.y;
             selact = obj;
           });
-	actinit[elem.acts[i][0]](point, elem.acts[i]);
 }
 	}
       updsel();
@@ -525,10 +541,12 @@ if (!selact && !run) {
   }
 if (elem) _seg = JSON.parse(JSON.stringify(elem._segments || elem.segments));
 }
+KeepDraw.Utils.draw(stage)
 }
-get('main').onmousemove = get('toolbar').onmousemove = function(e) {
+document.body.onmousemove = function(e) {
+event = e;
   if (move && !selpoint && !selact) {
-    if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5 && ls.brush != 0) elem.smooth(ls.smooth);
+    if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5 && ls.brush != 8 &&ls.brush != 0) elem.smooth(ls.smooth);
     if (brushes[ls.brush][1]) brushes[ls.brush][1](e);
   } else if (selpoint) {
     var seg = elem._segments || elem.segments;
@@ -552,8 +570,8 @@ get('main').onmousemove = get('toolbar').onmousemove = function(e) {
   } else if (selact) {
 	selact.x = e.clientX;
 	selact.y = e.clientY;
-actmove[elem.acts[selact.act][0]](e);	
 }
+KeepDraw.Utils.draw(stage)
 }
 get('main').onmouseup = get('toolbar').onmouseup = function(e) {
     if (selact) selact = !1;
@@ -567,6 +585,7 @@ get('main').onmouseup = get('toolbar').onmouseup = function(e) {
     if (selpoint) selpoint = !1;
   }
 }
+KeepDraw.Utils.draw(stage)
 }
 var back = function() {
   if (stage.childs.length > 0) {
@@ -583,8 +602,7 @@ var forward = function() {
 
   }
 }
-get('main').onkeydown = function(e) {
-
+document.body.onkeydown = function(e) {
   if (e.ctrlKey) {
     if (e.keyCode == 90) back();
     if (e.keyCode == 89) forward();
@@ -592,12 +610,14 @@ get('main').onkeydown = function(e) {
     if (e.keyCode == 49) setBrush(5);
     if (e.keyCode == 50) setBrush(6);
     if (e.keyCode == 51) setBrush(7);
-    if (e.keyCode == 52) setBrush(0);
-    if (e.keyCode == 53) setBrush(1);
-    if (e.keyCode == 54) setBrush(2);
-    if (e.keyCode == 55) setBrush(3);
-    if (e.keyCode == 56) setBrush(4);
-    if (e.keyCode == 32 && move) add = !0;
+    if (e.keyCode == 52) setBrush(8);
+    if (e.keyCode == 53) setBrush(0);
+    if (e.keyCode == 54) setBrush(1);
+    if (e.keyCode == 55) setBrush(2);
+    if (e.keyCode == 56) setBrush(3);
+    if (e.keyCode == 57) setBrush(4);
+    if (e.keyCode == 58) setBrush(4);
+    if (e.keyCode == 32 && move) add = !0, (event ? document.body.onmousemove(event) : !1);
   }
 }
 if (get(0)) {
@@ -605,31 +625,35 @@ get('import').onchange = function(e) {
   var read = new FileReader();
   read.readAsDataURL(get('import').files[0]);
   read.onload = function() {
-    get('imstyle').style.background = 'url(' + read.result + ') no-repeat 100%';
-    get('imstyle').style.backgroundSize = '100%';
-    images.push(new KeepDraw.Image({
+    get('imstyle').style.background = 'url(' + read.result + ') no-repeat';
+im = new KeepDraw.Image({
       width: ls.imgwidth,
       height: ls.imgheight,
       y: ls.imgy,
       x: ls.imgx,
       outside: false,
       src: read.result
-    }));
+    });
+    images.push(im);
+attrs.img = im;
+attrs.image = im
+get('delimg').style.display = 'block';
   };
 };
 }
 get('save').onmousemove = function() {
   clearsel();
+KeepDraw.Utils.draw(stage)
 }
 
 function clearsel() {
   if (elem) {
-    if (!selact && !selpoint && select && elem.segments) {
+    if (isel) {
       select = false;
       stage.childs.length -= stage.childs.length - isel + ((elem.noline) ? 1 : 0);
       elem.noline = !1;
       stage.events.mousedown = [];
-
+      isel = !1;
     }
   }
 }
@@ -653,7 +677,7 @@ function updsel() {
     for (var i = isel; i < stage.childs.length; i++) {
       var ch = stage.childs[i];
       var seg = elem._segments || elem.segments;
-      if (ch.cons == KeepDraw.Circle && ch.selseg) {
+      if (ch.cons == KeepDraw.Circle) {
         ch.x = seg[ch.selseg][ch.selsegc] + elem.x;
         ch.y = seg[ch.selseg][ch.selsegc + 1] + elem.y;
         if (ch.line) {
@@ -673,9 +697,17 @@ ls = {};
 location.reload();
 }
 }
+get('delimg').onclick = function() {
+images.push(false);
+init();
+get('delimg').style.display = 'none';
+get('imstyle').style.background = '';
+attrs.img = !1;
+attrs.image = !1;
+}
 document.oncontextmenu = function() {
   return false
 };
-stage.draw = function() {};
-new KeepDraw.Animation(stage);
-
+for (var i = 0; i < stage.childs.length; i++) {
+stage.childs[i].image = images[stage.childs[i].img]
+}
