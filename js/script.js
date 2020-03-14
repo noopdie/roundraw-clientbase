@@ -1,6 +1,4 @@
-document.addEventListener('touchmove', function(e) {
-  e.preventDefault();
-});
+
 run = !1;
 var event = !1;
 document.onselectstart = function() {
@@ -245,16 +243,23 @@ elem.img = images.length-1;
           var point = new KeepDraw.Circle({
             x: seg[i][k] + elem.x,
             y: seg[i][k + 1] + elem.y,
-            radius: 4,
+            radius: 20,
             selseg: i,
             line: ltopoint,
             selsegc: k,
-            color: '#fff',
+            color: 'rgba(255,255,255,0.4)',
             strokeColor: '#000',
             strokeWidth: 2,
             stage: stage
           });
           point.on('mousedown', function(e, obj) {
+console.log(obj.selsegc, obj.line); 
+sa = obj.line;
+            sx = obj.x;
+            sy = obj.y;
+            selpoint = obj;
+          });
+          point.on('touchstart', function(e, obj) {
 console.log(obj.selsegc, obj.line); 
 sa = obj.line;
             sx = obj.x;
@@ -279,6 +284,11 @@ sa = obj.line;
             sy = obj.y;
             selact = obj;
           });
+          point.on('touchstart', function(e, obj) {
+            sx = obj.x;
+            sy = obj.y;
+            selact = obj;
+          });
 }
 	}
       updsel();
@@ -288,8 +298,8 @@ sa = obj.line;
 brushes = [
   [
     function(e) {
-      x = e.clientX,
-        y = e.clientY,
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio,
         elem = new KeepDraw.Line({
           x: x,
           image: images[images.length - 1],
@@ -303,7 +313,7 @@ brushes = [
     },
     function(e) {
       var seg = elem.segments[elem.segments.length - 1];
-      var segs = [(seg[0] + (e.clientX - (seg[0] + x)) / (ls.slow * 1)), (seg[1] + (e.clientY - (seg[1] + y)) / (ls.slow * 1))];
+      var segs = [(seg[0] + (((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - (seg[0] + x)) / (ls.slow * 1)), (seg[1] + (((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - (seg[1] + y)) / (ls.slow * 1))];
       elem.segments.push(segs);
     },
     function() {
@@ -312,8 +322,8 @@ brushes = [
   ],
   [
     function(e) {
-      x = e.clientX,
-        y = e.clientY,
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio,
         elem = new KeepDraw.Line({
           x: x,
           y: y,
@@ -327,14 +337,14 @@ brushes = [
       elem.setAttrs(attrs);
     },
     function(e) {
-      elem.segments[elem.segments.length - 1] = [e.clientX - x, e.clientY - y];
-      if (add) elem.segments.push([e.clientX - x, e.clientY - y]), add = !1;
+      elem.segments[elem.segments.length - 1] = [((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y];
+      if (add) elem.segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]), add = !1;
     },
     brushesup
   ],
   [function(e) {
-      x = e.clientX,
-        y = e.clientY,
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio,
         elem = new KeepDraw.Circle({
           x: x,
           y: y,
@@ -348,14 +358,14 @@ brushes = [
       elem.setAttrs(attrs);
     },
     function(e) {
-      elem.segments[1][0] = e.clientX - x;
-      elem.segments[1][1] = e.clientY - y;
+      elem.segments[1][0] = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x;
+      elem.segments[1][1] = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y;
     },
     brushesup
   ],
   [function(e) {
-      x = e.clientX,
-        y = e.clientY,
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio,
         elem = new KeepDraw.Polygon({
           x: x,
           y: y,
@@ -370,15 +380,15 @@ brushes = [
       elem.setAttrs(attrs);
     },
     function(e) {
-      elem.segments[1][0] = e.clientX - x,
-        elem.segments[1][1] = e.clientY - y;
+      elem.segments[1][0] = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x,
+        elem.segments[1][1] = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y;
       if (add) elem.sides++, add = !1;
     },
     brushesup
   ],
   [function(e) {
-      x = e.clientX,
-        y = e.clientY,
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio,
         elem = new KeepDraw.Rect({
           x: x,
           image: images[images.length - 1],
@@ -392,14 +402,14 @@ brushes = [
       elem.setAttrs(attrs);
     },
     function(e) {
-      elem.segments[1][0] = e.clientX - x,
-        elem.segments[1][1] = e.clientY - y;
+      elem.segments[1][0] = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x,
+        elem.segments[1][1] = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y;
     },
     brushesup
   ],
   [function(e) {
-      x = e.clientX,
-        y = e.clientY;
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio;
       new KeepDraw.Line({
         x: x,
         y: y,
@@ -414,8 +424,8 @@ brushes = [
       });
     },
     function(e) {
-      stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]);
-      if (add) stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]), add = !1;
+      stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]);
+      if (add) stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]), add = !1;
     },
     function(e) {
       for (var i = 0; i < stage.childs.length - 1; i++) {
@@ -434,8 +444,8 @@ brushes = [
   ],
   [
     function(e) {
-      x = e.clientX,
-        y = e.clientY;
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio;
       new KeepDraw.Line({
         x: x,
         y: y,
@@ -450,8 +460,8 @@ brushes = [
       });
     },
     function(e) {
-      stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]);
-      if (add) stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]), add = !1;
+      stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]);
+      if (add) stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]), add = !1;
     },
     function(e) {
       for (var i = 0; i < stage.childs.length - 1; i++) {
@@ -466,7 +476,7 @@ brushes = [
   ],
   [function(e) {
       var arr = [];
-      col = stage.ctx.getImageData(e.clientX, e.clientY, 1, 1).data;
+      col = stage.ctx.getImageData(((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio, 1, 1).data;
       for (var i = 0; i < col.length; i++) {
         arr[i] = col[i];
       }
@@ -479,8 +489,8 @@ brushes = [
   ],
   [
     function(e) {
-      x = e.clientX,
-        y = e.clientY;
+      x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio,
+        y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio;
       new KeepDraw.Line({
         x: x,
         y: y,
@@ -495,8 +505,8 @@ brushes = [
       });
     },
     function(e) {
-      stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]);
-      if (add) stage.childs[stage.childs.length - 1].segments.push([e.clientX - x, e.clientY - y]), add = !1;
+      stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]);
+      if (add) stage.childs[stage.childs.length - 1].segments.push([((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - x, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - y]), add = !1;
     },
     function(e) {
       for (var i = 0; i < stage.childs.length - 1; i++) {
@@ -529,7 +539,7 @@ window.onbeforeunload = function() {
   ls.paths = JSON.stringify(paths);
 }
 }
-get('main').onmousedown = function(e) {
+get('main').onmousedown = get('main').ontouchstart = function(e) {
 if (!selact && !run) {
   if (!move) {
     if (!selpoint) {
@@ -543,7 +553,7 @@ if (elem) _seg = JSON.parse(JSON.stringify(elem._segments || elem.segments));
 }
 KeepDraw.Utils.draw(stage)
 }
-document.body.onmousemove = function(e) {
+document.onmousemove = document.ontouchmove = function(e) {
 event = e;
   if (move && !selpoint && !selact) {
     if (elem && ls.smooth * 1 > 0.1 && ls.brush != 5 && ls.brush != 8 &&ls.brush != 0) elem.smooth(ls.smooth);
@@ -553,27 +563,27 @@ event = e;
     var j = (selpoint.selsegc > 3) ? 1 : 0;
     if (selpoint.selsegc < 2) {
       if (seg[selpoint.selseg].length > 2) {
-        seg[selpoint.selseg][2] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
-        seg[selpoint.selseg][3] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
+        seg[selpoint.selseg][2] = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
+        seg[selpoint.selseg][3] = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
       }
       if (seg[selpoint.selseg - 1])
         if (seg[selpoint.selseg - 1].length > 4) {
-          seg[selpoint.selseg - 1][4] = e.clientX - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
-          seg[selpoint.selseg - 1][5] = e.clientY - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
+          seg[selpoint.selseg - 1][4] = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
+          seg[selpoint.selseg - 1][5] = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
         }
     }
-    selpoint.x = e.clientX;
-    selpoint.y = e.clientY;
-    seg[selpoint.selseg][selpoint.selsegc] = (e.clientX - sx) - (elem.x - sx);
-    seg[selpoint.selseg][selpoint.selsegc + 1] = (e.clientY - sy) - (elem.y - sy);
+    selpoint.x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio;
+    selpoint.y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio;
+    seg[selpoint.selseg][selpoint.selsegc] = (((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio - sx) - (elem.x - sx);
+    seg[selpoint.selseg][selpoint.selsegc + 1] = (((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio - sy) - (elem.y - sy);
     updsel();
   } else if (selact) {
-	selact.x = e.clientX;
-	selact.y = e.clientY;
+	selact.x = ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio;
+	selact.y = ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio;
 }
 KeepDraw.Utils.draw(stage)
 }
-get('main').onmouseup = get('toolbar').onmouseup = function(e) {
+document.onmouseup = document.ontouchend = function(e) {
     if (selact) selact = !1;
  else {
   if (e.which == 3 && move) add = !0;
@@ -653,6 +663,7 @@ function clearsel() {
       stage.childs.length -= stage.childs.length - isel + ((elem.noline) ? 1 : 0);
       elem.noline = !1;
       stage.events.mousedown = [];
+      stage.events.touchstart = [];
       isel = !1;
     }
   }
@@ -711,3 +722,15 @@ document.oncontextmenu = function() {
 for (var i = 0; i < stage.childs.length; i++) {
 stage.childs[i].image = images[stage.childs[i].img]
 }
+
+window.onerror = function(msg, url, linenumber) {
+        alert(
+          "Error message: " +
+            msg +
+            "\nURL: " +
+            url +
+            "\nLine Number: " +
+            linenumber
+        );
+        return true;
+      };
