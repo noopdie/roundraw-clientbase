@@ -35,7 +35,11 @@ padding: 3px;
   font-size: 15px;
   text-align: center;
 }
-
+@media only screen and (min-width: 600px) {
+ .bar a {
+  padding: 30px !important;
+ }
+}
 .bar .select {
   background-color: #fafafa;
   box-shadow: 0px 0px 0px 2px rgba(0,0,0,1);
