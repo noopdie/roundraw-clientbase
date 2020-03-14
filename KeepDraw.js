@@ -301,16 +301,16 @@ ry = ry || 0;
        mousemove: [],
        mouseup: [],
        contextmenu: [],
-       ontouchstart: [],
-       ontouchmove: [],
-       ontouchend: [],
-       ontouchcancel: []
+       touchstart: [],
+       touchmove: [],
+       touchend: [],
+       touchcancel: []
      };
      for (var key in events) {
        this.canvas.addEventListener(key, function(e) {
          for (var i = 0; i < events[e.type].length; i++) {
            var obj = events[e.type][i];
-           if (KeepDraw.getIntersection(obj, e.clientX * (obj.stage.width / obj.stage.canvas.offsetWidth), e.clientY * (obj.stage.height / obj.stage.canvas.offsetHeight))) {
+           if (KeepDraw.getIntersection(obj, ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio )) {
              obj.on(e.type)(e, obj);
            }
          }
