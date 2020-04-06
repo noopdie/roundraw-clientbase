@@ -1,4 +1,5 @@
- var date = new Date();
+
+var date = new Date();
  var time, lastTime = date.getTime();
  window.setAnimation = (function() {
    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
@@ -34,9 +35,13 @@
    Utils: {
      draw: function(arg) {
        var crush = !1;
+       arg.canvas.width = arg.width * window.devicePixelRatio;
+       arg.canvas.height = arg.height * window.devicePixelRatio;
+       arg.canvas.style.width = arg.width + "px";
+       arg.canvas.style.height = arg.height + "px";
        if (arg.fill) {
          arg.ctx.fillStyle = arg.fill.grd || arg.fill;
-         arg.ctx.fillRect(0, 0, arg.width, arg.height);
+         arg.ctx.fillRect(0, 0, arg.canvas.width, arg.canvas.height);
        } else arg.ctx.clearRect(0, 0, arg.width, arg.height);
        for (var i = 0; i < arg.childs.length; i++) {
          if (arg.childs[i]) arg.childs[i].draw(arg.childs[i]);
@@ -68,16 +73,7 @@
          if (!arg.y) arg.y = 0;
          arg.stage.ctx.translate(arg._x || arg.x, arg._y || arg.y);
          arg.stage.ctx.lineTo(seg[0][0] + 0.5, seg[0][1] + 0.5);
-         var w = (arg.width != arg._width) ? (arg.width + 0.5) / (arg._width + 0.5) : 1;
-         var h = (arg.height != arg._height) ? (arg.height + 0.5) / (arg._height + 0.5) : 1;
-         if (w != 1 || h != 1) {
-           for (var i = 0; i < seg.length; i++) {
-             seg[i][0] *= w;
-             seg[i][1] *= h;
-             if (seg[i][3]) seg[i][2] *= w, seg[i][3] *= h;
-             if (seg[i][5]) seg[i][4] *= w, seg[i][5] *= h;
-           }
-         }
+         
          for (var i = 1; i < seg.length; i++) {
            if (seg[i - 1][5]) {
              arg.stage.ctx.bezierCurveTo((seg[i - 1][2] + 0.5) >> 0, (seg[i - 1][3] + 0.5) >> 0, (seg[i - 1][4] + 0.5) >> 0, seg[i - 1][5], (seg[i][0] + 0.5) >> 0, (seg[i][1] + 0.5) >> 0);
@@ -90,15 +86,13 @@
          if (arg.closed) {
            arg.stage.ctx.closePath();
          }
-         var ends = KeepDraw.Utils.endPoints(arg);
-         arg.width = arg._width = ends[3][0] - ends[2][0];
-         arg.height = arg._height = ends[1][1] - ends[0][1];
+  
          if (point) var inter = arg.stage.ctx.isPointInPath(point[0], point[1]);
          KeepDraw.Utils.drawPath(arg, this.path),
            arg.stage.ctx.restore();
          if (point) return inter;
        } catch (err) {
-         console.log(arg)
+         console.log(err)
        }
      },
      drawPath: function(arg) {
@@ -117,20 +111,6 @@
          copy[k] = obj[k];
        }
        return copy;
-     },
-     endPoints: function(obj) {
-       var seg = obj.segments;
-       var top = [99999, 99999],
-         left = [99999, 99999],
-         right = [-99999, -99999],
-         bottom = [-99999, -9999999];
-       for (var i = 0; i < seg.length; i++) {
-         if (seg[i][0] < left[0]) left = seg[i];
-         if (seg[i][1] < top[1]) top = seg[i];
-         if (seg[i][1] > bottom[1]) bottom = seg[i];
-         if (seg[i][0] > right[0]) right = seg[i];
-       }
-       return [top, bottom, left, right];
      },
      percent: function(arg) {
        return arg.split('%')[0] * 1;
@@ -157,6 +137,72 @@
      },
      setFuncs: function(obj) {
        var seg = obj._segments || obj.segments;
+ 
+ 
+ obj.getWidth = function() {
+       var seg = obj._segments || obj.segments;
+       	var left = Infinity;
+            var right = -Infinity;
+       	for (var i = 0; i < seg.length; i++) {
+       	      for (var k = 0; k < seg.length; k+=2) {
+       	       if (seg[i][k] < left) left = seg[i][k];
+       	       if (seg[i][k] > right) right = seg[i][k];
+       	   }
+            }
+      return right - left; 	
+       }
+       obj.getHeight = function() {
+       	var seg = obj._segments || obj.segments;
+       	var top = Infinity;
+            var bottom = -Infinity;
+       	for (var i = 0; i < seg.length; i++) {
+       	      for (var k = 1; k < seg.length; k+=2) {
+       	       if (seg[i][k] < top) top = seg[i][k];
+       	       if (seg[i][k] > bottom) bottom = seg[i][k];
+       	   }
+            }
+      return bottom - top;	
+       }
+       obj.getCenter = function() {
+       var seg = obj.segments;
+       	var centerX = 0;
+           var ix = 0;
+            var centerY = 0;
+            var iy = 0;
+       	for (var i = 0; i < seg.length; i++) {
+       	      for (var k = 0; k < seg[i].length; k+=1) {
+       	  	if (k % 2 == 0) {
+ 	     centerX += seg[i][k]; 
+ix++
+ }
+       	      else {
+centerY += seg[i][k]; 
+iy++
+}
+       	   }
+            }
+      return [centerX / ix, centerY / iy]; 	
+       }
+      obj.setWidth = function(width) {
+      		var seg = obj._segments || obj.segments;
+         var w = width / obj.getWidth();
+           for (var i = 0; i < seg.length; i++) {
+             seg[i][0] *= w;
+             //seg[i][1] *= h;
+             if (seg[i][2]) seg[i][2] *= w; //seg[i][3] *= h;
+             if (seg[i][4]) seg[i][4] *= w; //seg[i][5] *= h;
+           }
+     }
+       obj.setHeight = function(height) {
+      		var seg = obj._segments || obj.segments;
+         var h = height / obj.getHeight();
+           for (var i = 0; i < seg.length; i++) {
+             seg[i][1] *= h;
+             if (seg[i][3]) seg[i][3] *= h;
+             if (seg[i][5]) seg[i][5] *= h;
+           }
+     }
+      
        obj.rotate = function(deg, rx, ry) {
 rx = rx || 0;
 ry = ry || 0;
@@ -183,29 +229,41 @@ ry = ry || 0;
          }
        };
        obj.smooth = function(power) {
-         var seg = obj.segments;
-         var pow = (power) ? ((power > 0) ? 2 : -2) + power / 2 : 2.3;
+       	if (obj.cons == KeepDraw.Line) {
+         var seg = obj._segments || obj.segments;
+         var pow = (power || power == 0) ? 2 + power / 2 : 2.3;
          if (seg.length > 2)
-           for (var i = 0; i < seg.length; i++) {
-             var im = (i < 1) ? seg[seg.length - 2] : seg[i - 1];
-             var ib = (i > seg.length - 2) ? seg[1] : seg[i + 1];
+           for (var i = 0; i < seg.length-1; i++) {
+             var im = (i < 1) ? (obj.closed) ? seg[seg.length - 2] : seg[i] : seg[i - 1];
+             var ib = seg[i + 1];
              var a = ((ib[0] + seg[i][0]) / 2 + (seg[i][0] + (seg[i][0] - ib[0]) * pow + ib[0]) / 2),
                b = ((ib[1] + seg[i][1]) / 2 + (seg[i][1] + (seg[i][1] - ib[1]) * pow + ib[1]) / 2),
                c = ((im[0] + seg[i][0]) / 2 + (seg[i][0] + (seg[i][0] - im[0]) * pow + im[0]) / 2),
                d = ((im[1] + seg[i][1]) / 2 + (seg[i][1] + (seg[i][1] - im[1]) * pow + im[1]) / 2);
-             im[4] = ((seg[i][0] - c + seg[i][0]) + a + seg[i][0]) / 3;
+
+             im[4] = ((seg[i][0] - c + seg[i][0]) + a + seg[i][0]) / 3,
              im[5] = ((seg[i][1] - d + seg[i][1]) + b + seg[i][1]) / 3;
-             seg[i][2] = ((seg[i][0] - a + seg[i][0]) + c + seg[i][0]) / 3;
+             
+             seg[i][2] = ((seg[i][0] - a + seg[i][0]) + c + seg[i][0]) / 3; 
              seg[i][3] = ((seg[i][1] - b + seg[i][1]) + d + seg[i][1]) / 3;
+             if (power == 0) seg[i].length = 2, im.length = 2;
+
+       //   seg[seg.length - 2][4] = ((seg[seg.length - 1][0] + d + seg[seg.length - 1][0]) - b + seg[seg.length - 1][0]) / 3;
+       //   seg[seg.length - 2][5] = ((seg[seg.length - 1][1] - c + seg[seg.length - 1][1]) + a + seg[seg.length - 1][1]) / 3;
            }
+           if (power == 0) seg[seg.length-1].length = 2;
          obj.segments = seg;
+         
+         }
        };
        obj.simplify = function(age) {
+       	if (obj.cons == KeepDraw.Line) {
          var seg = [];
          for (var i = 0; i < obj.segments.length; i += 1 + age) {
            seg.push(obj.segments[i]);
          }
          obj.segments = seg;
+         }
        };
        obj.remove = function(arg) {
            if (arg.stage) {
@@ -233,6 +291,7 @@ ry = ry || 0;
          var s = (obj.cons == KeepDraw.Circle) ? 1 : 0;
          obj = new KeepDraw.Line(o);
          obj.segments = o._segments || o.segments;
+         obj.closed = !0;
          if (s) obj.smooth(Math.PI);
          return obj;
        }
@@ -256,7 +315,6 @@ ry = ry || 0;
          }
          obj.segments = seg2;
        };
-       obj.endPoints = function() { return KeepDraw.Utils.endPoints(obj) };
        obj.inScreen = function() {
          if ((obj._x || obj.x) > 0 && (obj._x || obj.x) < innerWidth && (obj._y || obj.y) > 0 && (obj._y || obj.y) < innerHeight) return true;
          else return false;
@@ -265,10 +323,6 @@ ry = ry || 0;
          if (obj.x > minX && obj.x < maxX && obj.y > minY && obj.y < maxY) return true;
          else return false;
        };
-	obj.center = function() {
-  	var p = obj.endPoints();
-  	return [(p[2][0]+p[3][0])/2, (p[0][1]+p[1][1])/2];
-	}
        if (obj.group) {
          obj.group.childs.push(obj);
        }
@@ -276,8 +330,10 @@ ry = ry || 0;
    },
    Stage: function(arg) {
      var canvas = this.canvas = document.getElementById(arg.canvas);
-     this.width = this.canvas.width = arg.width * window.devicePixelRatio;
-     this.height = this.canvas.height = arg.height * window.devicePixelRatio;
+     this.width = this.canvas.width = arg.width;
+     this.height = this.canvas.height = arg.height;
+     this.canvas.style.width = arg.width + "px";
+     this.canvas.style.height = arg.height + "px";
      this.fill = arg.fill;
      this.ctx = canvas.getContext('2d');
      this.ctx.lineWidth = this.strokeWidth = arg.strokeWidth || 1;
@@ -310,7 +366,7 @@ ry = ry || 0;
        this.canvas.addEventListener(key, function(e) {
          for (var i = 0; i < events[e.type].length; i++) {
            var obj = events[e.type][i];
-           if (KeepDraw.getIntersection(obj, ((e.touches) ? e.touches[0].clientX : e.clientX) * window.devicePixelRatio, ((e.touches) ? e.touches[0].clientY : e.clientY) * window.devicePixelRatio )) {
+           if (KeepDraw.getIntersection(obj, (((e.touches) ? e.touches[0].clientX : e.clientX) - obj.stage.canvas.offsetLeft) * window.devicePixelRatio, (((e.touches) ? e.touches[0].clientY : e.clientY) - obj.stage.canvas.offsetTop) * window.devicePixelRatio )) {
              obj.on(e.type)(e, obj);
            }
          }
@@ -527,6 +583,12 @@ ry = ry || 0;
          if (!arg.segments) arg.segments = arg._segments;
          deg = Math.atan2(arg.segments[1][1] - seg[0][1] - arg.segments[0][1], arg.segments[1][0] - seg[0][0] - arg.segments[0][0]) * 2 + (Math.PI) / arg.sides;
          for (var i = 0; i < seg.length; i++) {
+         	/**
+         for (var k = 0; k < seg[i][k].length; k++) {
+         	var point = (k % 2 == 0) ? seg[i][k] * Math.cos(deg) - seg[i][k+1] * Math.sin(deg) : seg[i][k-1] * Math.sin(deg) + seg[i][k] * Math.cos(deg);
+            seg[i][k] = point;
+         }
+         **/
            var x = seg[i][0] * Math.cos(deg) - seg[i][1] * Math.sin(deg);
            var y = seg[i][0] * Math.sin(deg) + seg[i][1] * Math.cos(deg);
            seg[i][0] = x, seg[i][1] = y;
@@ -573,13 +635,6 @@ ry = ry || 0;
        this.draw(this);
      }
      this.cons = KeepDraw.Polygon;
-     this.resize = function(w, h) {
-       var seg = this.segments;
-       for (var i = 0; i < seg.length; i++) {
-         seg[i][0] = seg[i][0] * w;
-         seg[i][1] = seg[i][1] * h;
-       }
-     };
    },
    Text: function(arg) {
      if (arg.stage) {
@@ -603,6 +658,39 @@ ry = ry || 0;
    getIntersection: function(obj, x, y) {
      return obj.draw(obj, [x, y]);
    },
+   scaleSegments: function(seg, scale) {
+   	rseg = [];
+           for (var i = 0; i < seg.length; i++) {
+           	rseg[i] = [];
+             for (var k = 0; k < seg[i].length; k++) {
+             	rseg[i].push(seg[i][k] * zoom);
+            }
+            }
+         return rseg;
+   }, 
+   rotateSegments: function(seg, deg, rx, ry) {
+    rx = rx || 0;
+     ry = ry || 0;
+     rseg = [];
+         deg = deg * Math.PI / 180;
+         for (var i = 0; i < seg.length; i++) {
+         	rseg[i] = [];
+           var x = (seg[i][0] - rx) * Math.cos(deg) - (seg[i][1] - ry) * Math.sin(deg);
+           var y = (seg[i][0] - rx) * Math.sin(deg) + (seg[i][1] - ry) * Math.cos(deg);
+           rseg[i][0] = x + rx, rseg[i][1] = y + ry;
+           if (seg[i][3]) {
+           var x = (seg[i][2] - rx) * Math.cos(deg) - (seg[i][3] - ry) * Math.sin(deg);
+           var y = (seg[i][2] - rx) * Math.sin(deg) + (seg[i][3] - ry) * Math.cos(deg);
+           rseg[i][2] = x + rx, rseg[i][3] = y + ry;
+           }
+           if (seg[i][5]) {
+           var x = (seg[i][4] - rx) * Math.cos(deg) - (seg[i][5] - ry) * Math.sin(deg);
+           var y = (seg[i][4] - rx) * Math.sin(deg) + (seg[i][5] - ry) * Math.cos(deg);
+           rseg[i][4] = x + rx, rseg[i][5] = y + ry;
+           }
+         }
+         return rseg;
+       },
    intersection: function(obj1, obj2) {
      var res = [];
      var p1 = convert(obj1._segments || obj1.segments);
