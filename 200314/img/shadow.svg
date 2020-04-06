@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <defs>
+    <filter id="a" width="2.5" height="2.4" x="-.8" y="-.7">
+      <feGaussianBlur stdDeviation=".8"/>
+    </filter>
+  </defs>
+  <g color="#000">
+    <path d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(2.0601 1.12946 -1.02678 1.8728 1.48 -8.022)" overflow="visible" filter="url(#a)"/>
+    <path fill="#f0f0f0" d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(2.0601 1.12946 -1.02678 1.8728 1.48 -8.022)" overflow="visible"/>
+  </g>
+</svg>
