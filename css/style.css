@@ -1,59 +1,98 @@
 body {
   margin: 0;
   color: #0f0f0f;
+  background: #eee;
   position: absolute;
   width: 100%;
+  height: 100%;
   overflow: hidden;
   color: rgba(0, 0, 0, 0);
-  height: 100%;
   font-size: 0;
   z-index: -2;
 }
 #delimg {
 padding: 3px;
     font-family: arial;
+  font-size: large;
     text-align: center;
     color: white;
     background: orangered;
     right: 0;
+    top: -70px;
     position: relative;
     margin: 5px;
 }
 * {
-  transition: 0.5s;
 }
 
 .bar a {
-  top: 0;
   position: relative;
   background-size: 60%;
   background-position: 50%;
-  padding: 4%;
+  width: 40px;
+  height: 40px;
   background-repeat: no-repeat;
   display: inline-block;
   background-color: #f0f0f0;
-  font-size: 15px;
-  text-align: center;
 }
 @media only screen and (min-width: 600px) {
- .bar a {
-  padding: 30px !important;
- }
+
 }
 .bar .select {
   background-color: #fafafa;
   box-shadow: 0px 0px 0px 2px rgba(0,0,0,1);
-  z-index: 5;
+  z-index: 50;
 }
-
+#background {
+	width: 100%;
+	touch-action: none;
+	z-index: -10;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+}
+#background:focus {
+	outline: none;
+}
 .bar {
+position: absolute;
+height: 100%;
+width: 40px;
+float: right;
+overflow-x: auto;
+oveflow-y: auto;
+transition: 0.1s;
 }
-
+body ::-webkit-scrollbar { /* chrome based */
+    width: 0px;  /* ширина scrollbar'a */
+    background: transparent;  /* опционально */
+}
+body ::-moz-scrollbar { /* chrome based */
+    width: 0px;  /* ширина scrollbar'a */
+    background: transparent;  /* опционально */
+}
+.bar {
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+#tools {
+	position: absolute;
+height: 100%;
+padding: 0;
+width: 205px;
+left: 40px;
+overflow-x: hidden;
+oveflow-y: auto;
+transition: 0.1s;
+}
 #main {
+	background: #fff;
+	outline: dashed 2px #ccc;
   position: absolute;
   z-index: -1;
-  width: 100% !important;
-  height: 100% !important;
+}
+#color {
+	bottom: 0;
 }
 #bottom a {
 background: white;
@@ -68,15 +107,19 @@ background: white;
     border-radius: 50px;
 }
 #panel {
-  float: right;
-  overflow: auto;
+  overflow: hidden;
   transition: 0.2s;
+  position: absolute;
   right: 0;
+  padding:0;
   height: 100%;
-  width: 200px;
+  width: 150px;
   background: #f0f0f0;
   border-left: dashed 2px #ccc;
 }
+.row {
+	margin: 20px;
+	}
 #bottom {
   position: absolute;
   bottom: 0;
@@ -88,28 +131,34 @@ padding: 7px;
   border-top: dashed 2px #ccc;
 }
 input[type='range'] {
-  float: right;
+	position: static;
   width: 70px;
+  background: transparent;
   -webkit-appearance: none;
 }
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 input[type='number'] {
-  position: relative;
   top: -10px;
+  -moz-appearance: textfield;
   background: #fafafa;
   margin-left: 25px;
-  height: 20px;
+  box-shadow:none !important; 
+  height: 13px;
   padding: 3px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: Ubuntu Light, Segoe UI Light, Arial;
   border: dashed 1px #ccc !important;
-  width: 30px;
+  width: 38px;
 }
 
 ::-webkit-slider-runnable-track {
   height: 5px;
   cursor: pointer;
-  background: #333;
+  background: #888;
   border-radius: 100px;
 }
 
@@ -117,7 +166,7 @@ input[type='number'] {
   height: 20px;
   width: 20px;
   border-radius: 100%;
-  background: #333;
+  background: #555;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -7px;
@@ -125,10 +174,9 @@ input[type='number'] {
 }
 
 ::-moz-range-track {
-  width: 100px;
   height: 5px;
   cursor: pointer;
-  background: #333;
+  background: #888;
   border-radius: 100px;
 }
 
@@ -136,7 +184,7 @@ input[type='number'] {
   height: 20px;
   width: 20px;
   border-radius: 100%;
-  background: #333;
+  background: #555;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -7px;
@@ -146,15 +194,17 @@ input[type='number'] {
 .tab div {
   width: 20px;
   height: 20px;
-  margin-bottom: 15px;
-  border-radius: 100%
+  margin-bottom: 35px;
 }
 
-#panel a {
+#tools a {
   margin-left: 25px;
   font-size: 18px;
 }
-
+#colors div {
+	
+	border-radius: 50px 0px 0px 50px;
+	}
 #red {
   background: red;
 }
@@ -172,14 +222,17 @@ input[type='number'] {
 }
 
 .right {
-  margin-right: -200px;
+ right: -110px !important;
 }
 
+.hide {
+margin-right: -200px !important;
+}
 #strwidth {
   background: url(../img/swidth.svg) no-repeat 50%;
 }
 
-#stroke {
+#fillmode {
   background: url(../img/sf.svg) no-repeat 50%;
 }
 
@@ -244,21 +297,30 @@ input[type='number'] {
   border: dashed 2px #ccc;
   width: 30px;
   height: 70px;
-  background: url(../img/closeleft.svg) no-repeat 50% rgba(0, 0, 0, 0.05);
-  margin-left: -34px !important;
-  top: 40% !important;
+  background: url(../img/closeleft.svg) no-repeat 50% #f0f0f0;
+  right: 40px;
+  top: 40%;
+  transition: 0.2s;
+  position: absolute;
+}
+
+#hide {
+  border: dashed 2px #ccc;
+  width: 38px;
+  transform: rotate(180deg);
+  height: 40px;
+  background: url(../img/closeleft.svg) no-repeat 50% #f0f0f0;
+  right: 0;
+  background-size: 60% !important;
   position: absolute !important;
 }
 
 a.flip {
-  top: -500px;
+  right: 150px !important;
   transform: rotate(180deg);
   opacity: .5;
 }
 
-a.flip {
-  top: 500px !important;
-}
 
 .flip:hover {
   opacity: 1;
@@ -269,18 +331,23 @@ a.flip {
 }
 
 #import {
-  width: 170px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   cursor: pointer;
+  top: 0;
   opacity: 0;
+  z-index: -10;
   background: black;
 }
-
 #imstyle {
   display: block;
+  margin-left: 0 !important;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
   background: url(../img/image.svg);
   background-repeat: no-repeat;
-  background-size: 100% !important;
+  background-size: 100% 100% !important;
   margin-bottom: 10px;
   background-position: 50%;
   border-radius: 10px;
@@ -290,6 +357,7 @@ a.flip {
 .tab {
   color: black;
   border-bottom: dashed 2px #ccc;
+  border-left: dashed 2px #ccc;
   padding: 20px;
   box-shadow: 0 0px 50px 0px rgba(0, 0, 0, 0.0);
 }
