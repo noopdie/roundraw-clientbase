@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <meta charset='utf-8'>
@@ -114,12 +115,12 @@ border-radius: 7px;
 <h2>Заливка</h2> - Умная заливка зальет фигуру, которую вы выделили.
 <h2>Изображения</h2> - Возможно залить фигуру изображением.
 </div>
-<div class='title top'><a href='draw.html?v=2'>Начать рисовать!</a></div>
+<div class='title top' id='top3'><a href='draw.html?v=2'>Начать рисовать!</a></div>
 </body>
 <script>
 var get = function(e) {return document.getElementById(e)};
 document.body.onscroll = function() {
-get('top').style.backgroundPositionY = ((document.body.scrollTop - get('hello'). offsetHeight) / 1.5) + 'px';
+get('top').style.backgroundPositionY = ((document.body.scrollTop) / 1.5) + 'px';
 get('top2').style.backgroundPositionY = get('top3').style.backgroundPositionY = (document.body.scrollTop / 2) + 'px';
 get('t1').style.backgroundPositionY = (document.body.scrollTop / 2.5) + 'px';
 var col = document.body.scrollTop / document.body.offsetHeight;
