@@ -4,7 +4,6 @@ var event = !1;
 document.onselectstart = function() {
   return false
 };
-
 var removed = [],
   isel = !1,
   select = selpoint = selact = !1,
