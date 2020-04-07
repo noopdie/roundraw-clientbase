@@ -4,6 +4,7 @@
    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
      return setTimeout(callback, 20);
    };
+
  })();
  window.clearAnimation = (function() {
    return window.cancelRequestAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelRequestAnimationFrame ||
