@@ -3,6 +3,7 @@ var event = !1;
 document.onselectstart = function() {
   return false
 };
+
 var removed = [],
 stageshot = [], zoomTimeoutFunc,
 start_distance = 0,
