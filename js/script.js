@@ -39,7 +39,6 @@ function get(elem) {
 function getRadius(x, y, x2, y2) {
   return Math.sqrt(Math.pow(x - x2, 2) + Math.pow(y - y2, 2))
 };
-
 var ls = localStorage;
 ls.brush = 5;
   function setStageControls() {
@@ -666,7 +665,7 @@ start_clientY1 = clientY1;
 		} else {
 			zoomTimeoutFunc = setTimeout(function() {
 				zoomTimeout = !0;
-				}, 200);
+				}, 100);
 			}
 		}
 
@@ -738,12 +737,12 @@ var clientY1 = (((e.touches) ? e.touches[1].clientY : e.clientY) - get('main').o
     var seg = elem._segments || elem.segments;
     var j = (selpoint.selsegc > 3) ? 1 : 0;
     if (selpoint.selsegc < 2) {
-      if (seg[selpoint.selseg].length[3]) {
+      if (seg[selpoint.selseg].length > 2) {
         seg[selpoint.selseg][2] = clientX0 - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
         seg[selpoint.selseg][3] = clientY0 - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
       }
       if (seg[selpoint.selseg - 1])
-        if (seg[selpoint.selseg - 1].length[5]) {
+        if (seg[selpoint.selseg - 1].length > 4) {
           seg[selpoint.selseg - 1][4] = clientX0 - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
           seg[selpoint.selseg - 1][5] = clientY0 - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
         }
