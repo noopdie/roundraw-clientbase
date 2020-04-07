@@ -29,7 +29,7 @@ move_deg = 0,
   isel = !1,
   add = !1,
   input = !1,
-  select = selpoint = selact = !1,
+  select = moving_point = !1,
   sx, sy, zm, zooming = !1,
   paths = [];
 function get(elem) {
@@ -221,7 +221,7 @@ get('strw').oninput = function() {
 }
 get('sm').oninput = function() {
   ls.smooth = this.value;
-  if (elem) elem.smooth(this.value), displaysegs();
+  if (elem) elem.smooth(this.value),
   colInit();
 }
 get('ix').oninput = function() {
@@ -325,53 +325,30 @@ elem.img = images.length-1;
           var point = new KeepDraw[(k > 1) ? 'Circle' : 'Circle']({
             x: seg[i][k] + elem.x,
             y: seg[i][k + 1] + elem.y,
-            radius: (cursedPoint) ? 0 : 20,
+            radius: (cursedPoint) ? 0 : 10 * window.devicePixelRatio,
             selseg: i,
             sides: 4,
             line: ltopoint,
             selsegc: k,
             color: (k > 1) ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)',
             strokeColor: (k > 1) ? '#fff' : '#000',
-            strokeWidth: (cursedPoint) ? 0 : 2,
+            strokeWidth: (cursedPoint) ? 0 : 2 * window.devicePixelRatio,
             stage: stage
           });
           point.on('mousedown', function(e, obj) {
 sa = obj.line;
             sx = obj.x;
             sy = obj.y;
-            selpoint = obj;
+            moving_point = obj;
           });
           point.on('touchstart', function(e, obj) {
 sa = obj.line;
             sx = obj.x;
             sy = obj.y;
-            selpoint = obj;
+            moving_point = obj;
           });
         }
       }
-	if (elem.acts) for (var i = 0; i < elem.acts.length; i++) {
-		if (elem.acts[i][0] >= 0) {
-		var c = elem.center();
-		var point = new KeepDraw.Circle({
-		x: c[0] + elem.x,
-		y: c[1] + elem.y,
-		image: imgs[elem.acts[i][0]],
-		radius: 30,
-		act: i,
-		stage: stage
-		});
-          point.on('mousedown', function(e, obj) {
-            sx = obj.x;
-            sy = obj.y;
-            selact = obj;
-          });
-          point.on('touchstart', function(e, obj) {
-            sx = obj.x;
-            sy = obj.y;
-            selact = obj;
-          });
-}
-	}
       updsel(), init();
     }
     paths = [];
@@ -590,9 +567,8 @@ fill:  [
 attrsBrush = function(c) {
 
 }
-if (get('cursor')) {
-window.onbeforeunload = function() {
-  clearsel();
+var savepainting = function(e) {
+	clearsel();
   paths = [];
   for (var i = 0; i < stage.childs.length; i++) {
     var a = {};
@@ -603,7 +579,7 @@ window.onbeforeunload = function() {
   }
   ls.paths = JSON.stringify(paths);
 }
-}
+window.onbeforeunload = savepainting;
 get('background').onwheel = function(e) {
   if (!move) {
   clearsel();
@@ -626,7 +602,7 @@ get('background').onwheel = function(e) {
     }
   KeepDraw.Utils.draw(stage)
   }
-}
+  }
 get('background').onmousedown = get('background').ontouchstart = function(e) {
 
   	for (var i = 0; i < stage.childs.length; i++) {
@@ -645,7 +621,7 @@ start_clientX0 = clientX0;
 start_clientY0 = clientY0;
 }
 	if (e.touches) {
-if (e.touches[1] && !zoomTimeout) {
+if (e.touches[1] && !zoomTimeout && !moving_point) {
 	clearTimeout(zoomTimeoutFunc);
 	if (move) move = !1, back();
 var clientX1 = (((e.touches) ? e.touches[1].clientX : e.clientX) - get('main').offsetLeft) * window.devicePixelRatio;
@@ -668,9 +644,9 @@ start_clientY1 = clientY1;
 			}
 		}
 
-if (!selact && !run) {
+if (!run) {
   if (!move) {
-    if (!selpoint) {
+    if (!moving_point) {
       if (ls.pen != 'eraser') clearsel();
       removed = [];
       move = !0;
@@ -699,7 +675,7 @@ event = e;
 clientY0 = (((e.touches) ? e.touches[0].clientY : e.clientY) - get('main').offsetTop) * window.devicePixelRatio;
     if (e.which != 3) {
 if (e.touches ) {
-if (e.touches[1] && !zoomTimeout) {
+if (e.touches[1] && !zoomTimeout && !moving_point) {
 var clientX1 = (((e.touches) ? e.touches[1].clientX : e.clientX) - get('main').offsetLeft) * window.devicePixelRatio;
 var clientY1 = (((e.touches) ? e.touches[1].clientY : e.clientY) - get('main').offsetTop) * window.devicePixelRatio;
 
@@ -729,40 +705,37 @@ var clientY1 = (((e.touches) ? e.touches[1].clientY : e.clientY) - get('main').o
 }
 		}
 		}
-  if (move && !selpoint && !selact) {
+  if (move && !moving_point) {
     if (elem && ls.pen != 'cursor' && ls.pen != 'fill' &&ls.pen != 'pencil') elem.smooth(ls.smooth);
     if (brushes[ls.pen][1]) brushes[ls.pen][1](e, clientX0, clientY0);
-  } else if (selpoint) {
+  } else if (moving_point) {
     var seg = elem._segments || elem.segments;
-    var j = (selpoint.selsegc > 3) ? 1 : 0;
-    if (selpoint.selsegc < 2) {
-      if (seg[selpoint.selseg].length > 2) {
-        seg[selpoint.selseg][2] = clientX0 - _seg[selpoint.selseg][0] + _seg[selpoint.selseg][2] - elem.x;
-        seg[selpoint.selseg][3] = clientY0 - _seg[selpoint.selseg][1] + _seg[selpoint.selseg][3] - elem.y;
+    var j = (moving_point.selsegc > 3) ? 1 : 0;
+    if (moving_point.selsegc < 2) {
+      if (seg[moving_point.selseg].length > 2) {
+        seg[moving_point.selseg][2] = clientX0 - _seg[moving_point.selseg][0] + _seg[moving_point.selseg][2] - elem.x;
+        seg[moving_point.selseg][3] = clientY0 - _seg[moving_point.selseg][1] + _seg[moving_point.selseg][3] - elem.y;
       }
-      if (seg[selpoint.selseg - 1])
-        if (seg[selpoint.selseg - 1].length > 4) {
-          seg[selpoint.selseg - 1][4] = clientX0 - _seg[selpoint.selseg][0] + _seg[selpoint.selseg - 1][4] - elem.x;
-          seg[selpoint.selseg - 1][5] = clientY0 - _seg[selpoint.selseg][1] + _seg[selpoint.selseg - 1][5] - elem.y;
+      if (seg[moving_point.selseg - 1])
+        if (seg[moving_point.selseg - 1].length > 4) {
+          seg[moving_point.selseg - 1][4] = clientX0 - _seg[moving_point.selseg][0] + _seg[moving_point.selseg - 1][4] - elem.x;
+          seg[moving_point.selseg - 1][5] = clientY0 - _seg[moving_point.selseg][1] + _seg[moving_point.selseg - 1][5] - elem.y;
         }
     }
-    selpoint.x = clientX0;
-    selpoint.y = clientY0;
-    seg[selpoint.selseg][selpoint.selsegc] = (clientX0 - sx) - (elem.x - sx);
-    seg[selpoint.selseg][selpoint.selsegc + 1] = (clientY0 - sy) - (elem.y - sy);
-    if ((seg.length-1 == selpoint.selseg) && elem.closed) {
+    moving_point.x = clientX0;
+    moving_point.y = clientY0;
+    seg[moving_point.selseg][moving_point.selsegc] = (clientX0 - sx) - (elem.x - sx);
+    seg[moving_point.selseg][moving_point.selsegc + 1] = (clientY0 - sy) - (elem.y - sy);
+    if ((seg.length-1 == moving_point.selseg) && elem.closed) {
     	seg[0][0] = (clientX0 - sx) - (elem.x - sx);
     seg[0][1] = (clientY0 - sy) - (elem.y - sy);
     if (seg[0][3]) {
-    seg[0][2] = clientX0 - _seg[selpoint.selseg][0] + _seg[0][2] - elem.x;
-    seg[0][3] = clientY0 - _seg[selpoint.selseg][1] + _seg[0][3] - elem.y;
+    seg[0][2] = clientX0 - _seg[moving_point.selseg][0] + _seg[0][2] - elem.x;
+    seg[0][3] = clientY0 - _seg[moving_point.selseg][1] + _seg[0][3] - elem.y;
     }
     }
     updsel();
-  } else if (selact) {
-	selact.x = clientX0;
-	selact.y = clientY0;
-} 
+  }
   if (rightclick) {
   clearsel();
   var ch = stage.childs;
@@ -780,10 +753,11 @@ var clientY1 = (((e.touches) ? e.touches[1].clientY : e.clientY) - get('main').o
 }
 KeepDraw.Utils.draw(stage);
 }
+console.log('a');
 get('background').onmouseup = get('background').ontouchend = function(e) {
 	if (e.touches) {
 if (e.touches[0]) {
-	if (zooming && zoom != 0) {
+	if (zooming && zoom != 0 && !moving_point) {
   zooming = !1;
   attrs.strokeWidth *= zoom;
   attrs.shadowWidth *= zoom
@@ -798,16 +772,14 @@ if (e.targetTouches) {
 	if (e.targetTouches[0]) few = !0;
 }
 if (!few) {
-    if (selact) selact = !1;
- else {
   if (move) {
     move = !1;
+    savepainting();
     if (brushes[ls.pen][2]) brushes[ls.pen][2](e);
     select = !0;
   } else {
-    if (selpoint) selpoint = !1;
+    if (moving_point) moving_point = !1;
   }
-}
 KeepDraw.Utils.draw(stage)
 } else add = !0;
 if (!move) zoomTimeout = !1;
@@ -948,10 +920,20 @@ save = function() {
 }
 function updsel() {
   if (isel) {
+  	var seg = elem._segments || elem.segments;
+  /**
+  	var points = 0;
+      var numseg = 0;
+      for (var j = 0; j < seg.length; j++) { 
+        for (var k = 0; k < seg[j].length; k += 2) {
+        numseg++;	
+      }
+      }
+      **/
     for (var i = isel; i < stage.childs.length; i++) {
       var ch = stage.childs[i];
-      var seg = elem._segments || elem.segments;
        if (ch.selseg || ch.selseg == 0) {
+       //	points++;
       ch.x = seg[stage.childs[i].selseg][stage.childs[i].selsegc] + elem.x;
       ch.y = seg[stage.childs[i].selseg][stage.childs[i].selsegc+1] + elem.y;
         if (ch.line) {
@@ -963,6 +945,8 @@ function updsel() {
       }
     }
     KeepDraw.Utils.draw(stage);
+  //alert(numseg + " " + points);
+    //if (numseg != points) displaysegs();
   }
 }
 function reset() {
