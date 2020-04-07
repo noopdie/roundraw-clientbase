@@ -1,4 +1,3 @@
-
 var run = !1;
 var event = !1;
 document.onselectstart = function() {
