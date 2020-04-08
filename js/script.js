@@ -221,7 +221,7 @@ get('strw').oninput = function() {
 }
 get('sm').oninput = function() {
   ls.smooth = this.value;
-  if (elem) elem.smooth(this.value),
+  if (elem) elem.smooth(this.value);
   colInit();
 }
 get('ix').oninput = function() {
@@ -368,13 +368,15 @@ brushes = {
       elem.setAttrs(attrs);
     },
     function(e, clientX0, clientY0) {
+    	if (elem) {
       var seg = elem.segments[elem.segments.length - 1];
       var segs = [(seg[0] + (clientX0 - (seg[0] + start_clientX0)) / (ls.slow * 1)), (seg[1] + (clientY0 - (seg[1] + start_clientY0)) / (ls.slow * 1))];
       elem.segments.push(segs);
       elem.smooth(ls.smooth);
+      }
     },
     function() {
-      elem = !1;
+    elem = !1;
     }
   ],
  line: [
@@ -908,7 +910,6 @@ function clearsel() {
       stage.events.mousedown = [];
       stage.events.touchstart = [];
       isel = !1;
-      elem = !1;
       init();
     }
   }
