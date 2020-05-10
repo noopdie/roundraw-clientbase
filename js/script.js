@@ -606,8 +606,13 @@ get('background').onwheel = function(e) {
   KeepDraw.Utils.draw(stage)
   }
   }
-get('background').onmousedown = get('background').ontouchstart = function(e) {
-
+  get('background').addEventListener('mousedown', paintstart);
+  get('background').addEventListener('touchstart', paintstart);
+  get('background').addEventListener('touchmove', paintmove);
+  get('background').addEventListener('mousemove', paintmove);
+  get('background').addEventListener('touchend', paintend);
+  get('background').addEventListener('mouseup', paintend);
+function paintstart(e) {
   	for (var i = 0; i < stage.childs.length; i++) {
 		var ele = stage.childs[i];
 		var segs = ele._segments || ele.segments;
@@ -671,7 +676,7 @@ get('background').onmouseenter = function(e) {
 get('background').onmouseleave = function(e) {
 	get('background').blur();
 }
-get('background').onmousemove = get('background').ontouchmove = function(e) {
+function paintmove(e) {
 	
 event = e;
   clientX0 = (((e.touches) ? e.touches[0].clientX : e.clientX) - get('main').offsetLeft) * window.devicePixelRatio;
@@ -748,16 +753,18 @@ var clientY1 = (((e.touches) ? e.touches[1].clientY : e.clientY) - get('main').o
 	  var shifty = clientY0 - start_rightclientY0;
   
     for (var i = 0; i < stageshot.length; i++) {
+    	if(ch[i]) {
       var el = stageshot[i];
     ch[i].x = stageshot[i].x + shiftx;
 		ch[i].y = stageshot[i].y + shifty;
+    }
     }
 
 }
 KeepDraw.Utils.draw(stage);
 }
 console.log('a');
-get('background').onmouseup = get('background').ontouchend = function(e) {
+function paintend(e) {
 	if (e.touches) {
 if (e.touches[0]) {
 	if (zooming && zoom != 0 && !moving_point) {
