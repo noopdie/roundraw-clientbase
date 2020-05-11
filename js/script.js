@@ -144,8 +144,10 @@ if (get('cursor')) {
   	setStageControls();
   get('x').childNodes[1].value = get('xc').value = ls.stageleft || 0;
   get('y').childNodes[1].value = get('yc').value = ls.stagetop || 0;
-  get('width').childNodes[1].value = get('wc').value = stage.width;
-    get('height').childNodes[1].value = get('hc').value = stage.height;	
+  get('wc').value = stage.width;
+  get('width').childNodes[1].value = stage.width * window.devicePixelRatio;
+    get('hc').value = stage.height;	
+    get('height').childNodes[1].value = stage.height * window.devicePixelRatio;
   }
   get('red').style.background = 'rgba(' + colors[ls.sf][0] + ',0,0,1)';
   get('green').style.background = 'rgba(0,' + colors[ls.sf][1] + ',0,1)';
@@ -202,11 +204,11 @@ get('main').style.top = ls.stagetop + "px";
 }
 if (num == 'width') {
   	  if (elem) elem.setWidth(el.value * window.devicePixelRatio);
-       else  stage.width = ls.stagewidth = el.value * 1;
+       else  stage.width = ls.stagewidth = el.value / window.devicePixelRatio;
 }
   if (num == 'height') {
         if (elem) elem.setHeight(el.value * window.devicePixelRatio);
-        else stage.height = ls.stageheight = el.value * 1;
+        else stage.height = ls.stageheight = el.value / window.devicePixelRatio;
 }
 if (num == 'sl') ls.slow = el.value; 
   if (num == 'sm') {
