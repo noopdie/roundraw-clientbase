@@ -59,7 +59,8 @@ var images = (ls.images) ? JSON.parse(ls.images) : [false];
 for (var i = 0; i < images.length; i++) {
 if (images[i]) images[i] = new KeepDraw.Image(images[i]);
 }
-    if (images[images.length-1])get('imstyle').style.background = 'url(' + images[images.length-1].src + ') no-repeat', img = images[images.length-1];
+    if (images[images.length-1])get('imstyle').style.background
+ = 'url(' + images[images.length-1].src + ') no-repeat', img = images[images.length-1];
 if (!get('cursor')) ls.pen = 'cursor';
 if (!ls.pen || isFinite(ls.pen)) { ls.sf = ls.smooth = ls.cap = 0;
 ls.pen = 'cursor';
@@ -992,6 +993,30 @@ for (var i = 0; i < numInput.length; i++) {
   }
   numInput[i].onblur = function() {
   	input = !1;
+  }
+}
+function toggleFullScreen() {
+	console.log(stage.height);
+	console.log(innerHeight);
+	var fullStage = (stage.height == innerHeight) ? !0 : !1;
+  if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+get('fullscreen').style.backgroundImage = 'url(img/fullscreenexit.svg)';
+if (fullStage) {
+ stage.height = screen.height;
+ stage.width = screen.width
+ }
+colInit();
+  } else if (document.exitFullscreen) {
+      document.exitFullscreen(); 
+      get('fullscreen').style.backgroundImage = 'url(img/fullscreen.svg)';
+      setTimeout(function() {
+      if (fullStage) {
+stage.height = innerHeight;
+stage.width = innerWidth
+}
+      colInit();
+     }, 300); //!"!'!** WHY I HAVE TO WAIT AND CAN'T USE exitFullscreen().catch() !!!!!!?????!!?!? innerHeight UPDATES TOO LATE!!
   }
 }
 document.body.onload =  function() {
