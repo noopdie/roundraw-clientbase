@@ -1,0 +1,64 @@
+@media only screen and (hover: none) and (pointer: coarse) {
+    #iw {
+        height: 80px; 
+        top: -36px;  
+        font-size: 40px;
+    }
+    #width {
+        padding-bottom: 25px;
+    }
+::-webkit-slider-runnable-track {
+height: 50px;
+}
+
+::-webkit-slider-thumb {
+height: 80px;
+margin-top: -14px;
+border: solid 6px #f0f0f0;
+width: 80px;
+}
+
+::-moz-range-track {
+height: 50px;
+cursor: pointer;
+background: #888;
+border-radius: 100px;
+}
+
+::-moz-range-thumb {
+height: 80px;
+width: 80px;
+margin-top: -14px;
+border: solid 6px #f0f0f0;
+}
+#range1 {
+width: 60px;
+height: 60px;
+}
+
+#range2 {
+width: 60px;
+height: 60px;
+}
+.hidden {
+width: 209px !important; 
+}
+#range {
+height: 60px;
+}
+
+#panel div{
+height: 100px;
+width: 100px;
+
+}
+#panel {
+height: 100px;
+}
+#width {
+width: calc(100% - 450px) !important;
+}
+#iw {
+width: 100px !important;
+}
+}

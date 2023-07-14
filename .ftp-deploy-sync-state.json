@@ -1,0 +1,523 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1675175543503,
+    "data": [
+        {
+            "type": "file",
+            "name": "README.md",
+            "size": 738,
+            "hash": "02ff9d16fcec9d53c1389c32be20d97750fe0312ddda2b7189ddeb633557234c"
+        },
+        {
+            "type": "folder",
+            "name": "css"
+        },
+        {
+            "type": "file",
+            "name": "favicon.ico",
+            "size": 16148,
+            "hash": "f7065e91245a3ebb8ed89ce716b176dadf6e14e7486d199c4b6a1325e2836aae"
+        },
+        {
+            "type": "folder",
+            "name": "howdraw"
+        },
+        {
+            "type": "folder",
+            "name": "img"
+        },
+        {
+            "type": "file",
+            "name": "index.html",
+            "size": 8376,
+            "hash": "f12a3cd1a0a8d5b5f875b03f9025f819763021ff9baa69f77c3dce111c07c356"
+        },
+        {
+            "type": "folder",
+            "name": "js"
+        },
+        {
+            "type": "folder",
+            "name": "pages"
+        },
+        {
+            "type": "file",
+            "name": "css/game.css",
+            "size": 945,
+            "hash": "dffbf56d6e4645555227fdf0dc317a60de74842a933d59aa762478fdd5aef83c"
+        },
+        {
+            "type": "file",
+            "name": "css/style.css",
+            "size": 6802,
+            "hash": "67179e1bf1afc4a29b409de10796376a09854d268a0767619406b71f10ecc41b"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/frog.html",
+            "size": 5033,
+            "hash": "ec11e1a176384a82db550d5c898337ff4f35d91f2675f0890a69f71ec82dcf4c"
+        },
+        {
+            "type": "folder",
+            "name": "howdraw/img"
+        },
+        {
+            "type": "file",
+            "name": "img/back.svg",
+            "size": 395,
+            "hash": "ea0879339d48a3b115b8ef93d37776ecda1d5d5598148dd7da78dbd65802e5ed"
+        },
+        {
+            "type": "file",
+            "name": "img/cap.svg",
+            "size": 184,
+            "hash": "28445af85f73eaf7c21793e25c13dda05eca81d9588db4036a9803071f487069"
+        },
+        {
+            "type": "file",
+            "name": "img/circle.svg",
+            "size": 292,
+            "hash": "7b1f50d600a2177bd1a5acd1ed9cc1f1bae2eb0e9bef56606034ada79b893a36"
+        },
+        {
+            "type": "file",
+            "name": "img/closeleft.svg",
+            "size": 198,
+            "hash": "94c70852f74ca6cd59173aecb13b65e824b515f55493384b49f158168a4c503e"
+        },
+        {
+            "type": "file",
+            "name": "img/colors.svg",
+            "size": 609,
+            "hash": "1488e19043f8c14fc2970efeb93a695b61f5264e8dc4cc805e55e8be6bddf2f3"
+        },
+        {
+            "type": "file",
+            "name": "img/curmove.svg",
+            "size": 3270,
+            "hash": "9b9c3d6da50afb2ad9bd5813d29612122162df07897777673ea3fa2def064d85"
+        },
+        {
+            "type": "file",
+            "name": "img/cursor.svg",
+            "size": 2101,
+            "hash": "00132ed7656b431338d60e935aa5810c9b6b2462d9eeaa454040318d1faeca4b"
+        },
+        {
+            "type": "file",
+            "name": "img/deg.svg",
+            "size": 7217,
+            "hash": "9a81dd908bdb3d45be81d0d76df516018348bc6ea7f48730967c514c71060479"
+        },
+        {
+            "type": "file",
+            "name": "img/eject.svg",
+            "size": 3203,
+            "hash": "c0b422e7403d4168729255fe771f53bdf323ba8f055258479fd85b5d9f453929"
+        },
+        {
+            "type": "file",
+            "name": "img/eraser.svg",
+            "size": 1855,
+            "hash": "26b4ebcffedd3588e08aad55618881649d74defc17d07537f1a7264b5c3da20c"
+        },
+        {
+            "type": "file",
+            "name": "img/fill.svg",
+            "size": 3217,
+            "hash": "778e482b3be52a182e2b22f546530e5a55df87ffea2d3f687c429576e9111691"
+        },
+        {
+            "type": "file",
+            "name": "img/forward.svg",
+            "size": 397,
+            "hash": "ba329a91166b0820009298bb0bdede4c7735a70a5cb352ee4aa75e4e3bdb6e37"
+        },
+        {
+            "type": "file",
+            "name": "img/fullscreen.svg",
+            "size": 187,
+            "hash": "dc32cab434730887cc6a811b70c906ac29831029af71efdfffdd9dd96c7dd0aa"
+        },
+        {
+            "type": "file",
+            "name": "img/fullscreenexit.svg",
+            "size": 872,
+            "hash": "b2e8732877fccdd29902a2e4027446f60c76d740c1d45900d71e563d0af4e818"
+        },
+        {
+            "type": "file",
+            "name": "img/height.svg",
+            "size": 2657,
+            "hash": "f09f80a800d9eb601e46d885e044f5182268157e2d0c42daeb139ebee1054212"
+        },
+        {
+            "type": "file",
+            "name": "img/i1.jpg",
+            "size": 44271,
+            "hash": "3c17343ec0ca8e62a211ee73d6d9b504c53e1b8473da7a406fe4982430ba3036"
+        },
+        {
+            "type": "file",
+            "name": "img/i2.jpg",
+            "size": 27608,
+            "hash": "e026771002effb4b9797efb4eec2e0c49a1ac895b06a18bc0a46556635491be9"
+        },
+        {
+            "type": "file",
+            "name": "img/i3.jpg",
+            "size": 15524,
+            "hash": "4e9ed53fb3b49f11170c76ba88e48626bd76d1e9c99f321e5bfe1bf7149e2b27"
+        },
+        {
+            "type": "file",
+            "name": "img/image (3).png",
+            "size": 429212,
+            "hash": "f7ec4f251f14e3af218b6b6f4c4acf4dd345ba7795ed475dd4e36ff56abaa7aa"
+        },
+        {
+            "type": "file",
+            "name": "img/image.svg",
+            "size": 324,
+            "hash": "6212e3fcbb986b334bb5361fd5040e3dbbbdedb4f82d9fce7f52bb04642d2255"
+        },
+        {
+            "type": "file",
+            "name": "img/imageb.svg",
+            "size": 298,
+            "hash": "a7105ef32863de593f440edff76af0054b0877e3f57d6d39c6b46e3e0c36d6af"
+        },
+        {
+            "type": "file",
+            "name": "img/imgheight.svg",
+            "size": 455,
+            "hash": "b380bcf81ca85d4354284f6fb5874d28f4e54858bd9aee40183c77355044e3a3"
+        },
+        {
+            "type": "file",
+            "name": "img/imgset.svg",
+            "size": 3357,
+            "hash": "6da7013a552fdae759865c60c42f1f390499822ff75c1ca9f38aa5f348cea3f6"
+        },
+        {
+            "type": "file",
+            "name": "img/imgwidth.svg",
+            "size": 457,
+            "hash": "02aa6f7e78928618a4e7c02a7ab2781a42d4dafdfe1fd434977815d447549e6e"
+        },
+        {
+            "type": "file",
+            "name": "img/imgx.svg",
+            "size": 478,
+            "hash": "3ef391d06eed75b68a958fb7e1abe400fa596fc1488777f6d7c7c49598565ffd"
+        },
+        {
+            "type": "file",
+            "name": "img/imgy.svg",
+            "size": 451,
+            "hash": "a7c4db8755b17ffb1ddde2f687b3e5df1da62f180d4e6ff26ce01e8b684af915"
+        },
+        {
+            "type": "file",
+            "name": "img/keys.svg",
+            "size": 2745,
+            "hash": "34f3d89a970d179d6f8d6c8d5fd2fc3b13e573e070b4c9da574c129ffadfd536"
+        },
+        {
+            "type": "file",
+            "name": "img/line.svg",
+            "size": 2035,
+            "hash": "bab1396a58c72d06b8576c1015a2c45f62efbcb382a96900b0d45d9b7c879b00"
+        },
+        {
+            "type": "file",
+            "name": "img/move.svg",
+            "size": 2901,
+            "hash": "53f5e84d9bce02c1f404b2d65769b71bd0f58f0b9b6961c3785f91edeab6d22a"
+        },
+        {
+            "type": "file",
+            "name": "img/openTop.svg",
+            "size": 205,
+            "hash": "61a1c21ea89d3ff248cfa4ec2b12564f3a37e81f4ec17bb429d279ac47e327ef"
+        },
+        {
+            "type": "file",
+            "name": "img/pause.svg",
+            "size": 1876,
+            "hash": "4c8192c9fafa895dcb4e387c78374386f4c36c1fac1c476bf641037ba9755462"
+        },
+        {
+            "type": "file",
+            "name": "img/pencil.svg",
+            "size": 415,
+            "hash": "877d881edca4cc9a981829d4dffcd0312fa5c46a8532a7077ba8e8e3a732c28b"
+        },
+        {
+            "type": "file",
+            "name": "img/picker.svg",
+            "size": 2739,
+            "hash": "346a66b35488b2d8179452774cf5056cdcad4b8555261963291b6bbd340c9727"
+        },
+        {
+            "type": "file",
+            "name": "img/play.svg",
+            "size": 2270,
+            "hash": "e82386e461e9dd08b280c44e1c3bb61f310c094a55b1d3806673d54672ad59be"
+        },
+        {
+            "type": "file",
+            "name": "img/polygon.svg",
+            "size": 245,
+            "hash": "a81d85e711cbfb0bbf6c23348ec4912001e7f8761817422cf5d1b88b2a8f5bb0"
+        },
+        {
+            "type": "file",
+            "name": "img/rect.svg",
+            "size": 233,
+            "hash": "91df86516261b8046f62d0758a5d1f39b33744df35b380250675fc0aeba1e4d3"
+        },
+        {
+            "type": "file",
+            "name": "img/reset.svg",
+            "size": 2862,
+            "hash": "58fde3d0ca0d8032d73c4e456eecd08bf8316aad10744d40dcb2ea655f8d619a"
+        },
+        {
+            "type": "file",
+            "name": "img/rotate.svg",
+            "size": 5231,
+            "hash": "5eb4b8c1efd5ca804af4f8723dddb8e2858c4300eb22cfda6de99e03c44fb31b"
+        },
+        {
+            "type": "file",
+            "name": "img/save.svg",
+            "size": 257,
+            "hash": "6544044dee2b405877b1620908eac16558bafea9199be524385377701658a5ce"
+        },
+        {
+            "type": "file",
+            "name": "img/seg.svg",
+            "size": 4888,
+            "hash": "27d8a39478709c810be6211e091f0cf05fc32d4ae5e9eec6e56c23de02850d34"
+        },
+        {
+            "type": "file",
+            "name": "img/sf.svg",
+            "size": 600,
+            "hash": "0c88e0e55c39eef5367259c6fe52c1d0109055a4828086c9a473a731d6d70736"
+        },
+        {
+            "type": "file",
+            "name": "img/shadow.svg",
+            "size": 585,
+            "hash": "9823f6c40004bc152178c028b6ada9208e8bce24ba0459afebebee85f20d2a3c"
+        },
+        {
+            "type": "file",
+            "name": "img/sizes.svg",
+            "size": 933,
+            "hash": "5d5de03652f296d53d8b00cd5d827b136a095fd2113b1a4e88ec6a2b335e4ca9"
+        },
+        {
+            "type": "file",
+            "name": "img/slow.svg",
+            "size": 4172,
+            "hash": "987642b4e8bc5e96042f6cb866b52dda95ed7feac9c1e22517142038e3161790"
+        },
+        {
+            "type": "file",
+            "name": "img/smooth.svg",
+            "size": 240,
+            "hash": "eead320542506c27ad81d9b0b88c72d86af87cc13d896ff26d35a071bcd28ac1"
+        },
+        {
+            "type": "file",
+            "name": "img/speed.svg",
+            "size": 2489,
+            "hash": "e8f320c3ed74c0ce9d7f90569412f930f47aa02da5a78d69dd903691b49b817a"
+        },
+        {
+            "type": "file",
+            "name": "img/speedx.svg",
+            "size": 2869,
+            "hash": "dae4c3196eeba62c7273c3f46f6f55d1224c2ab7d52e7c6c039158671cf1fa74"
+        },
+        {
+            "type": "file",
+            "name": "img/speedy.svg",
+            "size": 2884,
+            "hash": "50f7c7235e5d389b1d77380ef7903fe0b1f60696520a9aa4030635b893fddc62"
+        },
+        {
+            "type": "file",
+            "name": "img/stop.svg",
+            "size": 1793,
+            "hash": "dde9ea5961dc437d4802ab7f7cffd98d62eb113e6fdf062cbc19c7e64d1778eb"
+        },
+        {
+            "type": "file",
+            "name": "img/swidth.svg",
+            "size": 933,
+            "hash": "5d5de03652f296d53d8b00cd5d827b136a095fd2113b1a4e88ec6a2b335e4ca9"
+        },
+        {
+            "type": "file",
+            "name": "img/telegram.png",
+            "size": 2284,
+            "hash": "9d7350ac4d78de53fa28461cd4c59472c6e84b4b2564a4826ce8cc85c370e5b5"
+        },
+        {
+            "type": "file",
+            "name": "img/title.png",
+            "size": 367314,
+            "hash": "6e7269a503a856ba48ed9b422241a36553bd1db83ec8d54bc52354b43c27019d"
+        },
+        {
+            "type": "file",
+            "name": "img/title2.png",
+            "size": 700,
+            "hash": "21fd1353cadc0b8c4de56b796f6cef57ccfd020ca6cd8e3a3e0c403d6d661ec5"
+        },
+        {
+            "type": "file",
+            "name": "img/title3.png",
+            "size": 1321,
+            "hash": "fd20b2b4077a0b8f3b235dc3fc3434c2739736cf5601afdff730e8f4ed9250c0"
+        },
+        {
+            "type": "file",
+            "name": "img/title4.png",
+            "size": 769,
+            "hash": "8b4b3fd328a4e734d8bc5e2a5858697569b9881e5a10550e47a5a38e0d78392e"
+        },
+        {
+            "type": "file",
+            "name": "img/width.svg",
+            "size": 2659,
+            "hash": "03016c185dc611b85d57c80674da86961360f7c1632343fcad063d40993c3321"
+        },
+        {
+            "type": "file",
+            "name": "img/x.svg",
+            "size": 2081,
+            "hash": "3ea5ab0deeb361a6aa5dc827367b2eafa3482094bfb2cbef25ddffb63445fe52"
+        },
+        {
+            "type": "file",
+            "name": "img/y.svg",
+            "size": 2044,
+            "hash": "0f23564a183bbd45329e7d758ba23ef901de0986febc819b6916ccbb817a74ca"
+        },
+        {
+            "type": "file",
+            "name": "js/KeepDraw.js",
+            "size": 32186,
+            "hash": "5207b51dcb5e192518185afd54b5f27d7ff603b1116d166239994226f1224589"
+        },
+        {
+            "type": "file",
+            "name": "js/backupScript.js",
+            "size": 41450,
+            "hash": "c7aa6c19bd79450a8a393d1763156e3ed358b67b664fb71f3c051ded2728b4d8"
+        },
+        {
+            "type": "file",
+            "name": "js/gc.js",
+            "size": 7398,
+            "hash": "440de9b5cdd10bf3607e022124b764f9eb0039f545575bf2242af995cc5cf2c7"
+        },
+        {
+            "type": "file",
+            "name": "js/script.js",
+            "size": 31473,
+            "hash": "c3b7d3d49a7f9151cff5b220b3de88e935bb7fec91974b9d751fea3ccb43c69d"
+        },
+        {
+            "type": "file",
+            "name": "js/scriptBackup2.js",
+            "size": 42005,
+            "hash": "f8136e6e45a59738bd588eb730941813013358d7687677f74beec7234e2b8e3b"
+        },
+        {
+            "type": "file",
+            "name": "pages/draw.html",
+            "size": 8147,
+            "hash": "b11d04364a2a340fa1c8e11a28e5815cfd9d3285b8b419d74976fa2dec33bdf1"
+        },
+        {
+            "type": "file",
+            "name": "pages/draw.html.save",
+            "size": 8149,
+            "hash": "0eb5aa5f2dea2d6df709692ac49ff32385b07d4c08b34cc48f537e0948055ec7"
+        },
+        {
+            "type": "file",
+            "name": "pages/gallery.html",
+            "size": 1005,
+            "hash": "3523d6910845f71747c384d147e19405a7c981c3d2775ffab2bff25807ffab71"
+        },
+        {
+            "type": "file",
+            "name": "pages/gameCreator.html",
+            "size": 3467,
+            "hash": "273001c817bc90b8f0d0993dcd077791eae9495a8d0a84aea3fc38e89ef7e605"
+        },
+        {
+            "type": "file",
+            "name": "pages/help.html",
+            "size": 9928,
+            "hash": "12dbc959f30dcd48cc4d7cf944239840fc1b114e8c5a1d23a4f9cc3dbda78989"
+        },
+        {
+            "type": "file",
+            "name": "pages/i.html",
+            "size": 8329,
+            "hash": "2eef44b340c61d53b364f12ee513e5c07254927820a102d16c46ac7d55803ed5"
+        },
+        {
+            "type": "file",
+            "name": "pages/la.html",
+            "size": 3183,
+            "hash": "0f8734c4c452f592bce3070e16e05d3e0a945124bdf133893b1577cb020b543e"
+        },
+        {
+            "type": "file",
+            "name": "pages/versions.html",
+            "size": 3510,
+            "hash": "930f123ae8a3c36376d20c22b43b56910f627f40a9189ed66f2d5c8ae71fdb48"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/img/frog1.png",
+            "size": 6455,
+            "hash": "2fb493e95dd3631c2af16080cad90f6f1ab636853a8674ae691a423e8bcfa799"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/img/frog2.png",
+            "size": 10208,
+            "hash": "414f456918ade7ab63de6576027a72297c9fdda4c95fca56c02f0f481c4ecd56"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/img/frog3.png",
+            "size": 16419,
+            "hash": "257312309f513574ecc6da2fb97d66e34a490d1d077322c4247ca9afa544170c"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/img/frog4.png",
+            "size": 18837,
+            "hash": "831fda1ce12e90d0c09efd337f3d456d987436af0f1fe7659ba51e7d85ec8044"
+        },
+        {
+            "type": "file",
+            "name": "howdraw/img/frog5.png",
+            "size": 26286,
+            "hash": "9c54968a1ae99b799aa4d067582a6c494b6f2f415084a96a267f637e1cb7ed65"
+        }
+    ]
+}

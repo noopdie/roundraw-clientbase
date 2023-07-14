@@ -1,0 +1,56 @@
+<html>
+    <body>
+    	<input id="newName"><button onclick='openNew()'>New painting</button>
+        <br>
+<input id="galleryName">
+        <a id="saveGallery" download="gallery.json" onclick="saveGallery()">Save gallery</a><br>
+        <a>Overwrite Gallery </a><input onchange="loadFile()" type="file" name="inputfile"
+        id="inputfile"><br>
+        <script>
+                                function get(elem) {
+                        return document.getElementById(elem)
+        };
+        function openNew() {
+        	if (get('newName').value) window.open("draw.html?" + get('newName').value ,"_self")
+        }
+            function loadFile() {
+			var fr=new FileReader();
+			fr.onload=function(){
+                var ls = JSON.parse(fr.result);
+                for (var key in localStorage) {
+                    delete localStorage[key]
+                }
+                for (var key in ls) {
+                    localStorage[key] = ls[key];
+                }
+                location.reload();
+			}
+			
+			fr.readAsText(get('inputfile').files[0]);
+		}
+
+            function saveGallery() {
+                try {
+                var date = new Date();
+                var id = (get('galleryName').value.length > 0) ? get('galleryName').value : 'gallery-' + date.getFullYear() + 'y_' + (date.getMonth() + 1) + 'mo_' + date.getDate() + 'd_' + date.getHours() + 'h_' + date.getMinutes() + 'm_' + date.getSeconds() + 's_' + date.getMilliseconds() + 'ms';
+                get("saveGallery").download = id + '.rdraw.json';
+                get("saveGallery").href = 'data:text/plain;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(localStorage))));
+                } catch(e) {
+                    alert(e);
+                }
+            }
+            function del(str) {
+            	if (confirm('Delete ' + decodeURI(str) + '?')) {
+                delete localStorage['image_' + str];
+                delete localStorage['wb_' + str];
+                location.reload();
+                }
+            }
+                    for (var key in localStorage) {
+                if (key.includes('image_')) {
+                    document.body.innerHTML += '<img width=400px src="' + localStorage[key] + '" ><br><a href="draw.html?' + key.split('image_')[1] + '">Open ' + decodeURI(key.split('image_')[1]) + ' </a><button onclick="del(\'' + key.split('image_')[1] + '\')">Delete</button><br>';
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -61,9 +61,10 @@ if (images[i]) images[i] = new KeepDraw.Image(images[i]);
 }
     if (images[images.length-1])get('imstyle').style.background
  = 'url(' + images[images.length-1].src + ') no-repeat', img = images[images.length-1];
-if (!get('cursor')) ls.pen = 'cursor';
-if (!ls.pen || isFinite(ls.pen)) { ls.sf = ls.smooth = ls.cap = 0;
-ls.pen = 'cursor';
+if (!get('cursor')) ls.pen = 'pencil';
+if (!ls.pen || isFinite(ls.pen)) { ls.sf = ls.cap = 0;
+ls.pen = 'pencil';
+ls.smooth = 2.3;
 ls.imgwidth = 1000;
 ls.imgheight = 1000;
 ls.imgx = -500;
@@ -76,7 +77,7 @@ var colors = (!ls.colors || !JSON.parse(ls.colors)[3]) ? [
   [0, 0, 0, 1], 
   [0, 0, 0, 0]
 ] : JSON.parse(ls.colors);
-ls.slow = ls.slow || 1;
+ls.slow = ls.slow || 2;
 var setBrush = function(c) {
   get(ls.pen).classList.remove('select');
   ls.pen = c;

@@ -1,0 +1,1872 @@
+<html>
+
+<head>
+    <title>Roundraw - vector online editor</title>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        #toolbox {
+            transition: 0.1s;
+            position: absolute;
+            font-size: 0;
+            bottom: 50px;
+            left: 10px;
+            background-color: #f0f0f0;
+            border-collapse: collapse;
+        }
+
+        #toolbox td {
+            width: 35px;
+            height: 35px;
+            padding: 0;
+            bottom: 0;
+            background-size: 80%;
+            border: dashed 2px #999;
+            background-color: #fff;
+            background-position: 50%;
+            background-repeat: no-repeat;
+        }
+
+        #panel {
+            width: 100%;
+            height: 35px;
+            transition: 0.1s;
+            position: absolute;
+            font-size: 0;
+            bottom: 0;
+            background-color: #f0f0f0;
+            border-top: dashed 2px #999;
+
+        }
+
+        .hidden {
+            width: 111px !important;
+        }
+
+        #panel div {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            bottom: 0;
+            background-size: 80%;
+            border-right: dashed 2px #999;
+            background-color: #fff;
+            background-position: 50%;
+            background-repeat: no-repeat;
+        }
+
+        #panel input[type='range'] {
+            -webkit-appearance: none;
+        }
+
+        #panel input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #panel ::-webkit-slider-runnable-track {
+            height: 25px;
+            cursor: pointer;
+            background: #888;
+            border-radius: 100px;
+        }
+
+        #panel ::-webkit-slider-thumb {
+            height: 30px;
+            width: 30px;
+            margin-top: -3px;
+            border-radius: 100%;
+            background: #555;
+            cursor: pointer;
+            -webkit-appearance: none;
+            border: solid 3px #f0f0f0;
+        }
+
+        #panel ::-moz-range-track {
+            height: 25px;
+            cursor: pointer;
+            background: #888;
+            border-radius: 100px;
+        }
+
+        #panel ::-moz-range-thumb {
+            height: 30px;
+            width: 30px;
+            margin-top: -3px;
+            border-radius: 100%;
+            background: #555;
+            cursor: pointer;
+            -webkit-appearance: none;
+            border: solid 3px #f0f0f0;
+        }
+
+        #width {
+            width: calc(100% - 230px);
+            padding-bottom: 5px;
+        }
+
+        #iw {
+            width: 35px;
+            position: relative;
+            top: -9px;
+            -moz-appearance: textfield;
+            background: #fafafa;
+            box-shadow: none !important;
+            height: 39px;
+            padding: 3px;
+            font-size: 20px;
+            font-family: Arial;
+            border: 0 !important;
+            border-right: dashed 2px #998 !important;
+        }
+
+        body {
+            margin: 0;
+            touch-action: none;
+            overflow: hidden;
+        }
+
+        #myCanvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #tempCanvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #range {
+            position: absolute;
+            background-color: #333;
+            height: 40px;
+            transition: 0.1s;
+            left: 50px;
+            box-shadow: 0px 0px 0px 5px white;
+            top: 50px;
+            width: 50%;
+            border-radius: 40px;
+        }
+
+        #range1 {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            box-shadow: 0px 0px 0px 5px white;
+            background-color: #333;
+            border-radius: 100%;
+        }
+
+        #range2 {
+            position: absolute;
+            width: 40px;
+            right: 0;
+            height: 40px;
+            box-shadow: 0px 0px 0px 5px white;
+            background-color: #333;
+            border-radius: 100%;
+        }
+
+        .flip {
+            transform: rotate(180deg);
+            border-left: dashed 2px #999;
+            border-right: 0 !important;
+        }
+
+        #pen {
+            background-image: url(img/pencil.svg);
+        }
+
+        #backbutt {
+            background-image: url(img/back.svg);
+        }
+
+        #tools {
+            background-image: url(img/tools.svg);
+        }
+
+        #hide {
+            background-image: url(img/hide.svg);
+            transition: 0.2s;
+        }
+
+
+        #info {
+            padding: 0.8em;
+            font-size: 1.3em;
+            color: blue;
+            text-shadow: 0 0 2px red;
+            line-height: 1em;
+            display: block;
+            font-family: Arial;
+        }
+
+        #color {
+            border-radius: 100%;
+            width: 25px;
+            height: 25px;
+            margin: 5px;
+            outline: dashed #999 2px;
+        }
+
+        #colorPick {
+            position: absolute;
+            background-color: #fafafa;
+            padding: 6px;
+            bottom: 50px;
+            left: 10px;
+            transition: 0.1s;
+            border: 2px dashed #999;
+            border-radius: 7px;
+        }
+
+        #colorCanvas {
+            border: 1px solid #777;
+            width: 250px;
+            height: 150px;
+        }
+
+        #colorPick input[type='range'] {
+            -webkit-appearance: none;
+            width: 250px;
+            margin: 0;
+            box-shadow: 0px 0px 0px 1px black;
+            margin-left: 1px;
+        }
+
+        #colorPick input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #colorPick ::-webkit-slider-runnable-track {
+            height: 25px;
+            cursor: pointer;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        #colorPick ::-webkit-slider-thumb {
+            height: 30px;
+            width: 30px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            margin-top: -2px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            border: solid 1px #999;
+        }
+
+        #colorPick ::-moz-range-track {
+            height: 25px;
+            cursor: pointer;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        #colorPick ::-moz-range-thumb {
+            height: 30px;
+            width: 30px;
+            border-radius: 4px;
+            margin-top: -2px;
+            background: rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+            -webkit-appearance: none;
+            border: solid 1px #999;
+        }
+
+        .colorHide {
+            bottom: -250px !important;
+            opacity: 0;
+        }
+
+        .hideArch {
+            top: -250px !important;
+            opacity: 0;
+        }
+
+        #save {
+            display: flex;
+            background-position: 50%;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+
+        canvas {}
+    </style>
+</head>
+
+<body>
+    <div id="area">
+        <canvas id='myCanvas'>
+        </canvas>
+        <canvas id='tempCanvas'>
+        </canvas>
+    </div>
+    <div id='colorPick' class='colorHide'><canvas id="colorCanvas"></canvas><br>
+        <input type="range" min='0' max='1' step='0.01' id='opacity' />
+    </div>
+
+    <div id="range" class='hideArch'>
+        <div id="range1"></div>
+        <div id="range2"></div>
+    </div>
+    <table id="toolbox" class='colorHide'>
+        <tr>
+            <td id='fullscreen' onclick='toggleFullScreen()' download='image.png'
+                style='background-image: url(img/fullscreen.svg)'></td>
+            <td id='back' onclick='back()' style='background-image: url(img/back.svg)'></td>
+            <td id='forward' onclick='forward()' style='background-image: url(img/forward.svg)'></td>
+            <td><a id='save' onclick='save()' download='image.png' style='background-image: url(img/save.svg)'></a></td>
+            <td id='picker' onclick='setBrush("picker")' style='background-image: url(img/picker.svg)'></td>
+
+        </tr>
+        <tr>
+            <td id='fill' onclick='setBrush("fill")' style='background-image: url(img/fill.svg)'></td>
+            <td id='cursor' onclick='setBrush("cursor")' style='background-image: url(img/cursor.svg)'></td>
+            <td id='line' onclick='setBrush("line")' style='background-image: url(img/line.svg)'></td>
+            <td id='circle' onclick='setBrush("circle")' style='background-image: url(img/circle.svg)'></td>
+            <td id='styler' onclick='setBrush("styler")' style='background-image: url(img/eraser.svg)'></td>
+        </tr>
+        <tr>
+            <td id='sun' onclick='setBrush("sun")' style='background-image: url(img/sun.svg)'></td>
+            <td id='polygon' onclick='setBrush("polygon")' style='background-image: url(img/polygon.svg)'></td>
+            <td id='rect' onclick='setBrush("rect")' style='background-image: url(img/rect.svg)'></td>
+            <td id='keys' onclick='' href="help.html" style='background-image: url(img/keys.svg)'></td>
+        </tr>
+        <tr>
+            <td id='reset' onclick='reset()' style='background-image: url(img/reset.svg)'></td>
+            <td id='archive' onclick='openArch()' style='background-image: url(img/archive.svg)'></td>
+            <td id='select' onclick='select()' style='background-image: url(img/select.svg)'></td>
+            <td id='background' onclick='setBrush("background")' style='background-image: url(img/background.svg)'></td>
+        </tr>
+    </table>
+    <div id="panel" class="hidden">
+        <div id='hide'></div>
+        <div id='backbutt' onclick='back()'></div>
+        <div id='pen'></div>
+        <div id='tools'></div>
+        <div>
+            <p id='color'></p>
+        </div>
+        <input id="iw" min='0' onchange='change(this, "iw");' type='number' value='0'>
+        <input id='width' max="300" min="1" type='range' value="0">
+    </div>
+    <p id='info'></p>
+    <script>
+        function calcPolygonArea(obj) {
+            var total = 0;
+            var vertices = obj.segments;
+            for (var i = 0, l = vertices.length; i < l; i++) {
+                var addX = vertices[i][0];
+                var addY = vertices[i == vertices.length - 1 ? 0 : i + 1][1];
+                var subX = vertices[i == vertices.length - 1 ? 0 : i + 1][0];
+                var subY = vertices[i][1];
+
+                total += (addX * addY * 0.5);
+                total -= (subX * subY * 0.5);
+            }
+
+            return Math.abs(total);
+        }
+        function doesLineInterceptCircle(A, B, C, radius) {
+            var dist;
+            const v1x = B[0] - A[0];
+            const v1y = B[1] - A[1];
+            const v2x = C[0] - A[0];
+            const v2y = C[1] - A[1];
+            // get the unit distance along the line of the closest point to
+            // circle center
+            const u = (v2x * v1x + v2y * v1y) / (v1y * v1y + v1x * v1x);
+
+
+            // if the point is on the line segment get the distance squared
+            // from that point to the circle center
+            if (u >= 0 && u <= 1) {
+                dist = (A[0] + v1x * u - C[0]) ** 2 + (A[1] + v1y * u - C[1]) ** 2;
+            } else {
+                // if closest point not on the line segment
+                // use the unit distance to determine which end is closest
+                // and get dist square to circle
+                dist = u < 0 ?
+                    (A[0] - C[0]) ** 2 + (A[1] - C[1]) ** 2 :
+                    (B[0] - C[0]) ** 2 + (B[1] - C[1]) ** 2;
+            }
+            return dist < radius * radius;
+        }
+        selfIntersection = function (obj) {
+            var res = [];
+            var seg = obj._segments || obj.segments;
+            var x = obj._x || obj.x;
+            var y = obj._y || obj.y;
+            var strokeWidth = ((obj.strokeWidth / 2) || 0) + ((obj.strokeWidth / 2) || 0);
+            var points = [];
+            var result;
+            for (var i = 0; i < seg.length - 1; i++) {
+                var s1p = [seg[i][0] + x, seg[i][1] + y];
+                var s1p1 = [seg[i + 1][0] + x, seg[i + 1][1] + y];
+                for (var k = i; k < seg.length - 1; k++) {
+                    if (i != k && i != k + 1 && k != i + 1) {
+                        var s2p = [seg[k][0] + x, seg[k][1] + y];
+                        var s2p1 = [seg[k + 1][0] + x, seg[k + 1][1] + y];
+                        var s1u_t = (s2p1[0] - s2p[0]) * (s1p[1] - s2p[1]) - (s2p1[1] - s2p[1]) * (s1p[0] - s2p[0]);
+                        var s2u_t = (s1p1[0] - s1p[0]) * (s1p[1] - s2p[1]) - (s1p1[1] - s1p[1]) * (s1p[0] - s2p[0]);
+                        var u_s2 = (s2p1[1] - s2p[1]) * (s1p1[0] - s1p[0]) - (s2p1[0] - s2p[0]) * (s1p1[1] - s1p[1]);
+
+                        if (u_s2 != 0) {
+                            var s1u = s1u_t / u_s2;
+                            var s2u = s2u_t / u_s2;
+
+                            if (0 <= s1u && s1u <= 1 && 0 <= s2u && s2u <= 1) {
+                                res.push([
+                                    s1p[0] + s1u * (s1p1[0] - s1p[0]),
+                                    s1p[1] + s1u * (s1p1[1] - s1p[1]),
+                                    i + 1, k + 1
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        intersection = function (obj1, obj2) {
+            var res = [];
+            var seg1 = obj1._segments || obj1.segments;
+            var seg2 = obj2._segments || obj2.segments;
+            var x1 = obj1._x || obj1.x;
+            var y1 = obj1._y || obj1.y;
+            var x2 = obj2._x || obj2.x;
+            var y2 = obj2._y || obj2.y;
+            var strokeWidth = ((obj1.strokeWidth / 2) || 0) + ((obj2.strokeWidth / 2) || 0);
+            var points = [];
+            var result;
+            for (var i = 0; i < seg1.length - 1; i++) {
+                var s1p = [seg1[i][0] + x1, seg1[i][1] + y1];
+                var s1p1 = [seg1[i + 1][0] + x1, seg1[i + 1][1] + y1];
+                for (var k = 0; k < seg2.length - 1; k++) {
+                    var s2p = [seg2[k][0] + x2, seg2[k][1] + y2];
+                    var s2p1 = [seg2[k + 1][0] + x2, seg2[k + 1][1] + y2];
+                    var s1u_t = (s2p1[0] - s2p[0]) * (s1p[1] -
+                        s2p[1]) - (s2p1[1] - s2p[1]) * (s1p[0] - s2p[0]);
+                    var s2u_t = (s1p1[0] - s1p[0]) * (s1p[1] - s2p[1]) - (s1p1[1] - s1p[1]) * (s1p[0] - s2p[0]);
+                    var u_s2 = (s2p1[1] - s2p[1]) * (s1p1[0] - s1p[0]) - (s2p1[0] - s2p[0]) * (s1p1[1] - s1p[1]);
+
+                    if (u_s2 != 0) {
+                        var s1u = s1u_t / u_s2;
+                        var s2u = s2u_t / u_s2;
+
+                        if (0 <= s1u && s1u <= 1 && 0 <= s2u && s2u <= 1) {
+                            res.push([
+                                s1p[0] + s1u * (s1p1[0] - s1p[0]),
+                                s1p[1] + s1u * (s1p1[1] - s1p[1]),
+                                i + 1, k + 1
+                            ]);
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+        function get(elem) {
+            return document.getElementById(elem)
+        };
+        var ls = localStorage;
+        var mine = [];
+        var removed = [];
+        if (!ls.pencilWidth) ls.pencilWidth = 5;
+        if (!ls.eraserWidth) ls.eraserWidth = 50;
+        if (!ls.color) ls.color = 'black';
+        if (!ls.rgba) ls.rgba = '{"0":2,"1":0,"2":0,"3":255}';
+        if (!ls.opacity) ls.opacity = 1;
+        get('iw').value = ls.pencilWidth;
+        get('width').value = ls.pencilWidth;
+        get('color').style.backgroundColor = ls.color;
+        get('opacity').value = ls.opacity;
+        var view = {
+            x: 0,
+            y: 0,
+            zoom: 1,
+            deg: 0
+        }
+        if (ls.background) {
+            get('myCanvas').style.backgroundColor = ls.background;
+        }
+        var readings = { pen: "pencil", select: [], drawTimeout: true };
+        var drawing = [];
+        var wbid = window.location.href.split('?wb_')[1];
+        var c = get("myCanvas");
+        c.width = (innerWidth * devicePixelRatio);
+        c.height = (innerHeight * devicePixelRatio);
+        var ctx = c.getContext("2d");
+        var tc = get("tempCanvas");
+        tc.width = (innerWidth * devicePixelRatio);
+        tc.height = (innerHeight * devicePixelRatio);
+        var tctx = tc.getContext("2d");
+        const http = new XMLHttpRequest();
+        if (wbid) {
+            http.open('GET', 'http://noopdie.com/wb_' + wbid)
+            http.send()
+            http.onload = () => {
+                if (http.status != 404) {
+                    try {
+                        socket = new WebSocket('ws://noopdie.com/wb_' + wbid);
+                        view.wb = JSON.parse(http.responseText);
+                        view.wb_ = JSON.parse(http.responseText);
+                        socket.onmessage = function (msg) {
+                            msg.data.text().then((res) => {
+                                var text = res.split('&');
+                                if (text[0] == 'new' && (!view.wb[view.wb.length - 1] || view.wb[view.wb.length - 1].id != text[2])) {
+
+                                    view.wb[view.wb.push(JSON.parse(text[3])) - 1].id = text[2];
+                                    view.wb_[view.wb_.push(JSON.parse(text[3])) - 1].id = text[2];
+                                    a = JSON.parse(text[3]);
+                                    draw(transform(view.wb))
+                                }
+                                if (text[0] == 'del') {
+                                    for (var i = 0; i < view.wb.length; i++) {
+                                        if (view.wb[i].id == text[1]) {
+                                            view.wb.splice(i, 1);
+                                            view.wb_.splice(i, 1);
+                                            draw(transform(view.wb));
+                                        }
+                                    }
+                                }
+
+                                if (text[0] == 'change') {
+                                    for (var i = 0; i < view.wb.length; i++) {
+                                        if (view.wb[i].id == text[1]) {
+                                            var attrs = JSON.parse(text[2]);
+                                            for (var key in attrs) {
+                                                view.wb[i][key] = attrs[key];
+                                                draw(transform(view.wb));
+                                            }
+                                        }
+                                    }
+
+                                }
+                            });
+                        };
+                        draw(view.wb);
+                    } catch (err) { alert(err) }
+                } else false;
+            }
+        } else {
+            socket = { send: () => { } }
+            view.wb = (localStorage.wb) ? JSON.parse(localStorage.wb) : [];
+            view.wb_ = (localStorage.wb) ? JSON.parse(localStorage.wb) : [];
+            draw(view.wb);
+        }
+
+        window.onbeforeunload = function () {
+            if (!wbid) {
+                localStorage.wb = JSON.stringify(view.wb)
+            }
+        }
+        function draw(wb, context, x, y) {
+            var includesPoint = [];
+            var ctx_ = (context) ? context : ctx;
+            var range1 = (readings.range1) ? Math.floor(readings.range1 * wb.length) : 0;
+            var range2 = (readings.range2) ? Math.floor(readings.range2 * wb.length) : wb.length;
+            ctx_.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+            for (var i = range1; i < range2; i++) {
+                ctx_.lineWidth = wb[i].strokeWidth;
+                ctx_.lineCap = wb[i].lineCap;
+                ctx_.lineJoin = wb[i].lineJoin;
+                ctx_.fillStyle = wb[i].color;
+                ctx_.strokeStyle = wb[i].strokeColor;
+                ctx_.beginPath();
+                var addx = (innerWidth * devicePixelRatio) / 2 + wb[i].x;
+                var addy = + (innerHeight * devicePixelRatio) / 2 + wb[i].y;
+
+                var seg = wb[i].segments;
+                ctx_.lineTo(seg[0][0] + addx, seg[0][1] + addy);
+                for (var k = 1; k < seg.length; k++) {
+
+                    if (seg[k - 1][5]) {
+                        ctx_.bezierCurveTo(seg[k - 1][2] + addx, seg[k - 1][3] + addy, seg[k - 1][4] + addx, seg[k - 1][5] + addy, seg[k][0] + addx, seg[k][1] + addy);
+                    } else if (seg[k - 1][3]) {
+                        ctx_.quadraticCurveTo(seg[k - 1][2] + addx, seg[k - 1][3] + addy, seg[k][0] + addx, seg[k][1] + addy);
+                    } else {
+                        ctx_.lineTo(seg[k][0] + addx, seg[k][1] + addy);
+                    }
+                    /*
+                    for (var t = 0; t < 1; t += 0.2) {
+                    ctx_.fillStyle = 'red';
+                    var x, y;
+                    if (seg[k-1][5]) {
+                    x = Math.pow(1-t, 3) * seg[k-1][0] + 3 * Math.pow(1-t, 2) * t * seg[k-1][2] + 3 * (1-t) * Math.pow(t,2) * seg[k-1][4] + Math.pow(t,3) * seg[k][0];
+                    y = Math.pow(1-t, 3) * seg[k-1][1] + 3 * Math.pow(1-t, 2) * t * seg[k-1][3] + 3 * (1-t) * Math.pow(t,2) * seg[k-1][5] + Math.pow(t,3) * seg[k][1];
+                    } else if (seg[k-1][3]) {
+                    x = Math.pow(1-t, 2) * seg[k-1][0] + 2 * (1-t) * t * seg[k-1][2] + Math.pow(t,2) * seg[k][0]
+                    y = Math.pow(1-t, 2) * seg[k-1][1] + 2 * (1-t) * t * seg[k-1][3] + Math.pow(t,2) * seg[k][1]
+                    } else {
+                    x = (1-t) * seg[k-1][0] + t * seg[k][0]
+                    y = (1-t) * seg[k-1][1] + t * seg[k][1]
+                    }
+                    x+= addx;
+                    y+= addy;
+                    ctx_.beginPath();
+                    ctx_.arc(x, y, wb[i].strokeWidth/2, 0, 2 * Math.PI, false);
+                    ctx_.fill();
+                    }
+                    */
+                }
+                if (x && y) if (ctx_.isPointInPath(x, y)) includesPoint.push(wb[i]);
+                if (wb[i].closed) ctx_.closePath();
+
+                if (wb[i].shadowWidth) ctx_.shadowBlur = wb[i].shadowWidth * view.zoom;
+                if (wb[i].shadowColor) ctx_.shadowColor = wb[i].shadowColor;
+                ctx_.fill();
+                ctx_.stroke()
+                if (wb[i].shadowWidth) ctx_.shadowBlur = 0;
+                if (wb[i].shadowColor) ctx._shadowColor = 'transparent'
+            }
+            return includesPoint
+        }
+        get('area').addEventListener('touchstart', function (e) {
+            get('colorPick').classList.add('colorHide');
+            get('toolbox').classList.add('colorHide');
+
+            if (e.touches[1]) {
+                if (readings.touchDraw && brush[readings.pen][3] && readings.drawTimeout) {
+                    brush[readings.pen][3]();
+                    readings.touchDraw = true;
+                    readings.add = false;
+                    return;
+                }
+                readings.touchDraw = false;
+                tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                readings.startX = ((e.touches[0].clientX * devicePixelRatio) + (e.touches[1].clientX * devicePixelRatio)) / 2;
+                readings.startViewX = view.x;
+                readings.startY = ((e.touches[0].clientY * devicePixelRatio) + (e.touches[1].clientY * devicePixelRatio)) / 2;
+                readings.startX0 = (e.touches[0].clientX * devicePixelRatio);
+                readings.startX1 = (e.touches[1].clientX * devicePixelRatio);
+                readings.startViewY = view.y;
+                readings.startDistance = Math.sqrt(Math.pow((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), 2) + Math.pow((e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio), 2));
+                readings.startZoom = view.zoom;
+                readings.startDeg = Math.atan2((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), (e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio)) * 180 / Math.PI;
+                readings.deg = view.deg;
+            } else if (e.touches[0]) {
+                setTimeout(() => { readings.drawTimeout = true }, 200);
+                readings.touchDraw = true;
+                brush[readings.pen][0]((e.touches[0].clientX * devicePixelRatio), (e.touches[0].clientY * devicePixelRatio));
+            }
+            readings.drawTimeout = false;
+        });
+        get('area').addEventListener('touchmove', function (e) {
+            if (e.touches[1] && !readings.touchDraw) {
+                var distance = Math.sqrt(Math.pow((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), 2) + Math.pow((e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio), 2));
+                view.zoom = readings.startZoom * (distance / readings.startDistance);
+                readings.moveX = ((e.touches[0].clientX * devicePixelRatio) + (e.touches[1].clientX * devicePixelRatio)) / 2;
+                view.x = readings.startViewX + (readings.moveX - readings.startX);
+                view.x += (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * view.zoom / readings.startZoom - (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX);
+                readings.moveY = ((e.touches[0].clientY * devicePixelRatio) + (e.touches[1].clientY * devicePixelRatio)) / 2;
+                view.y = readings.startViewY + (readings.moveY - readings.startY);
+                view.y += (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * view.zoom / readings.startZoom - (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY);
+                var moveDeg = Math.atan2((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), (e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio)) * 180 / Math.PI;
+                var deg = readings.startDeg - moveDeg;
+                view.deg = readings.deg + deg;
+                var angle = deg * Math.PI / 180;
+                var x = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.cos(angle) - (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.sin(angle);
+                var y = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.sin(angle) + (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.cos(angle);
+                view.x = x + readings.moveX - (innerWidth * devicePixelRatio) / 2;
+                view.y = y + readings.moveY - (innerHeight * devicePixelRatio) / 2;
+                if (view.deg > 360) view.deg -= 360;
+                if (view.deg < 0) view.deg += 360;
+                if (readings.select.length > 0 && readings.pen == 'select') showSel();
+                draw(transform(view.wb));
+            } else if (e.touches[0] && readings.touchDraw) {
+                if (brush[readings.pen][3] && readings.add) {
+                    brush[readings.pen][3]();
+                    readings.add = false;
+                }
+                brush[readings.pen][1]((e.touches[0].clientX * devicePixelRatio), (e.touches[0].clientY * devicePixelRatio));
+
+            }
+        });
+
+        get('area').addEventListener('touchend', function (e) {
+            if (!e.touches[1]) {
+                get('info').innerText = '';
+                if (readings.touchDraw && e.touches.length == 0) {
+                    brush[readings.pen][2]();
+                    readings.touchDraw = false;
+                }
+            }
+        });
+        get('area').oncontextmenu = function (e) {
+            e.preventDefault();
+        }
+        get('area').onmousedown = function (e) {
+            get('colorPick').classList.add('colorHide');
+            get('toolbox').classList.add('colorHide');
+            if (e.which == 1 && readings.drawTimeout) {
+                readings.leftClick = true;
+                brush[readings.pen][0]((e.clientX * devicePixelRatio), (e.clientY * devicePixelRatio));
+            }
+            if (e.which == 3) {
+                readings.rightClick = true;
+                readings.startViewX = view.x;
+                readings.startViewY = view.y;
+                readings.startX = (e.clientX * devicePixelRatio);
+                readings.startY = (e.clientY * devicePixelRatio);
+            }
+            if (e.which == 2) readings.middleClick = true;
+        }
+        get('area').onwheel = function (e) {
+            if (readings.middleClick) {
+                var deg = (e.deltaY > 0) ? -15 : 15;
+                view.deg += deg;
+                if (view.deg > 360) view.deg -= 360;
+                if (view.deg < 0) view.deg += 360;
+                var angle = deg * Math.PI / 180;
+                var x = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.cos(angle) - (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.sin(angle);
+                var y = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.sin(angle) + (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.cos(angle);
+                view.x = x + readings.moveX - (innerWidth * devicePixelRatio) / 2;
+                view.y = y + readings.moveY - (innerHeight * devicePixelRatio) / 2;
+            } else {
+                var zoom = (e.deltaY > 0) ? 0.8 : 1.2;
+                view.zoom *= zoom;
+                view.x += ((view.x + (innerWidth * devicePixelRatio) / 2) - (e.clientX * devicePixelRatio)) * zoom - ((view.x + (innerWidth * devicePixelRatio) / 2) - (e.clientX * devicePixelRatio));
+                view.y += ((view.y + (innerHeight * devicePixelRatio) / 2) - (e.clientY * devicePixelRatio)) * zoom - ((view.y + (innerHeight * devicePixelRatio) / 2) - (e.clientY * devicePixelRatio));
+            }
+            get('info').innerHTML = 'x: ' + view.x + '<br>y: ' + view.y + '<br>deg: ' + view.deg + '<br>zoom: ' + view.zoom;
+            if (readings.select.length > 0 && readings.pen == 'select') showSel();
+            draw(transform(view.wb));
+        }
+        get('area').onmousemove = function (e) {
+            var rect = readings.selRect;
+            if (rect) {
+                tc.style.cursor = (e.clientX > rect.left && e.clientY > rect.top && e.clientX < rect.right && e.clientY < rect.bottom) ? 'move' : 'default';
+            }
+            if (readings.leftClick) {
+                if (brush[readings.pen][3] && readings.add) {
+                    brush[readings.pen][3]();
+                    readings.add = false;
+                }
+                brush[readings.pen][1]((e.clientX * devicePixelRatio), (e.clientY * devicePixelRatio));
+
+            }
+            readings.moveX = (e.clientX * devicePixelRatio);
+            readings.moveY = (e.clientY * devicePixelRatio);
+            if (readings.rightClick) {
+                view.x = readings.startViewX + ((e.clientX * devicePixelRatio) - readings.startX);
+                view.y = readings.startViewY + ((e.clientY * devicePixelRatio) - readings.startY);
+                if (readings.select.length > 0 && readings.pen == 'select') showSel();
+                draw(transform(view.wb));
+            }
+            get('info').innerHTML = 'x: ' + view.x + '<br>y: ' + view.y + '<br>deg: ' + view.deg + '<br>zoom: ' + view.zoom;
+        }
+        get('area').onmouseup = function (e) {
+            if (readings.rightClick) readings.rightClick = false;
+            if (readings.middleClick) readings.middleClick = false;
+            if (readings.leftClick) {
+                brush[readings.pen][2]();
+                readings.leftClick = false;
+            }
+        }
+        function transform(wb, _view) {
+            var view_ = _view || view;
+            if (typeof view_.deX == 'number') {
+                view_.wb_ = JSON.parse(JSON.stringify(wb));
+            }
+            for (var i = 0; i < wb.length; i++) {
+                if (view_.deX) {
+                    wb[i].x -= view_.deX;
+                    wb[i].y -= view_.deY;
+
+                }
+                view_.wb_[i].strokeWidth = wb[i].strokeWidth * view_.zoom;
+                var seg = wb[i].segments;
+                var seg_ = view_.wb_[i].segments;
+                var deg = view_.deg * Math.PI / 180;
+                for (var k = 0; k < seg.length; k++) {
+                    seg_[k][0] = (seg[k][0] + wb[i].x) * view_.zoom - wb[i].x;
+                    seg_[k][1] = (seg[k][1] + wb[i].y) * view_.zoom - wb[i].y;
+                    var x = (seg_[k][0] + wb[i].x) * Math.cos(deg) - (seg_[k][1] + wb[i].y) * Math.sin(deg);
+                    var y = (seg_[k][0] + wb[i].x) * Math.sin(deg) + (seg_[k][1] + wb[i].y) * Math.cos(deg);
+                    seg_[k][0] = x - wb[i].x, seg_[k][1] = y - wb[i].y;
+                    if (seg[k][3]) {
+                        seg_[k][2] = (seg[k][2] + wb[i].x) * view_.zoom - wb[i].x;
+                        seg_[k][3] = (seg[k][3] + wb[i].y) * view_.zoom - wb[i].y;
+                        var x = (seg_[k][2] + wb[i].x) * Math.cos(deg) - (seg_[k][3] + wb[i].y) * Math.sin(deg);
+                        var y = (seg_[k][2] + wb[i].x) * Math.sin(deg) + (seg_[k][3] + wb[i].y) * Math.cos(deg);
+                        seg_[k][2] = x - wb[i].x, seg_[k][3] = y - wb[i].y;
+
+                    }
+
+                    if (seg[k][5]) {
+                        seg_[k][4] = (seg[k][4] + wb[i].x) * view_.zoom - wb[i].x;
+                        seg_[k][5] = (seg[k][5] + wb[i].y) * view_.zoom - wb[i].y;
+                        var x = (seg_[k][4] + wb[i].x) * Math.cos(deg) - (seg_[k][5] + wb[i].y) * Math.sin(deg);
+                        var y = (seg_[k][4] + wb[i].x) * Math.sin(deg) + (seg_[k][5] + wb[i].y) * Math.cos(deg);
+                        seg_[k][4] = x - wb[i].x, seg_[k][5] = y - wb[i].y;
+                    }
+
+                }
+                view_.wb_[i].x = wb[i].x + view_.x;
+                view_.wb_[i].y = wb[i].y + view_.y;
+            }
+            return view_.wb_;
+        }
+        function detransform(wb) {
+            return transform(wb, {
+                x: 0,
+                y: 0,
+                deX: view.x,
+                deY: view.y,
+                deg: 360 - view.deg,
+                zoom: 1 / view.zoom
+            });
+        }
+        get('range1').onmousedown = function (e) {
+            readings.range1Move = true;
+        }
+        get('range2').onmousedown = function (e) {
+            readings.range2Move = true;
+        }
+        get('range1').addEventListener('touchstart', function (e) {
+            readings.range1Move = true;
+        });
+        get('range2').addEventListener('touchstart', function (e) {
+            readings.range2Move = true;
+        });
+        document.body.onmousemove = function (e) {
+            if (e.touches) e.clientX = e.touches[0].clientX, e.clientY = e.touches[0].clientY;
+            if (readings.range1Move) {
+                if ((e.clientX * devicePixelRatio) > get('range').offsetLeft + get('range1').offsetWidth / 2 && (e.clientX * devicePixelRatio) < (get('range').offsetWidth + get('range').offsetLeft - get('range1').offsetWidth / 2)) get('range1').style.left = ((e.clientX * devicePixelRatio) - get('range').offsetLeft - get('range1').offsetWidth / 2) + 'px';
+                readings.range1 = (get('range1').offsetLeft) / (get('range').offsetWidth);
+                if ((e.clientX * devicePixelRatio) < get('range').offsetLeft) readings.range1 = 0, get('range1').style.left = 0;
+                draw(transform(view.wb));
+            }
+            if (readings.range2Move) {
+                if ((e.clientX * devicePixelRatio) > get('range').offsetLeft + get('range2').offsetWidth / 2 && (e.clientX * devicePixelRatio) < (get('range').offsetWidth + get('range').offsetLeft - get('range2').offsetWidth / 2)) get('range2').style.left = ((e.clientX * devicePixelRatio) - get('range').offsetLeft - get('range2').offsetWidth / 2) + 'px';
+                readings.range2 = (get('range2').offsetLeft + get('range2').offsetWidth) / (get('range').offsetWidth);
+                if ((e.clientX * devicePixelRatio) > get('range').offsetLeft + get('range').offsetWidth) readings.range2 = 1, get('range2').style.left = get('range').offsetWidth - get('range2').offsetWidth;
+                draw(transform(view.wb));
+            }
+        }
+        document.body.addEventListener('touchmove', document.body.onmousemove);
+        document.body.onmouseup = function (e) {
+            if (readings.range1Move) readings.range1Move = false;
+            if (readings.range2Move) readings.range2Move = false;
+        }
+        document.body.addEventListener('touchend', function (e) {
+            if (readings.range1Move) readings.range1Move = false;
+            if (readings.range2Move) readings.range2Move = false;
+        });
+        get('pen').onmousedown = function () {
+            if (readings.pen == 'pencil') {
+                readings.pen = 'eraser';
+                get('pen').style.backgroundImage = 'url(img/eraser.svg)';
+                get('iw').value = ls.eraserWidth;
+                get('width').value = ls.eraserWidth;
+                get('width').max = 300;
+            }
+            else {
+                readings.pen = 'pencil';
+                get('pen').style.backgroundImage = 'url(img/pencil.svg)';
+                get('iw').value = ls.pencilWidth;
+                get('width').value = ls.pencilWidth;
+                get('width').max = 300;
+            }
+            tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+            readings.selected = [];
+            readings.selRect = false;
+        }
+        get('width').oninput = function () {
+            if (readings.pen == 'eraser') ls.eraserWidth = get('width').value;
+            if (readings.pen == 'pencil') ls.pencilWidth = get('width').value;
+            get('iw').value = get('width').value;
+        }
+        get('iw').onchange = function () {
+            if (readings.pen == 'eraser') ls.eraserWidth = get('iw').value;
+            if (readings.pen == 'pencil') ls.pencilWidth = get('iw').value;
+            get('width').value = get('iw').value;
+        }
+        get('opacity').oninput = function () {
+            ls.opacity = get('opacity').value;
+            var rgba = JSON.parse(ls.rgba);
+            ls.color = "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ", " + ls.opacity + ")";
+            get('color').style.backgroundColor = ls.color;
+        }
+        var brush = {
+            background: [
+                function () { }, function () { }, function () { },
+            ],
+            pencil: [
+                function (x, y) {
+                    drawing = [{
+                        id: Math.random().toString(16).slice(2),
+                        x: -(innerWidth * devicePixelRatio) / 2,
+                        y: -(innerHeight * devicePixelRatio) / 2,
+                        segments: [],
+                        strokeColor: ls.color,
+                        color: 'rgba(0,0,0,0)',
+                        strokeWidth: ls.pencilWidth * view.zoom,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }];
+                    readings.startDate = false;
+                    readings.startX = x, readings.startY = y;
+                },
+                function (x, y) {
+                    if (!drawing[0].segments[0]) drawing[0].segments[0] = [x, y];
+                    var endDate = new Date();
+                    var timeDiff = (readings.startDate) ? (endDate.getTime() - readings.startDate.getTime()) / 50 : 1;
+                    timeDiff = timeDiff * timeDiff * timeDiff * 5;
+                    info.innerText = timeDiff;
+                    if (timeDiff > 2) timeDiff = 1;
+                    var seg = drawing[0].segments[drawing[0].segments.length - 1];
+                    var distance = Math.sqrt(Math.pow(x - seg[0], 2) + Math.pow(y - seg[0], 2));
+                    if (distance > 25) timeDiff = 0.5;
+                    if (distance > 4) {
+                        drawing[0].segments.push([(x - seg[0]) * timeDiff + seg[0], (y - seg[1]) * timeDiff + seg[1]]);
+                        smooth(drawing[0]);
+                        draw(drawing, tctx);
+                        readings.startDate = new Date();
+                    }
+
+                },
+                function () {
+                    if (!drawing[0].segments[0]) drawing[0].segments = [[readings.startX, readings.startY], [readings.startX, readings.startY]];
+                    trace = detransform(drawing)[0];
+                    for (var i = 0; i < trace.segments.length; i++) {
+                        trace.x = parseFloat((trace.x * 1).toFixed(2));
+                        trace.y = parseFloat((trace.y * 1).toFixed(2));
+                        for (var k = 0; k < trace.segments[i].length; k++) {
+                            trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                        }
+                    }
+                    view.wb.push(trace);
+                    view.wb_.push(JSON.parse(JSON.stringify(trace)));
+                    mine.push(trace.id);
+                    socket.send('new&Line&' + trace.id + '&' + JSON.stringify(trace));
+                    drawing = [];
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    draw(transform(view.wb))
+                },
+            ],
+            rect: [
+                function (x, y) {
+                    drawing = [{
+                        id: Math.random().toString(16).slice(2),
+                        x: -(innerWidth * devicePixelRatio) / 2,
+                        y: -(innerHeight * devicePixelRatio) / 2,
+                        segments: [[x, y], [x, y]],
+                        strokeColor: ls.color,
+                        color: 'rgba(0,0,0,0)',
+                        strokeWidth: ls.pencilWidth * view.zoom,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }];
+
+                },
+                function (x, y) {
+                    var sx = drawing[0].segments[0][0];
+                    var sy = drawing[0].segments[0][1];
+                    drawing[0].segments = [[sx, sy], [x, sy], [x, y], [sx, y], [sx, sy]];
+                    draw(drawing, tctx);
+                },
+                function () {
+                    trace = detransform(drawing)[0];
+                    for (var i = 0; i < trace.segments.length; i++) {
+                        trace.x = parseFloat((trace.x * 1).toFixed(2));
+                        trace.y = parseFloat((trace.y * 1).toFixed(2));
+                        for (var k = 0; k < trace.segments[i].length; k++) {
+                            trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                        }
+                    }
+                    view.wb.push(trace);
+                    view.wb_.push(JSON.parse(JSON.stringify(trace)));
+                    mine.push(trace.id);
+                    socket.send('new&Line&' + trace.id + '&' + JSON.stringify(trace));
+                    drawing = [];
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    draw(transform(view.wb))
+                },
+            ],
+            line: [
+                function (x, y) {
+                    drawing = [{
+                        id: Math.random().toString(16).slice(2),
+                        x: -(innerWidth * devicePixelRatio) / 2,
+                        y: -(innerHeight * devicePixelRatio) / 2,
+                        segments: [[x, y], [x, y], [x, y]],
+                        strokeColor: ls.color,
+                        color: 'rgba(0,0,0,0)',
+                        strokeWidth: ls.pencilWidth * view.zoom,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }];
+
+                },
+                function (x, y) {
+                    drawing[0].segments[drawing[0].segments.length - 1] = [x, y];
+                    draw(drawing, tctx);
+                },
+                function () {
+                    trace = detransform(drawing)[0];
+                    for (var i = 0; i < trace.segments.length; i++) {
+                        trace.x = parseFloat((trace.x * 1).toFixed(2));
+                        trace.y = parseFloat((trace.y * 1).toFixed(2));
+                        for (var k = 0; k < trace.segments[i].length; k++) {
+                            trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                        }
+                    }
+                    view.wb.push(trace);
+                    view.wb_.push(JSON.parse(JSON.stringify(trace)));
+                    mine.push(trace.id);
+                    socket.send('new&Line&' + trace.id + '&' + JSON.stringify(trace));
+                    drawing = [];
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    draw(transform(view.wb))
+                },
+                function () {
+                    var seg = drawing[0].segments
+                    var i = seg.length - 1;
+                    drawing[0].segments.push([seg[i][0], seg[i][1]]);
+                }
+            ],
+            circle: [
+                function (x, y) {
+                    drawing = [{
+                        id: Math.random().toString(16).slice(2),
+                        x: -(innerWidth * devicePixelRatio) / 2 + x,
+                        y: -(innerHeight * devicePixelRatio) / 2 + y,
+                        segments: [[x, y]],
+                        strokeColor: ls.color,
+                        closed: true,
+                        color: 'rgba(0,0,0,0)',
+                        strokeWidth: ls.pencilWidth * view.zoom,
+                    }];
+                    readings.radius = 0;
+                },
+                function (x, y) {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    var s = drawing[0].segments[0];
+                    tctx.beginPath();
+                    tctx.lineWidth = drawing[0].strokeWidth;
+                    tctx.strokeStyle = ls.color;
+                    readings.radius = Math.sqrt(Math.pow(x - s[0], 2) + Math.pow(y - s[1], 2));
+                    tctx.arc(s[0], s[1], readings.radius, 0, Math.PI * 2, false);
+                    tctx.stroke();
+                },
+                function () {
+                    var pi = 3.55;
+                    var r = readings.radius;
+                    drawing[0].segments = [
+                        [-r + r / pi, -r + r / pi],
+                        [r - r / pi, -r + r / pi],
+                        [r - r / pi, r - r / pi],
+                        [-r + r / pi, r - r / pi],
+                        [-r + r / pi, -r + r / pi],
+                    ];
+                    smooth(drawing[0], Math.PI);
+                    trace = detransform(drawing)[0];
+                    for (var i = 0; i < trace.segments.length; i++) {
+                        trace.x = parseFloat((trace.x * 1).toFixed(2));
+                        trace.y = parseFloat((trace.y * 1).toFixed(2));
+                        for (var k = 0; k < trace.segments[i].length; k++) {
+                            trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                        }
+                    }
+                    view.wb.push(trace);
+                    view.wb_.push(JSON.parse(JSON.stringify(trace)));
+                    mine.push(trace.id);
+                    socket.send('new&Line&' + trace.id + '&' + JSON.stringify(trace));
+                    drawing = [];
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    draw(transform(view.wb))
+                },
+            ],
+            eraser: [
+                function (x, y) {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    tctx.lineWidth = 2;
+                    tctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    tctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    tctx.beginPath();
+                    tctx.arc(x, y, ls.eraserWidth, 0, 2 * Math.PI, false);
+                    tctx.stroke();
+                    tctx.fill();
+                    centerw = (innerWidth * devicePixelRatio) / 2;  //even this small thing can help with awful lag!
+                    centerh = (innerHeight * devicePixelRatio) / 2;
+                },
+                function (x, y) {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    tctx.lineWidth = 2;
+                    tctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    tctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    tctx.beginPath();
+                    tctx.arc(x, y, ls.eraserWidth, 0, 2 * Math.PI, false);
+                    var wb = transform(view.wb);
+                    var erange1 = (readings.range1) ? Math.floor(readings.range1 * wb.length) : 0;
+                    var erange2 = (readings.range2) ? Math.floor(readings.range2 * wb.length) : wb.length;
+                    loop1: for (var i = erange1; i < erange2; i++) {
+                        loop2: for (var k = 1; k < wb[i].segments.length; k++) {
+                            if (doesLineInterceptCircle([wb[i].x + wb[i].segments[k][0] + centerw, wb[i].y + wb[i].segments[k][1] + centerh], [wb[i].x + wb[i].segments[k - 1][0] + centerw, wb[i].y + wb[i].segments[k - 1][1] + centerh], [x, y], ls.eraserWidth * 1 + wb[i].strokeWidth / 2)) {
+                                tctx.fillStyle = 'red';
+                                socket.send('del&' + wb[i].id);
+                                removed.push(view.wb[i]);
+                                view.wb.splice(i, 1);
+                                view.wb_.splice(i, 1);
+                                draw(wb);
+                                break loop1;
+                                break loop2;
+                            }
+                        }
+                    }
+                    tctx.stroke();
+                    tctx.fill();
+                },
+                function () {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                },
+            ],
+            styler: [
+                function (x, y) {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    tctx.lineWidth = 2;
+                    tctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    tctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    tctx.beginPath();
+                    tctx.arc(x, y, ls.eraserWidth, 0, 2 * Math.PI, false);
+                    tctx.stroke();
+                    tctx.fill();
+                    centerw = (innerWidth * devicePixelRatio) / 2;  //even this small thing can help with awful lag!
+                    centerh = (innerHeight * devicePixelRatio) / 2;
+                },
+                function (x, y) {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                    tctx.lineWidth = 2;
+                    tctx.fillStyle = 'rgba(0,0,0,0.5)';
+                    tctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                    tctx.beginPath();
+                    tctx.arc(x, y, ls.eraserWidth, 0, 2 * Math.PI, false);
+                    var wb = transform(view.wb);
+                    var erange1 = (readings.range1) ? Math.floor(readings.range1 * wb.length) : 0;
+                    var erange2 = (readings.range2) ? Math.floor(readings.range2 * wb.length) : wb.length;
+                    loop1: for (var i = erange1; i < erange2; i++) {
+                        loop2: for (var k = 1; k < wb[i].segments.length; k++) {
+                            if (doesLineInterceptCircle([wb[i].x + wb[i].segments[k][0] + centerw, wb[i].y + wb[i].segments[k][1] + centerh], [wb[i].x + wb[i].segments[k - 1][0] + centerw, wb[i].y + wb[i].segments[k - 1][1] + centerh], [x, y], ls.eraserWidth * 1 + wb[i].strokeWidth / 2)) {
+                                tctx.fillStyle = 'red';
+                                // socket.send('del&' + wb[i].id);
+                                view.wb[i].strokeWidth = 80;
+                                view.wb_.strokeWidth = 80;
+                                draw(wb);
+                                break loop1;
+                                break loop2;
+                            }
+                        }
+                    }
+                    tctx.stroke();
+                    tctx.fill();
+                },
+                function () {
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                },
+            ],
+            select: [
+                function (x, y) {
+                    if (readings.selRect) {
+                        var rect = readings.selRect;
+                        if (x > rect.left && y > rect.top && x < rect.right && y < rect.bottom) readings.moveSel = true;
+                        readings.selwb = transform(view.wb);
+                        readings.twb = JSON.parse(JSON.stringify(readings.selwb));
+                    }
+                    readings.startX = x, readings.startY = y;
+                },
+                function (x, y) {
+                    if (readings.moveSel) {
+                        var twb = readings.twb;
+                        var paths = readings.selected;
+                        for (var key in paths) {
+                            var tpath = twb[paths[key]];
+                            var path = readings.selwb[paths[key]];
+                            tpath.x = path.x + (x - readings.startX);
+                            tpath.y = path.y + (y - readings.startY);
+                            //view.wb[paths[key]] = detransform([path])[0];
+                        }
+                        draw(twb);
+                        showSel(twb);
+                    } else {
+                        tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                        tctx.lineWidth = 2;
+                        tctx.strokeStyle = 'black';
+                        tctx.setLineDash([7, 4]);
+                        tctx.fillStyle = 'rgba(255,255,255,0.5)';
+                        tctx.beginPath();
+                        tctx.moveTo(readings.startX, readings.startY)
+                        tctx.lineTo(x, readings.startY);
+                        tctx.lineTo(x, y);
+                        tctx.lineTo(readings.startX, y);
+                        tctx.lineTo(readings.startX, readings.startY)
+                        tctx.stroke();
+                        tctx.fill();
+                        tctx.setLineDash([0, 0]);
+                        readings.select = [[(readings.startX < x) ? readings.startX : x, (readings.startY < y) ? readings.startY : y], [(x > readings.startX) ? x : readings.startX, (y > readings.startY) ? y : readings.startY]];
+                    }
+                },
+                function () {
+                    if (readings.moveSel) {
+
+                        var twb = readings.twb;
+                        var paths = readings.selected;
+                        for (var key in paths) {
+                            var tpath = twb[paths[key]];
+                            var trace = detransform([tpath])[0];
+                            for (var i = 0; i < trace.segments.length; i++) {
+                                trace.x = parseFloat((trace.x * 1).toFixed(2));
+                                trace.y = parseFloat((trace.y * 1).toFixed(2));
+                                for (var k = 0; k < trace.segments[i].length; k++) {
+                                    trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                                    // if (k == 2 && trace.segments[i][k] == 0) trace.segments.splice(i,1);
+                                }
+                            }
+                            view.wb[paths[key]] = trace;
+                            socket.send('change&' + trace.id + '&' + JSON.stringify(trace));
+                        }
+                        var wb_ = transform(view.wb);
+                        readings.moveSel = false;
+                        draw(wb_);
+                        showSel(wb_);
+                    } else {
+                        tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                        var wb = transform(view.wb);
+                        var paths = readings.selected = [];
+                        var sel = readings.select;
+                        var range1 = (readings.range1) ? Math.floor(readings.range1 * wb.length) : 0;
+                        var range2 = (readings.range2) ? Math.floor(readings.range2 * wb.length) : wb.length;
+                        loop1: for (var i = range1; i < range2; i++) {
+                            loop2: for (var k = 0; k < wb[i].segments.length; k++) {
+                                var seg = wb[i].segments[k];
+                                var x = wb[i].x + seg[0] + (innerWidth / 2 * devicePixelRatio);
+                                var y = wb[i].y + seg[1] + (innerHeight / 2 * devicePixelRatio);
+                                if (!(x > sel[0][0] && y > sel[0][1] && x < sel[1][0] && y < sel[1][1])) break loop2;
+                                if (k == wb[i].segments.length - 1) readings.selected.push(i);
+                            }
+                        }
+                        if (readings.selected.length == 0) readings.selRect = false;
+                    }
+                    showSel(wb);
+                }
+            ],
+            picker: [function (x, y) {
+                var arr = [];
+                var rgba = ctx.getImageData(x, y, 1, 1).data;
+                get('opacity').value = ls.opacity = rgba[3] / 255;
+                get('color').style.backgroundColor = ls.color = "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ", " + ls.opacity + ")";
+
+
+            },
+            function () { },
+            function () { }
+            ],
+            sun: [
+                function (x, y) {
+                    var segs = [];
+                    tctx.fillStyle = 'red';
+                    readings.pick = ctx.getImageData(x, y, 1, 1).data;
+                    function eqc() {
+                        var s = readings.pick;
+                        var c = ctx.getImageData(readings.go.x, readings.go.y, 1, 1).data;
+                        return (c[0] == s[0] && c[1] == s[1] && c[2] == s[2] && c[3] == s[3]) ? true : false
+                    }
+                    function dr() { tctx.fillRect(readings.go.x, readings.go.y, 1, 1) }
+                    var mv = true;
+                    var go = readings.go = {
+                        x: x,
+                        y: y,
+                    };
+                    loop1: for (var deg = 0; deg < 360; deg += 1) {
+                        var angle = deg * Math.PI / 180;
+                        var dx = Math.cos(angle) - Math.sin(angle);
+                        var dy = Math.sin(angle) + Math.cos(angle);
+                        loop2: while (mv) {
+                            if (eqc()) {
+                                dr();
+                                go.x += dx;
+                                go.y += dy;
+                                if (go.x > innerWidth * devicePixelRatio || go.x < 0 || go.y > innerHeight * devicePixelRatio || go.y < 0) {
+                                    segs = false;
+                                    break loop1;
+                                    break loop2;
+
+                                }
+                            } else {
+                                mv = false;
+                            }
+                        }
+                        mv = true;
+                        if (segs) segs.push([go.x, go.y])
+                        go.x = x;
+                        go.y = y;
+                    }
+                    if (segs) {
+                        var drawing = [{
+                            strokeWidth: 0,
+                            strokeColor: 'rgba(0,0,0,0)',
+                            color: ls.color,
+                            segments: segs,
+                            id: Math.random().toString(16).slice(2),
+                            x: -(innerWidth * devicePixelRatio) / 2,
+                            y: -(innerHeight * devicePixelRatio) / 2,
+                        }];
+                        var trace = readings.trace = detransform(drawing)[0];
+                        for (var i = 0; i < trace.segments.length; i++) {
+                            trace.x = parseFloat((trace.x * 1).toFixed(2));
+                            trace.y = parseFloat((trace.y * 1).toFixed(2));
+                            for (var k = 0; k < trace.segments[i].length; k++) {
+                                trace.segments[i][k] = parseFloat((trace.segments[i][k] * 1).toFixed(2));
+                                // if (k == 2 && trace.segments[i][k] == 0) trace.segments.splice(i,1);
+                            }
+                        }
+                    }
+                },
+                function (x, y) {
+                    readings.noMove = true;
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                },
+                function () {
+                    if (!readings.noMove) {
+                        view.wb.push(readings.trace);
+                        view.wb_.push(JSON.parse(JSON.stringify(readings.trace)));
+                        draw(transform(view.wb));
+                        tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                        socket.send('new&Line&' + readings.trace.id + '&' + JSON.stringify(readings.trace));
+                    }
+                    readings.noMove = false;
+                }
+            ],
+            fill: [
+                function (x, y) {
+                    var iw = innerWidth / 2 * devicePixelRatio;
+                    var ih = innerHeight / 2 * devicePixelRatio;
+                    var wb = JSON.parse(JSON.stringify(view.wb));
+                    for (var i = 0; i < wb.length; i++) {
+                        var seg = wb[i].segments;
+                        for (var k = 0; k < wb[i].segments.length; k++) {
+                            for (var l = 0; l < wb[i].segments[k].length; l++) {
+                                wb[i].segments[k][l] += (l % 2 == 0) ? -(-wb[i].x - iw) : -(- wb[i].y - ih);
+                            }
+                        }
+                        wb[i].x = -iw;
+                        wb[i].y = -ih;
+                    }
+                    var drawing = [];
+                    pts = [];
+                    for (var i = 0; i < wb.length; i++) {
+                        var segi = wb[i].segments;
+                        var p = selfIntersection(wb[i]);
+
+                        if (p.length != 0) {
+                            for (s = 1; s < p.length; s++) {
+                                var sm = (s == 0) ? p.length - 1 : s - 1;
+                                var sprout = false;
+                                var l1 = p[sm][2] < p[sm][3];
+                                var l2 = p[s][2] > p[s][3];
+                                var si1 = (l1) ? p[sm][2] : p[sm][3];
+                                var si2 = (l2) ? p[s][3] : p[s][2];
+                                var sk2 = (!l1) ? p[sm][2] : p[sm][3];
+                                var sk1 = (!l2) ? p[s][3] : p[s][2];
+                                var rev = sk1 > sk2;
+                                for (var m = s; m < p.length; m++) {
+                                    if (m != s - 1) {
+                                        var mrev = si1 > sk2;
+                                        var m1 = (!mrev) ? si1 : sk2;
+                                        var m2 = (!mrev) ? sk2 : si1;
+                                        if (p[m][2] >= m1 && p[m][2] <= m1) sprout = true;
+                                        if (p[m][3] >= m1 && p[m][3] <= m2) sprout = true;
+                                        break;
+                                    }
+                                }
+                                if (sprout) {
+                                    var cuti = segi.slice(si1, si2);
+                                    var cutk = segi.slice(sk1, sk2);
+                                    if (rev) cutk = segi.slice(sk2, sk1);
+                                    cutk = (rev) ? cutk.reverse() : cutk;
+                                    cuti.unshift([p[sm][0] + iw, p[sm][1] + ih])
+                                    cuti.push([p[s][0] + iw, p[s][1] + ih])
+                                    var cut = cuti.concat(cutk);
+                                    drawing.push({
+                                        x: -iw,
+                                        y: -ih,
+                                        segments: cut,
+                                        closed: true,
+                                    });
+                                } else {
+                                    var l = p[s][2] < p[s][3];
+                                    var si = (l) ? p[s][2] : p[s][3];
+                                    var sk = (l) ? p[s][3] : p[s][2];
+                                    var cut = segi.slice(si, sk);
+                                    if (segi[si - 1][5]) cut.unshift([p[s][0] + iw, p[s][1] + ih, segi[si - 1][2], segi[si - 1][3], segi[si - 1][4], segi[si - 1][5]]);
+                                    else if (segi[si - 1][3]) cut.unshift([p[s][0] + iw, p[s][1] + ih, segi[si - 1][2], segi[si - 1][3]]);
+                                    cut.push([p[s][0] + iw, p[s][1] + ih])
+                                    drawing.push({
+                                        x: -iw,
+                                        y: -ih,
+                                        segments: cut,
+                                        closed: true,
+                                        color: 'transparent',
+                                        strokeColor: 'transparent'
+                                    });
+                                }
+                            }
+                            if (true) {
+                                var s = (sprout && wb[i].segments.length > 30) ? p.length - 1 : 0;
+                                var l = p[s][2] < p[s][3];
+                                var si = (l) ? p[s][2] : p[s][3];
+                                var sk = (l) ? p[s][3] : p[s][2];
+                                var cut = segi.slice(si, sk);
+                                if (segi[si - 1][5]) cut.unshift([p[s][0] + iw, p[s][1] + ih, segi[si - 1][2], segi[si - 1][3], segi[si - 1][4], segi[si - 1][5]]);
+                                else if (segi[si - 1][3]) cut.unshift([p[s][0] + iw, p[s][1] + ih, segi[si - 1][2], segi[si - 1][3]]);
+                                cut.push([p[s][0] + iw, p[s][1] + ih]);
+                                drawing.push({
+                                    x: -iw,
+                                    y: -ih,
+                                    segments: cut,
+                                    closed: true,
+                                    color: 'transparent',
+                                    strokeColor: 'transparent'
+                                });
+                            }
+                        }
+
+                        for (var k = i; k < wb.length; k++) {
+                            var segk = wb[k].segments;
+                            if (i != k) {
+                                var p = intersection(wb[i], wb[k]);
+                                if (p.length == 1) pts.push([i, k, p[0]]);
+                                for (var s = 1; s < p.length; s++) {
+                                    var si1 = p[s - 1][2];
+                                    var sk1 = p[s - 1][3];
+
+                                    var si2 = p[s][2];
+                                    var sk2 = p[s][3];
+
+                                    var cuti1 = (si1 < si2) ? si1 : si2;
+                                    var cuti2 = (si1 > si2) ? si1 : si2;
+                                    var cutk1 = (sk1 < sk2) ? sk1 : sk2;
+                                    var cutk2 = (sk1 > sk2) ? sk1 : sk2;
+                                    var cuti = segi.slice(cuti1, cuti2);
+                                    var cutk = segk.slice(cutk1, cutk2);
+                                    var rev = (sk1 < sk2) ? true : false;
+                                    var end1 = p[s];
+                                    var end2 = p[s - 1];
+                                    if (!rev) {
+                                        end1 = p[s - 1];
+                                        end2 = p[s];
+                                    }
+                                    for (var ci = 0; ci < cuti.length; ci++) {
+                                        for (var key in cuti[ci]) {
+                                            cuti[ci][key] += (key % 2 == 0) ? wb[i].x + iw : wb[i].y + ih;
+                                        }
+                                    }
+                                    for (var ck = 0; ck < cutk.length; ck++) {
+                                        for (var key in cutk[ck]) {
+                                            cutk[ck][key] += (key % 2 == 0) ? wb[k].x + iw : wb[k].y + ih;
+                                        }
+                                    }
+                                    if (!rev) cuti.unshift([end1[0] + iw, end1[1] + ih]);
+                                    else cuti.push([end1[0] + iw, end1[1] + ih]);
+                                    cutk.unshift([end2[0] + iw, end2[1] + ih]);
+                                    if (rev) {
+                                        cuti = cuti.reverse();
+                                        //cuti[0] = [cuti[0][0], cuti[0][1], cuti[cuti.length-1][2], cuti[cuti.length-1][3]];
+                                        for (var l = 1; l < cuti.length; l++) {
+                                            var cutil = JSON.parse(JSON.stringify(cuti[l]));
+                                            if (cutil[5]) {
+                                                var l2 = cutil[2]
+                                                var l3 = cutil[3]
+                                                //cuti[l] = [cutil[0], cutil[1], cuti[l-1][4], cuti[l-1][5], cuti[l-1][2], cuti[l-1][3]];
+                                                cuti[l - 1] = [cuti[l - 1][0], cuti[l - 1][1], cutil[4], cutil[5], l2, l3];
+                                            } else if (cutil[3]) {
+                                                var l2 = cutil[2]
+                                                var l3 = cutil[3]
+                                                cuti[l - 1] = [cuti[l - 1][0], cuti[l - 1][1], l2, l3];
+                                            }
+                                        }
+                                    }
+                                    var cut = cutk.concat(cuti);
+                                    drawing.push({
+                                        x: -iw,
+                                        y: -ih,
+                                        segments: cut,
+                                        closed: true,
+                                        color: 'transparent',
+                                        strokeColor: 'transparent'
+                                    });
+
+                                }
+
+                            }
+                        }
+                    }
+                    ch = (pts[0]) ? [[pts[0]]] : [];
+                    pts.splice(0, 1);
+                    var k = 0;
+                    if (ch[0]) {
+                        loop1: while (true) {
+                            var go = false;
+                            loop2: for (var i = 0; i < pts.length; i++) {
+                                for (var l = i + 1; l < pts.length; l++) {
+                                    //if (pts[i][0] == pts[l][0] && pts[i][1] == pts[l][1]) pts[i][1]--;
+                                }
+                                var a = ch[k][ch[k].length - 1];
+                                var b = pts[i];
+
+                                if (a[0] == b[0] || a[1] == b[1] || a[0] == b[1] || a[1] == b[0]) {
+                                    go = true;
+                                    ch[k].push(b);
+                                    pts.splice(i, 1);
+                                    break loop2;
+                                }
+                            }
+                            if (!go) {
+                                var a = ch[k][ch[k].length - 1];
+                                var b = ch[k][0];
+                                if (!(a[0] == b[0] || a[1] == b[1] || a[0] == b[1] || a[1] == b[0]) || ch[k].length < 3) {
+                                    if (!pts[0]) break loop1;
+                                    else ch.push(pts.splice(0, 1)), console.log(pts[0]);
+                                } else {
+                                    if (pts[0]) {
+                                        console.log(pts[0]);
+                                        ch.push(pts.splice(0, 1));
+                                        k = ch.length - 1;
+                                    } else break loop1;
+                                }
+                            }
+                        }
+                        for (var i = 0; i < ch.length; i++) { //the number of polygons
+                            var cut = [];
+                            for (var k = 0; k < ch[i].length; k++) { //the number of facets in polygon
+                                var ni, nk, n; //n is index of shape in viewboard
+                                var chi = ch[i][(k == 0) ? ch[i].length - 1 : k - 1]; //first intersecting facet
+                                var chk = ch[i][k]; //second intersecting facet
+                                //chi and chk is intersecting ponts and it`s facets at once. It`s becuse yet unclear, to which facet point is belonging to.     I think that facets are defined fine, but not intersections.
+                                if (chk[0] == chi[0]) n = chi[0], ni = 2, nk = 2;
+                                if (chk[1] == chi[1]) n = chi[1], ni = 3, nk = 3;
+                                if (chk[1] == chi[0]) n = chi[0], ni = 2, nk = 3;
+                                if (chk[0] == chi[1]) n = chi[1], ni = 3, nk = 2;
+                                if (wb[n]) {
+                                var nsi = chi[2][ni];
+                                var nsk = chk[2][nk];
+                                var n1 = (nsi < nsk) ? nsi : nsk;
+                                var n2 = (nsi > nsk) ? nsi : nsk;
+                                var rev = (nsi > nsk) ? true : false;
+
+                                var seg = wb[n].segments.slice(n1, n2);
+                                if (rev) {
+                                    seg = seg.reverse();
+                                    //cuti[0] = [cuti[0][0], cuti[0][1], cuti[cuti.length-1][2], cuti[cuti.length-1][3]];
+                                    for (var l = 1; l < seg.length; l++) {
+                                        var segl = JSON.parse(JSON.stringify(seg[l]));
+                                        if (segl[5]) {
+                                            var l2 = segl[2]
+                                            var l3 = segl[3]
+                                            //cuti[l] = [cutil[0], cutil[1], cuti[l-1][4], cuti[l-1][5], cuti[l-1][2], cuti[l-1][3]];
+                                            seg[l - 1] = [seg[l - 1][0], seg[l - 1][1], segl[4], segl[5], l2, l3];
+                                        } else if (segl[3]) {
+                                            var l2 = segl[2]
+                                            var l3 = segl[3]
+                                            seg[l - 1] = [seg[l - 1][0], seg[l - 1][1], l2, l3];
+                                        }
+                                    }
+                                }
+                                cut = cut.concat(seg);
+                                var e1 = (nsi < nsk) ? chi[2] : chk[2];
+                                var e2 = (nsi > nsk) ? chi[2] : chk[2];
+                                var end1 = (rev) ? e2 : e1;
+                                var end2 = (rev) ? e1 : e2;
+                                //cut.unshift([end1[0]+iw, end1[1]+ih])
+                                cut.push([end2[0] + iw, end2[1] + ih])
+                            }
+                            }
+
+                            drawing.push({
+                                x: -iw,
+                                y: -ih,
+                                segments: cut,
+                                closed: true,
+                                color: 'transparent',
+                                strokeColor: 'transparent'
+                            });
+                        }
+                    }
+
+                    //socket.send('new&Line&' + Math.random().toString(16).slice(2) + '&' + JSON.stringify(drawing[0]));
+                    var sel = draw(transform(drawing, { x: view.x, y: view.y, deg: view.deg, zoom: view.zoom, wb_: JSON.parse(JSON.stringify(drawing)) }), tctx, x, y);
+                    if (sel[0]) {
+                        var area = Infinity;
+                        var i;
+                        for (var o = 0; o < sel.length; o++) {
+                            var calc = calcPolygonArea(sel[o]);
+                            if (calc < area) area = calc, i = o;
+                        }
+                        sel[i].color = ls.color;
+                        sel[i].strokeColor = ls.color;
+                        sel[i].strokeWidth = ls.pencilWidth;
+                        var id = Math.random().toString(16).slice(2);
+                        sel[i].id = id;
+                        var obj = detransform([sel[i]])[0]
+                        view.wb.push(obj);
+                        var trace = JSON.stringify(obj);
+                        view.wb_.push(JSON.parse(trace));
+                        mine.push(id);
+                        draw(transform(view.wb));
+                        socket.send('new&Line&' + id + '&' + trace);
+                    } else {
+                        for (var i = 0; i < drawing.length; i++) {
+                            drawing[i].strokeColor = 'hsla(' + (Math.random() * 360) + ', 100%, 50%, 0.5)';
+                            drawing[i].color = 'rgba(0,255,0,0.3)';
+                            drawing[i].strokeWidth =  Math.random() * 50 + 3;
+                        }
+                        draw(transform(drawing, { x: view.x, y: view.y, deg: view.deg, zoom: view.zoom, wb_: JSON.parse(JSON.stringify(drawing)) }), tctx, x, y);
+                    }
+                }
+                ,
+                function (x, y) {
+
+                },
+                function () {
+                    var sel = readings.selFill;
+
+                    tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                }
+            ]
+        }
+        function smooth(obj, power) {
+            var seg = obj._segments || obj.segments;
+            var pow = (power || power == 0) ? 2 + power / 2 : Math.PI;
+            if (seg.length > 2)
+                for (var i = 0; i < seg.length - 1; i++) {
+                    var im = (i < 1) ? (obj.closed) ? seg[seg.length - 2] : seg[i] : seg[i - 1];
+                    var ib = seg[i + 1];
+                    var a = ((ib[0] + seg[i][0]) / 2 + (seg[i][0] + (seg[i][0] - ib[0]) * pow + ib[0]) / 2),
+                        b = ((ib[1] + seg[i][1]) / 2 + (seg[i][1] + (seg[i][1] - ib[1]) * pow + ib[1]) / 2),
+                        c = ((im[0] + seg[i][0]) / 2 + (seg[i][0] + (seg[i][0] - im[0]) * pow + im[0]) / 2),
+                        d = ((im[1] + seg[i][1]) / 2 + (seg[i][1] + (seg[i][1] - im[1]) * pow + im[1]) / 2);
+
+                    im[4] = ((seg[i][0] - c + seg[i][0]) + a + seg[i][0]) / 3,
+                        im[5] = ((seg[i][1] - d + seg[i][1]) + b + seg[i][1]) / 3;
+
+                    seg[i][2] = ((seg[i][0] - a + seg[i][0]) + c + seg[i][0]) / 3;
+                    seg[i][3] = ((seg[i][1] - b + seg[i][1]) + d + seg[i][1]) / 3;
+                    if (power == 0) seg[i].length = 2, im.length = 2;
+                }
+            if (power == 0) seg[seg.length - 1].length = 2;
+            obj.segments = seg;
+        };
+        get('hide').onclick = function () {
+            get('panel').classList.toggle('hidden');
+            get('hide').classList.toggle('flip');
+        }
+        get('color').onclick = function () {
+            get('colorPick').classList.toggle('colorHide');
+            get('toolbox').classList.add('colorHide');
+        }
+        get('tools').onclick = function () {
+            get('toolbox').classList.toggle('colorHide');
+            get('colorPick').classList.add('colorHide');
+        }
+        window.addEventListener('resize', function (event) {
+            tc.width = (innerWidth * devicePixelRatio);
+            tc.height = (innerHeight * devicePixelRatio);
+            c.width = (innerWidth * devicePixelRatio);
+            c.height = (innerHeight * devicePixelRatio);
+            draw(transform(view.wb))
+        }, true);
+        document.onselectstart = function () {
+            return false
+        };
+        function initColorPicker() {
+            var canvas = document.getElementById('colorCanvas');
+            var canvasContext = canvas.getContext('2d');
+
+            let gradient = canvas.getContext('2d').createLinearGradient(0, 0, canvas.width, 0)
+            gradient.addColorStop(0, '#ff0000')
+            gradient.addColorStop(1 / 6, '#ffff00')
+            gradient.addColorStop((1 / 6) * 2, '#00ff00')
+            gradient.addColorStop((1 / 6) * 3, '#00ffff')
+            gradient.addColorStop((1 / 6) * 4, '#0000ff')
+            gradient.addColorStop((1 / 6) * 5, '#ff00ff')
+            gradient.addColorStop(1, '#ff0000')
+            canvas.getContext('2d').fillStyle = gradient
+            canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height)
+
+            gradient = canvas.getContext('2d').createLinearGradient(0, 0, 0, canvas.height)
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
+            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)')
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+            canvas.getContext('2d').fillStyle = gradient
+            canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height)
+
+            gradient = canvas.getContext('2d').createLinearGradient(0, 0, 0, canvas.height)
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)')
+            gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0)')
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)')
+            canvas.getContext('2d').fillStyle = gradient
+            canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height)
+            canvas.onmousedown = function () {
+                readings.selColor = true;
+            }
+            canvas.addEventListener('touchstart', canvas.onmousedown);
+            canvas.onmousemove = function (e) {
+                if (readings.selColor) {
+
+                    var rect = e.target.getBoundingClientRect();
+                    var x = (e.clientX || e.targetTouches[0].clientX) - rect.left;
+                    var y = (e.clientY || e.targetTouches[0].clientY) - rect.top;
+                    if (x > 0 && y > 0 && x < canvas.clientWidth && y < canvas.clientHeight) {
+                        var imgData = canvasContext.getImageData((x / canvas.clientWidth) * canvas.width, (y / canvas.clientHeight) * canvas.height, 1, 1)
+                        var rgba = imgData.data;
+                        ls.rgba = JSON.stringify(rgba);
+                        var col = "rgba(" + rgba[0] + ", " + rgba[1] + ", " + rgba[2] + ", " + ls.opacity + ")";
+                        if (readings.pen == 'background') {
+                            get('myCanvas').style.backgroundColor = col;
+                            ls.background = col;
+                        } else {
+                            ls.color = col;
+                            get('color').style.backgroundColor = col;
+                        }
+                    }
+                }
+            }
+            canvas.addEventListener('touchmove', canvas.onmousemove);
+            canvas.onmouseup = function () {
+                readings.selColor = false;
+            }
+            canvas.addEventListener('touchend', canvas.onmouseup);
+        }
+
+        initColorPicker();
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                get('fullscreen').style.backgroundImage = 'url(img/fullscreenexit.svg)';
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+                get('fullscreen').style.backgroundImage = 'url(img/fullscreen.svg)';
+            }
+        }
+        function save() {
+            get('save').href = c.toDataURL()
+        }
+        function openArch() {
+            get('range').classList.toggle('hideArch');
+        }
+        function select() {
+            readings.pen = 'select';
+            get('pen').style.backgroundImage = 'url(img/select.svg)';
+        }
+        function showSel(wb) {
+            var wb_ = wb || transform(view.wb);
+            var paths = readings.selected;
+            if (paths.length > 0) {
+
+                var rect = readings.selRect = {
+                    top: Infinity,
+                    left: Infinity,
+                    bottom: -Infinity,
+                    right: -Infinity,
+                }
+
+                for (var key in paths) {
+                    var path = wb_[paths[key]];
+                    for (var i = 0; i < path.segments.length; i++) {
+                        var seg = path.segments[i];
+                        if (seg[1] + path.y + (innerHeight / 2 * devicePixelRatio) > rect.bottom) rect.bottom = seg[1] + path.y + (innerHeight / 2 * devicePixelRatio) + path.strokeWidth / 2;
+                        if (seg[0] + path.x + (innerWidth / 2 * devicePixelRatio) > rect.right) rect.right = seg[0] + path.x + (innerWidth / 2 * devicePixelRatio) + path.strokeWidth / 2;
+                        if (seg[1] + path.y + (innerHeight / 2 * devicePixelRatio) < rect.top) rect.top = seg[1] + path.y + (innerHeight / 2 * devicePixelRatio) - path.strokeWidth / 2;
+                        if (seg[0] + path.x + (innerWidth / 2 * devicePixelRatio) < rect.left) rect.left = seg[0] + path.x + (innerWidth / 2 * devicePixelRatio) - path.strokeWidth / 2;
+                    }
+                }
+                tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+                tctx.lineWidth = 2;
+                tctx.strokeStyle = 'black';
+                tctx.setLineDash([7, 4]);
+                tctx.fillStyle = 'rgba(255,255,255,0.5)';
+                tctx.beginPath();
+                tctx.moveTo(rect.left, rect.top)
+                tctx.lineTo(rect.right, rect.top);
+                tctx.lineTo(rect.right, rect.bottom);
+                tctx.lineTo(rect.left, rect.bottom);
+                tctx.lineTo(rect.left, rect.top)
+                tctx.stroke();
+                tctx.fill();
+                tctx.setLineDash([0, 0]);
+            }
+        }
+        setBrush = function (pen) {
+
+            readings.pen = pen;
+            get('pen').style.backgroundImage = 'url(img/' + pen + '.svg)';
+
+        }
+
+        var back = function () {
+            if (mine[0]) {
+                var key = mine.length - 1;
+                for (var i = 0; i < view.wb.length; i++) {
+                    if (view.wb[i].id == mine[key]) {
+                        mine.splice(key, 1)
+                        removed.push(view.wb[i]);
+                        socket.send('del&' + view.wb[i].id);
+                        view.wb.splice(i, 1);
+                        view.wb_.splice(i, 1);
+                        draw(transform(view.wb));
+                    }
+                }
+            }
+        }
+        var forward = function () {
+            if (removed.length > 0) {
+                var i = removed.length - 1;
+                view.wb.push(removed[i]);
+                var rem_ = JSON.stringify(removed[i])
+                view.wb_.push(JSON.parse(rem_));
+                mine.push(removed[i].id);
+                socket.send('new&Line&' + removed[i].id + '&' + rem_);
+                removed.splice(i, 1)
+                draw(transform(view.wb));
+            }
+        }
+        document.body.onkeydown = function (e) {
+            if (!readings.input) {
+                if (e.ctrlKey) {
+                    if (e.keyCode == 90) back();
+                    if (e.keyCode == 89) forward();
+                } else {
+                    if (e.keyCode == 49) setBrush('pencil');
+                    if (e.keyCode == 50) setBrush('eraser');
+                    if (e.keyCode == 51) setBrush('picker');
+                    if (e.keyCode == 52) setBrush('fill');
+                    if (e.keyCode == 53) setBrush('select');
+                    if (e.keyCode == 54) setBrush('line');
+                    if (e.keyCode == 55) setBrush('circle');
+                    if (e.keyCode == 56) setBrush('polygon');
+                    if (e.keyCode == 57) setBrush('rect');
+                    if (e.keyCode == 32 && (readings.leftClick || readings.touchDraw)) readings.add = !0;
+                }
+            }
+        }
+        var numInput = document.querySelectorAll('input[type="number"]');
+        for (var i = 0; i < numInput.length; i++) {
+            // Listen for input event on numInput.
+            numInput[i].onfocus = function () {
+                readings.input = !0;
+            }
+            numInput[i].onblur = function () {
+                readings.input = !1;
+            }
+        }
+    </script>
+</body>
+
+</html>

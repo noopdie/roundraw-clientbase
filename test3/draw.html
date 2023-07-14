@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <title>Roundraw - vector online editor</title>
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="area">
+        <canvas id='myCanvas'>
+        </canvas>
+        <canvas id='tempCanvas'>
+        </canvas>
+    </div>
+    <div id='colorPick' class='colorHide'><canvas id="colorCanvas"></canvas><br>
+        <input type="range" min='0' max='1' step='0.01' id='opacity' />
+    </div>
+
+    <div id="range" class='hideArch'>
+        <div id="range1"></div>
+        <div id="range2"></div>
+    </div>
+    <div id="top">
+        <table><tr>
+            <td ontouchstart='unzoom()' onclick="if (typeof ontouchstart == 'undefined') unzoom()" style='background-image: url(img/unzoom.svg)'></td>
+            <td id="fullscreen" ontouchstart='toggleFullScreen()' onclick="if (typeof ontouchstart == 'undefined') toggleFullScreen()" style='background-image: url(img/fullscreen.svg)'></td>
+            <td ontouchstart='back()' onclick="if (typeof ontouchstart == 'undefined') back()" style='background-image: url(img/back.svg)'></td>
+            <td ontouchstart='forward()' onclick="if (typeof ontouchstart == 'undefined') forward()" style='background-image: url(img/forward.svg)'></td>
+        </tr></table>
+    </div>
+    <table id="toolbox" class='colorHide'>
+        <tr>
+           
+            <td><a id='save' onclick='save()' download='image.png' style='background-image: url(img/save.svg)'></a></td>
+            <td id='picker' onclick='setBrush("picker")' style='background-image: url(img/picker.svg)'></td>
+
+        </tr>
+        <tr>
+            <td id='fill' onclick='setBrush("fill")' style='background-image: url(img/fill.svg)'></td>
+            <td id='cursor' onclick='setBrush("cursor")' style='background-image: url(img/cursor.svg)'></td>
+            <td id='line' onclick='setBrush("line")' style='background-image: url(img/line.svg)'></td>
+            <td id='circle' onclick='setBrush("circle")' style='background-image: url(img/circle.svg)'></td>
+            <td id='styler' onclick='setBrush("styler")' style='background-image: url(img/eraser.svg)'></td>
+        </tr>
+        <tr>
+            <td id='sun' onclick='setBrush("sun")' style='background-image: url(img/sun.svg)'></td>
+            <td id='polygon' onclick='setBrush("polygon")' style='background-image: url(img/polygon.svg)'></td>
+            <td id='rect' onclick='setBrush("rect")' style='background-image: url(img/rect.svg)'></td>
+            <td id='keys' onclick='' href="help.html" style='background-image: url(img/keys.svg)'></td>
+        </tr>
+        <tr>
+            <td id='reset' onclick='reset()' style='background-image: url(img/reset.svg)'></td>
+            <td id='archive' onclick='openArch()' style='background-image: url(img/archive.svg)'></td>
+            <td id='select' onclick='select()' style='background-image: url(img/select.svg)'></td>
+            <td id='background' onclick='setBrush("background")' style='background-image: url(img/background.svg)'></td>
+        </tr>
+    </table>
+    <div id="panel" class="hidden">
+        <div id='hide'></div>
+        <div id='pen'></div>
+        <div id='tools'></div>
+        <div>
+            <p id='color'></p>
+        </div>
+        <input id="iw" min='0' onchange='change(this, "iw");' type='number' value='0'>
+        <input id='width' max="300" min="1" type='range' value="0">
+    </div>
+    <p id='info'></p>
+    <script src="js/variables.js"></script>
+    <script src="js/funcs/draw.js"></script>
+    <script src="js/funcs/smooth.js"></script>
+    <script src="js/funcs/transform.js"></script>
+    <script src="js/funcs/detransform.js"></script>
+    <script src="js/funcs/initColorPicker.js"></script>
+    <script src="js/funcs/showSel.js"></script>
+    <script src="js/funcs/calcPolygonArea.js"></script>
+    <script src="js/funcs/doesLineInterceptCircle.js"></script>
+    <script src="js/funcs/selfIntersection.js"></script>
+    <script src="js/funcs/intersection.js"></script>
+    <script src="js/funcs/back.js"></script>
+    <script src="js/funcs/forward.js"></script>
+    <script src="js/funcs/toggleFullScreen.js"></script>
+    <script src="js/funcs/unzoom.js"></script>
+    <script src="script.js"></script>
+    <script src="js/events/socket/onmessage.js"></script>
+    <script src="js/events/area/touchstart.js"></script>
+    <script src="js/events/area/touchmove.js"></script>
+    <script src="js/events/area/touchend.js"></script>
+    <script src="js/events/area/mousedown.js"></script>
+    <script src="js/events/area/mousemove.js"></script>
+    <script src="js/events/area/mouseup.js"></script>
+    <script src="js/events/area/onwheel.js"></script>
+    <script src="js/events/range/move.js"></script>
+    <script src="js/events/body/onkeydown.js"></script>
+    <script src="js/events/window/resize.js"></script>
+    <script src="js/brushes/archive.js"></script>
+    <script src="js/brushes/circle.js"></script>
+    <script src="js/brushes/eraser.js"></script>
+    <script src="js/brushes/forward.js"></script>
+    <script src="js/brushes/pencil.js"></script>
+    <script src="js/brushes/rect.js"></script>
+    <script src="js/brushes/select.js"></script>
+    <script src="js/brushes/background.js"></script>
+    <script src="js/brushes/cursor.js"></script>
+    <script src="js/brushes/fullscreen.js"></script>
+    <script src="js/brushes/picker.js"></script>
+    <script src="js/brushes/reset.js"></script>
+    <script src="js/brushes/styler.js"></script>
+    <script src="js/brushes/back.js"></script>
+    <script src="js/brushes/fill.js"></script>
+    <script src="js/brushes/line.js"></script>
+    <script src="js/brushes/polygon.js"></script>
+    <script src="js/brushes/save.js"></script>
+    <script src="js/brushes/sun.js"></script>
+    <script src="js/brushes/cursor.js"></script>
+</body>
+
+</html>

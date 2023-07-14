@@ -1,0 +1,47 @@
+get('area').addEventListener('touchmove', function (e) {
+    if (e.touches[1] && !readings.touchDraw) {
+        var distance = Math.sqrt(Math.pow((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), 2) + Math.pow((e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio), 2));
+        view.zoom = readings.startZoom * (distance / readings.startDistance);
+        readings.moveX = ((e.touches[0].clientX * devicePixelRatio) + (e.touches[1].clientX * devicePixelRatio)) / 2;
+        view.x = readings.startViewX + (readings.moveX - readings.startX);
+        view.x += (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * view.zoom / readings.startZoom - (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX);
+        readings.moveY = ((e.touches[0].clientY * devicePixelRatio) + (e.touches[1].clientY * devicePixelRatio)) / 2;
+        view.y = readings.startViewY + (readings.moveY - readings.startY);
+        view.y += (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * view.zoom / readings.startZoom - (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY);
+        var moveDeg = Math.atan2((e.touches[1].clientX * devicePixelRatio) - (e.touches[0].clientX * devicePixelRatio), (e.touches[1].clientY * devicePixelRatio) - (e.touches[0].clientY * devicePixelRatio)) * 180 / Math.PI;
+        var deg = readings.startDeg - moveDeg;
+        view.deg = readings.deg + deg;
+        var angle = deg * Math.PI / 180;
+        var x = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.cos(angle) - (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.sin(angle);
+        var y = (view.x + (innerWidth * devicePixelRatio) / 2 - readings.moveX) * Math.sin(angle) + (view.y + (innerHeight * devicePixelRatio) / 2 - readings.moveY) * Math.cos(angle);
+        view.x = x + readings.moveX - (innerWidth * devicePixelRatio) / 2;
+        view.y = y + readings.moveY - (innerHeight * devicePixelRatio) / 2;
+        if (view.deg > 360) view.deg -= 360;
+        if (view.deg < 0) view.deg += 360;
+        if (readings.select.length > 0 && readings.pen == 'select') showSel();
+        var wb = transform(view.wb)
+        draw(wb);
+        if (readings.pen == 'cursor') {
+            tctx.clearRect(0, 0, (innerWidth * devicePixelRatio), (innerHeight * devicePixelRatio));
+            if (readings.selected >= 0) {
+                var i = readings.selected;
+            for (var l = 0; l < wb[i].segments.length; l++) {
+                tctx.lineWidth = 2;
+                tctx.fillStyle = 'rgba(0,0,0,0.5)';
+                tctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                tctx.beginPath();
+                tctx.arc(wb[i].x + wb[i].segments[l][0] + centerw, wb[i].y + wb[i].segments[l][1] + centerh, 10, 0, 2 * Math.PI, false);
+                tctx.stroke();
+                tctx.fill();
+            }
+        }
+        }
+    } else if (e.touches[0] && readings.touchDraw) {
+        if (brush[readings.pen][3] && readings.add) {
+            brush[readings.pen][3]();
+            readings.add = false;
+        }
+        brush[readings.pen][1]((e.touches[0].clientX * devicePixelRatio), (e.touches[0].clientY * devicePixelRatio));
+
+    }
+});

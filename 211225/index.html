@@ -1,0 +1,352 @@
+<html>
+
+     
+<head>
+<link rel="icon" type="image/x-icon" href="/roundraw/favicon.ico">
+<meta charset='utf-8'>
+     <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+     <meta name="yandex-verification" content="336fc51d93ccf53f" />
+<title>Рисовать онлайн бесплатно рисунки</title>
+<style>
+body {
+color: rgba(255,255,255,0.7);
+margin: 0;
+background: linear-gradient(135deg,rgba(230,70,130,1)  10%, rgba(255,90,30,1) 72%);
+font-size: larger;
+font-family: Ubuntu Light, Segoe UI Light, Arial !important;
+ scroll-behavior: smooth;
+    text-align: center;
+}
+.bar {
+text-align: left;
+width: 100%;
+box-shadow: 0 0 50px 0 rgba(0,0,0,0.1);
+border-bottom: solid 1px rgba(255,255,255,0.1);
+position: fixed;
+background: transparent;
+}
+.bar a {
+text-decoration: none;
+display: inline-block;
+float: right;
+color: rgba(255,255,255,0.7);
+padding: 1em;
+}
+.bar p {
+display: inline-block;
+padding: 1em;
+margin: 0;
+background: rgba(255,255,255,0.1);
+}
+.title {
+    width: 100%;
+    padding-top: 1em;
+    font-size: 3em;
+    padding-bottom: 1em;
+    background: rgba(255,255,255,0.1);
+box-shadow: 0 0 50px 0 rgba(0,0,0,0.1);
+color: rgba(255,255,255,0.7);
+}
+.top {
+    padding-bottom: 2em;
+    padding-top: 2em;
+ background: url(title3.png) repeat rgba(255,255,255,0);
+background-position-top: -5px;
+box-shadow: inset 0 0 150px 0 rgba(0,0,0,0.3), 0 0 50px 0 rgba(0,0,0,0.1);
+background-position-y: 0px;
+}
+.text {
+padding: 20px;
+color: #555;
+}
+#hello {
+padding: 20px;
+color: #f0f0f0;
+background: #2255aa
+}
+#top2 {
+ background: url(title2.png) repeat;
+}
+#top3 {
+ background: url(title4.png) repeat;
+}
+#t1 {
+ background: url(title3.png) repeat rgba(255,255,255,0.9);
+}
+#t0 {
+ background: url(title4.png) repeat rgba(30,120,170,0.9);
+ color: rgba(255,255,255,0.75);
+ padding-bottom: 30px;
+}
+#glink {
+text-decoration: none;
+background: rgba(0,0,70,0.4);
+color: rgba(255,255,255,0.7);
+padding: 10px;
+margin-top: 20px;
+display: block;
+border-radius: 7px;
+}
+#link {
+text-decoration: none;
+border: 0;
+font-size: 1.87em;
+width: 200%;
+padding: 10px;
+
+background: rgba(255,255,255,0.85);
+border-top-left-radius: 7px;
+border-bottom-left-radius: 7px; 
+}
+#copy {
+text-decoration: none;
+border: 0;
+margin-left: -5px;
+font-size: 1.7em;
+padding: 10px;
+padding-left: 20px;
+padding-right: 20px;
+color: white;
+text-shadow: 2px 0 0px #337, 
+0 2px 0px #337, 
+-2px 0 0px #337, 
+0 -2px 0px #337;
+background: #00afff;
+}
+#go {
+text-decoration: none;
+border: 0;
+width: 60%;
+margin-left: -5px;
+font-size: 1.7em;
+text-align: center;
+padding: 10px;
+border-top-right-radius: 7px;
+border-bottom-right-radius: 7px; 
+color: white;
+
+background: #f74;
+}
+#field {
+text-decoration: none;
+background: rgba(0,0,70,0.4);
+color: rgba(255,255,255,0.7);
+margin-top: 20px;
+text-align: left;
+display: none;
+  
+border-radius: 7px;
+}
+
+img {
+transition: 0.2s;
+height: 99%;
+}
+#images {
+padding: 0;
+height: 300px;
+background: white;
+}
+.top a {
+text-decoration: none;
+background: rgba(0,0,0,0.3);
+color: rgba(255,255,255,0.7);
+padding: 10px;
+border-radius: 7px;
+}
+.footer {
+    width: 100%;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: -15px;
+}
+#chat {
+    filter: blur(0);
+    width: 100%;
+    height: calc(100% - 26px);
+    border: 0;
+    border-bottom-left-radius: 13px;
+    position: relative;
+    border-bottom-right-radius: 13px;
+}
+#chatArea {
+    width: 300px;
+    height: 376px;
+    border-radius: 13px;
+    border: solid rgba(0, 0, 0, 0.123) 2px;
+    position: fixed;
+    top: calc(100% - 396px);
+    left: calc(100% - 320px); 
+    overflow:hidden;
+    resize: both;
+}
+#chatTitle {
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+background-color: #343247;
+color: white;
+padding: 6px;
+cursor: move;
+user-select: none;
+font-size: 14px;
+text-align: left;
+padding-left: 20px;
+}
+#hideChat {
+    top: 3px;
+    right: 3px;
+    position: absolute;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 3px;
+    border-radius: 100%;
+    background-color: rgb(78, 78, 78);
+}
+#chatCount {
+    top: 3px;
+    right: 40px;
+    position: absolute;
+    font-size: 14px;
+    padding: 3px;
+    background-color: #343247;
+}
+.hiddenChat {
+    transition: 0.3s;
+    bottom: -380px !important;
+    top: 100% !important;
+}
+#openChat {
+    position: fixed;
+    background-color: #000000bf;
+    bottom: -50px;
+    transition: 0.1s;
+    right: 150px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    width: 60px;
+    height: 30px;
+}
+.showOpenChat {
+    bottom: -3px !important;
+}
+</style>
+</head>
+<body>
+<div class='bar' id='toolbar'>
+<p>Roundraw</p>
+<a href='draw.html'>Рисовать!</a>
+<a href='gallery.html'>Галерея</a>
+<a href='versions.html'>Версии</a>
+<a href='#top2'>Что это?</a>
+</div>
+<div class='title top' id='top'>Roundraw - рисовать онлайн бесплатно</div>
+<div class='text' id='t0'>рисовать с друзьями по ссылке:
+<a onclick='getLink()' id='glink'>получить ссылку!</a>
+<div id='field'>
+	<input id='link' />
+	<a id='copy' onclick='copyLink()'>копировать</a>
+	<a id='go'>зайти</a>
+	</div>
+</div>
+<div class='title' id='top2'>Что такое Roundraw?</div>
+<div class='text' id='t1'>
+<h1>Roundraw - это векторный редактор изображений онлайн.</h1> Здесь вы можете рисовать онлайн бесплатно, заливать, перемещать, изменять и удалять фигуры. Рисунок сохраняется на экране даже при перезагрузке страницы. Так же, вы можете скачать рисунок нажатием одной кнопки. 
+<h1>Отличия от других онлайн-редакторов:<h1>
+<h2>Векторный</h2> - Вы можете выделить любую фигуру и изменить ее;
+<h2>Тень</h2> - Можно присвоить тень любой фигуре;
+<h2>Сглаживание</h2> - Имеется автоматическое сглаживание линий;
+<h2>Бесплатный</h2> - Можно рисовать онлайн бесплатно, без регистрации;
+<h2>Заливка</h2> - Умная заливка зальет фигуру, которую вы выделили.
+<h2>Изображения</h2> - Возможно залить фигуру изображением.
+</div>
+<div class='title top' id='top3'><a href='draw.html?v=2'>Начать рисовать!</a></div>
+<div id="chatArea">
+    <div id='chatTitle'>Обсуждение редактора
+        <div id="chatCount"></div>
+    </div> 
+    <a onclick="hideChat()" id='hideChat'>❌</a>
+<iframe id="chat" src="/chat.html?v=2"></iframe>
+</div>
+<div id="openChat" onclick="showChat()">📑</div>
+</body>
+<script>
+var get = function(e) {return document.getElementById(e)};
+function copyLink() {
+	get('link').select();
+	document.execCommand("copy");
+}
+function getLink() {
+	const http = new XMLHttpRequest()
+http.open('GET', 'http://noopdie.com/newWhiteboard')
+http.send()
+http.onload = () => {
+var link = 'http://noopdie.com/roundraw/211225/draw.html?' + http.responseText
+get('glink').style.display = 'none';
+	get('field').style.display = 'flex';
+	get('link').value = link;
+	get('go').href = link;
+	get('link').scrollLeft = get('link').scrollWidth;
+}
+}
+document.body.onscroll = function() {
+get('top').style.backgroundPositionY = ((document.body.scrollTop) / 1.5) + 'px';
+get('top2').style.backgroundPositionY = get('top3').style.backgroundPositionY = (document.body.scrollTop / 2) + 'px';
+get('t1').style.backgroundPositionY = (document.body.scrollTop / 2.5) + 'px';
+get('t0').style.backgroundPositionY = (document.body.scrollTop / 4) + 'px';
+var col = document.body.scrollTop / document.body.offsetHeight;
+get('toolbar').style.background = 'rgba(0,0,0,' + (col - 0.1) + ')';
+}
+var chatDrag = false, startX = 0, startY = 0, startChatX = 0, startChatY = 0;
+var chat = get('chatArea');
+get('chatTitle').onmousedown = function(e) {
+    chatDrag = true;
+    get('chat').style.pointerEvents = 'none';
+    document.body.style.overflow = 'hidden';
+    startX = (e.touches) ? e.touches[0].clientX : e.clientX;
+    startY = (e.touches) ? e.touches[0].clientY : e.clientY;
+    startChatX = chat.offsetLeft;
+    startChatY = chat.offsetTop;
+}
+document.body.onmousemove = function(e) {
+    if (chatDrag) {
+        var x = (e.touches) ? e.touches[0].clientX : e.clientX;
+        var y = (e.touches) ? e.touches[0].clientY : e.clientY;
+        chat.style.left = x - startX + startChatX;
+        chat.style.top =  y - startY + startChatY;
+        
+    }
+}
+document.body.onmouseup = function() {
+    chatDrag = false;
+    document.body.style.overflow = 'auto';
+    get('chat').style.pointerEvents = 'auto';
+}
+function hideChat() {
+    chat.classList.add('hiddenChat');
+    get('openChat').classList.add('showOpenChat');
+    localStorage.showChat = 'no';
+}
+function showChat() {
+    chat.classList.remove('hiddenChat');
+    get('openChat').classList.remove('showOpenChat');
+    localStorage.showChat = 'yes';
+}
+get('chatTitle').addEventListener('touchstart', get('chatTitle').onmousedown);
+document.body.addEventListener('touchmove', document.body.onmousemove);
+document.body.addEventListener('touchend', document.body.onmouseup);
+if (localStorage.showChat == 'no') {
+    chat.classList.add('hiddenChat');
+    get('openChat').classList.add('showOpenChat');
+}
+setInterval(function() {
+const http = new XMLHttpRequest()
+http.open('GET', 'http://noopdie.com/chatclients')
+http.send()
+http.onload = () => {
+get('openChat').innerText = '👤' + http.responseText;
+get('chatCount').innerText = '👤' + http.responseText;
+}
+}, 1000);
+</script>
+</html>

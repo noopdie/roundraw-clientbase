@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Roundraw - онлайн-редактор рисунков</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="yandex-verification" content="336fc51d93ccf53f" />
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div id='background' tabindex="0">
+    <canvas id='main'></canvas>
+    </div>
+    <a id='hide' onclick="get('panel').classList.toggle('hide'), get('toLeft').classList.toggle('hide');"></a>
+      <a id='toLeft' onclick="get('panel').classList.toggle('right'), get('toLeft').classList.toggle('flip');"></a>
+    <div id='panel' class="right">
+    	<div class='bar'>
+        <a onclick="get('panel').classList.toggle('hide'), get('toLeft').classList.toggle('hide');" style='background-image: url(img/closeleft.svg)'></a>
+        <a id='cursor' onclick='setBrush("cursor")' style='background-image: url(img/cursor.svg)'></a>
+        <a id='eraser' onclick='setBrush("eraser")' style='background-image: url(img/eraser.svg)'></a>
+        <a id='picker' onclick='setBrush("picker")' style='background-image: url(img/picker.svg)'></a>
+        <a id='fill' onclick='setBrush("fill")' style='background-image: url(img/fill.svg)'></a>
+        <a id='pencil' onclick='setBrush("pencil")' style='background-image: url(img/pencil.svg)'></a>
+        <a id='line' onclick='setBrush("line")' style='background-image: url(img/line.svg)'></a>
+        <a id='circle' onclick='setBrush("circle")' style='background-image: url(img/circle.svg)'></a>
+        <a id='polygon' onclick='setBrush("polygon")' style='background-image: url(img/polygon.svg)'></a>
+        <a id='rect' onclick='setBrush("rect")' style='background-image: url(img/rect.svg)'></a>
+        
+               <a id='fullscreen' onclick='toggleFullScreen()' download='image.png' style='background-image: url(img/fullscreen.svg)'></a>
+        
+        <a id='save' onclick='save()' download='image.png' style='background-image: url(img/save.svg)'></a>
+        <a id='back' onclick='back()' style='background-image: url(img/back.svg)'></a>
+        <a id='forward' onclick='forward()' style='background-image: url(img/forward.svg)'></a>
+        <a id='keys' onclick='' href="help.html" style='background-image: url(img/keys.svg)'></a>
+        <a id='reset' onclick='reset()' style='background-image: url(img/reset.svg)'></a>
+    </div>
+    <div id='tools'>
+    	<div id='color'></div>
+   <!--     <div id='tabs' class='tab'>
+            <a style='background: url(img/colors.svg) no-repeat 50%' onclick="get('colors').classList.toggle('ctab')"></a>
+            <a style='background: url(img/sizes.svg) no-repeat 50%' onclick="get('sizes').classList.toggle('ctab')"></a>
+            <a style='background: url(img/imgset.svg) no-repeat 50%' onclick="get('imgsets').classList.toggle('ctab')"></a>
+            <a style='background: url(img/seg.svg) no-repeat 50%' onclick="get('segs').classList.toggle('ctab')"></a>
+        </div>
+-->
+      
+
+        <div id='colors' class='tab'>
+        	     <div id='red'>
+                <input max='255' min='0' onchange='change(this, 0)' type='number' value='0'>
+            
+            <input id='r' max="255" min="0" oninput='change(this, 0)' type='range' value="0">
+       </div>
+           <div id='green'>
+                <input max='255' min='0' onchange='change(this, 1)' type='number' value='0'>
+  
+            <input id='g' max="255" min="0" oninput='change(this, 1)' type='range' value="0">
+                  </div>
+                  <div id='blue'>
+                <input max='255' min='0' onchange='change(this, 2)' type='number' value='0'>
+
+            <input id='b' max="255" min="0" oninput='change(this, 2)' type='range' value="0">
+                        </div>
+                        <div id='opacity'>
+                        	        
+                <input max='1' min='0' onchange='change(this, 3)' type='number' value='0'>
+                	<input id='o' max="1" step="0.01" min="0" type='range' value="1" oninput='change(this, 3)'>
+                
+</div>
+            <div id='fillmode'>
+            	<a>0</a>
+           	<input id='sf' max="3" min="0" type='range' value="0">
+                
+            </div>
+            
+        </div>
+        <div id='sizes' class='tab'>
+        	<div id='cap'>
+        	<a>0</a>
+        	<input id='c' max="2" min="0" type='range' value="0">
+        	         </div>
+   
+               
+                        <div id='shadow'>
+                <input min='0' onchange='change(this, "sh");' type='number' value='0'>
+                	<input id='sh' max="100" min="0" type='range' value="0">
+
+            </div>
+                     <div id='strwidth'>
+                
+                <input min='0' onchange='change(this, "strw");' type='number' value='0'>
+                	<input id='strw' max="100" min="0" type='range' value="0">
+   
+            </div>
+                        <div id='smooth'>
+                        	
+                <input min='0' onchange='change(this, "sm");' type='number' value='0'>
+                	<input id='sm' max="20" step="0.1" min="-20" type='range' value="0">
+
+            </div>
+                       <div id='slow'>
+                       	
+                <input min='1' onchange='change(this, "sl");' type='number' value='0'>
+                	<input id='sl' max="15" min="1" type='range' value="0">
+ 
+            </div>
+        </div>
+        <div id='imgsets' class='tab'>
+            <div id='imstyle' >
+            	        <input type="file" id='import' />
+<div id='delimg'>X</div>
+        
+            </div>
+                   <div id='imgwidth'>
+                   	
+                <input min='0' onchange='change(this, "iw");' type='number' value='500'>
+                	<input id='iw' max="1000" min="0" type='range' value="0">
+     
+            </div>
+                 <div id='imgheight'>
+                 	       
+                <input min='0' onchange='change(this, "ih");' type='number' value='500'>
+                	<input id='ih' max="1000" min="0" type='range' value="0">
+
+            </div>
+            
+                        <div id='imgx'>
+                        	
+                <input min='0' onchange='change(this, "ix");' type='number' value='250'>
+                	<input id='ix' max="500" min="-500" type='range' value="0">
+
+            </div>
+                        <div id='imgy'>
+                       
+                <input min='0' onchange='change(this, "iy");' type='number' value='-250'>
+                	 	<input id='iy' max="500" min="-500" type='range' value="0">
+
+            </div>
+        </div>
+        <div id='segs' class='tab'>
+                        <div id='x'>
+                        	
+                <input min='0' onchange='change(this, "x");' type='number' value='0'>
+                	<input id='xc' type='range' value="0">
+
+            </div>
+                      <div id='y'>
+                      	
+                <input min='0' onchange='change(this, "y");' type='number' value='0'>
+                	<input id='yc' type='range' value="0">
+  
+            </div>
+                     <div id='width'>
+                     	
+                <input min='0' onchange='change(this, "width");' type='number' value='0'>
+                	<input id='wc' min="1" type='range'>
+   
+            </div>
+                       <div id='height'>
+                             <input min='0' onchange='change(this, "height");' type='number' value='0'>
+                             	          	<input id='hc' min="1" type='range'>
+
+            </div>
+            </div>
+        </div>
+    </div>
+        <script src='KeepDraw.js'></script>
+<script src='js/script.js'></script>
+    <script>
+ 
+</script>
+</body>
+
+</html>

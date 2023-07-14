@@ -4,6 +4,7 @@
 <head>
 <meta charset='utf-8'>
      <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+        
      <meta name="yandex-verification" content="336fc51d93ccf53f" />
 <title>Рисовать онлайн бесплатно рисунки</title>
 <style>
@@ -46,13 +47,25 @@ background: rgba(255,255,255,0.1);
 box-shadow: 0 0 50px 0 rgba(0,0,0,0.1);
 color: rgba(255,255,255,0.7);
 }
+#bar top {
+	padding: 0;
+}
 .top {
     padding-bottom: 2em;
     padding-top: 2em;
- background: url(title.png) no-repeat rgba(255,255,255,0.1);
+    display: block;
+ background: url(img/title.png) no-repeat rgba(255,255,255,0.1);
 background-position-top: -5px;
 box-shadow: inset 0 0 150px 0 rgba(0,0,0,0.3), 0 0 50px 0 rgba(0,0,0,0.1);
 background-position-y: 0px;
+}
+#beta {
+	display: inline-block;
+	width: 100%;
+	padding: 10px;
+	background: rgba(0,0,0,0.3);
+	text-align: center;
+	margin: 0;
 }
 .text {
 padding: 20px;
@@ -64,13 +77,13 @@ color: #f0f0f0;
 background: #2255aa
 }
 #top2 {
- background: url(title2.png) repeat;
+ background: url(img/title2.png) repeat;
 }
 #top3 {
- background: url(title4.png) repeat;
+ background: url(img/title4.png) repeat;
 }
 #t1 {
- background: url(title3.png) repeat rgba(255,255,255,0.9);
+ background: url(img/title3.png) repeat rgba(255,255,255,0.9);
 }
 img {
 transition: 0.2s;
@@ -94,6 +107,76 @@ border-radius: 7px;
     background: rgba(0, 0, 0, 0.3);
     margin-top: -15px;
 }
+#chat {
+    filter: blur(0);
+    width: 100%;
+    height: calc(100% - 26px);
+    border: 0;
+    border-bottom-left-radius: 13px;
+    position: relative;
+    border-bottom-right-radius: 13px;
+}
+#chatArea {
+    width: 300px;
+    height: 376px;
+    border-radius: 13px;
+    border: solid rgba(0, 0, 0, 0.123) 2px;
+    position: fixed;
+    top: calc(100% - 396px);
+    left: calc(100% - 320px);
+    overflow:hidden;
+    resize: both;
+}
+#chatTitle {
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+background-color: #343247;
+color: white;
+padding: 6px;
+cursor: move;
+user-select: none;
+font-size: 14px;
+text-align: left;
+padding-left: 20px;
+}
+#hideChat {
+    top: 3px;
+    right: 3px;
+    position: absolute;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 3px;
+    border-radius: 100%;
+    background-color: rgb(78, 78, 78);
+}
+#chatCount {
+    top: 3px;
+    right: 40px;
+    position: absolute;
+    font-size: 14px;
+    padding: 3px;
+    background-color: #343247;
+}
+.hiddenChat {
+    transition: 0.3s;
+    bottom: -380px !important;
+    top: 100% !important;
+}
+#openChat {
+    position: fixed;
+    background-color: #000000bf;
+    bottom: -50px;
+    transition: 0.1s;
+    right: 150px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    width: 60px;
+    height: 30px;
+}
+.showOpenChat {
+    bottom: -3px !important;
+}
 </style>
 </head>
 <body>
@@ -103,8 +186,11 @@ border-radius: 7px;
 <a href='gallery.html'>Галерея</a>
 <a href='versions.html'>Версии</a>
 <a href='#top2'>Что это?</a>
+<a id='beta' href='211225/'>нажмите, чтобы рисовать вместе с друзьями по ссылке в бета-версии!</a>
 </div>
-<div class='title top' id='top'>Roundraw - рисовать онлайн бесплатно</div>
+<div class='title top' id='top'>
+	
+Roundraw - <a href="draw.html">рисовать</a> онлайн бесплатно</div>
 <div class='title' id='top2'>Что это?</div>
 <div class='text' id='t1'>
 <h1>Roundraw - это векторный редактор изображений онлайн.</h1> Здесь вы можете рисовать онлайн бесплатно, заливать, перемещать, изменять и удалять фигуры. Рисунок сохраняется на экране даже при перезагрузке страницы. Так же, вы можете скачать рисунок нажатием одной кнопки. 
@@ -117,6 +203,14 @@ border-radius: 7px;
 <h2>Изображения</h2> - Возможно залить фигуру изображением.
 </div>
 <div class='title top' id='top3'><a href='draw.html?v=2'>Начать рисовать!</a></div>
+<div id="chatArea">
+    <div id='chatTitle'>Обсуждение редактора
+        <div id="chatCount"></div>
+    </div> 
+    <a onclick="hideChat()" id='hideChat'>❌</a>
+<iframe id="chat" src="http://noopdie.com/chat.html?v=2"></iframe>
+</div>
+<div id="openChat" onclick="showChat()">📑</div>
 </body>
 <script>
 var get = function(e) {return document.getElementById(e)};
@@ -127,11 +221,56 @@ get('t1').style.backgroundPositionY = (document.body.scrollTop / 2.5) + 'px';
 var col = document.body.scrollTop / document.body.offsetHeight;
 get('toolbar').style.background = 'rgba(0,0,0,' + (col - 0.1) + ')';
 }
-</script>
-<script id="chatBroEmbedCode">
-/* Chatbro Widget Embed Code Start */
-function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}
-/* Chatbro Widget Embed Code End */
-ChatbroLoader({encodedChatId: '82G8X'});
+var chatDrag = false, startX = 0, startY = 0, startChatX = 0, startChatY = 0;
+var chat = get('chatArea');
+get('chatTitle').onmousedown = function(e) {
+    chatDrag = true;
+    get('chat').style.pointerEvents = 'none';
+    document.body.style.overflow = 'hidden';
+    startX = (e.touches) ? e.touches[0].clientX : e.clientX;
+    startY = (e.touches) ? e.touches[0].clientY : e.clientY;
+    startChatX = chat.offsetLeft;
+    startChatY = chat.offsetTop;
+}
+document.body.onmousemove = function(e) {
+    if (chatDrag) {
+        var x = (e.touches) ? e.touches[0].clientX : e.clientX;
+        var y = (e.touches) ? e.touches[0].clientY : e.clientY;
+        chat.style.left = x - startX + startChatX;
+        chat.style.top =  y - startY + startChatY;
+        
+    }
+}
+document.body.onmouseup = function() {
+    chatDrag = false;
+    document.body.style.overflow = 'auto';
+    get('chat').style.pointerEvents = 'auto';
+}
+function hideChat() {
+    chat.classList.add('hiddenChat');
+    get('openChat').classList.add('showOpenChat');
+    localStorage.showChat = 'no';
+}
+function showChat() {
+    chat.classList.remove('hiddenChat');
+    get('openChat').classList.remove('showOpenChat');
+    localStorage.showChat = 'yes';
+}
+get('chatTitle').addEventListener('touchstart', get('chatTitle').onmousedown);
+document.body.addEventListener('touchmove', document.body.onmousemove);
+document.body.addEventListener('touchend', document.body.onmouseup);
+if (localStorage.showChat == 'no') {
+    chat.classList.add('hiddenChat');
+    get('openChat').classList.add('showOpenChat');
+}
+setInterval(function() {
+const http = new XMLHttpRequest()
+http.open('GET', 'http://noopdie.com/chatclients')
+http.send()
+http.onload = () => {
+get('openChat').innerText = '👤' + http.responseText;
+get('chatCount').innerText = '👤' + http.responseText;
+}
+}, 1000);
 </script>
 </html>

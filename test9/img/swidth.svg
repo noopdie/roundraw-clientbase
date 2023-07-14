@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <g color="#000">
+    <path fill="#0f0f0f" d="M 0.5,7.9036677 C 6.603232,9.171112 7.1941983,9.1821219 13.43675,9.9061603 14.511492,9.9213094 15.5,8.9467252 15.5,7.8718818 15.5,6.7970364 14.511492,5.8224026 13.43675,5.8376006 6.8475857,6.6774304 6.3338904,6.8647701 0.5,7.9036677 z" style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Sans" overflow="visible" font-family="Sans"/>
+    <path fill="#fff" stroke="#000" stroke-width=".3" d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(.93278 .5114 -.4649 .84798 -.702 .536)" overflow="visible"/>
+    <path fill="#fff" stroke="#000" stroke-width=".3" d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(.93278 .5114 -.4649 .84798 11.048 .536)" overflow="visible"/>
+  </g>
+</svg>

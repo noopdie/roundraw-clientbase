@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset='utf-8'>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div class='title'>Редактор изображений Roundraw
+<div class='mintitle'>онлайн-приложение для создания и сохранения изображений.</div>
+</div><br>
+<a href='#start'>Начало работы в Roundraw</a><br>
+<div class='back' id='start'>
+Roundraw - простой редактор изображений. <br>
+Вы можете использовать его для создания простых рисунков, редактирования существующих изображений. <br>
+Чтобы создать рисунок вы можете:<br>
+<div class='tab'>
+1. Выбрать фигуру и нарисовать ее.<br>
+2. Выбрать заливку, изменить ширину линии и тени.<br>
+3. Вставить изображение и изменить его размеры.<br>
+4. Выделить, удалить, изменить или переместить фигуру;<br>
+</div>
+Редактор имеет некоторые особенности:<br>
+<div class='tab'>
+Все настройки редактора сохраняются автоматически;<br>
+Все панели можно скрыть;<br>
+Весь рисунок в roundraw имеет векторный формат;<br>
+Любую фигуру можно удалить или изменить.<br>
+</div>
+</div> 
+<a href='#view'>Внешний вид редактора</a><br>
+<div class='back' id='view'>
+Чтобы увеличить рабочее пространство, вы можете использовать  кнопки, представленные в следующей таблице:<br>
+<table>
+<tr>
+<td>Иконка</td>
+<td>Скрывает или показывает..</td>
+</tr>
+<td><img src='img/openTop.svg'></img></td>
+<td>Панель сверху.</td>
+</tr>
+</tr>
+<td><img src='img/closeleft.svg'></img></td>
+<td>Панель справа.</td>
+</tr>
+</tr>
+<td><img src='img/colors.svg'></img></td>
+<td>Вкладу с настройками цвета.</td>
+</tr>
+</tr>
+<td><img src='img/sizes.svg'></img></td>
+<td>Вкладу с настройками обводки.</td>
+</tr>
+</tr>
+<td><img src='img/imgset.svg'></img></td>
+<td>Вкладу с настройками вставляемого изображения.</td>
+</tr>
+</tr>
+<td><img src='img/seg.svg'></img></td>
+<td>Вкладу с настройками координат фигуры.</td>
+</tr>
+</table>
+</div>
+<a href='#funcs'>Основные функции: их описание и сочетания клавиш </a><br>
+<div class='back' id='funcs'>
+Все основные функции редактора находятся в верхней панели. В следующей таблице представлены все основные функции и кнопки.<br>
+<table>
+<tr>
+<td>Название</td>
+<td>Иконка</td>
+<td>Клавиши</td> 
+<td>Назначение</td>
+</tr>
+<tr>
+<td>Курсор</td>
+<td><img src='img/cursor.svg'></img></td>
+<td>1</td>
+<td>Выделяет фигуры. Перечеркните фигуру, чтобы выделить.</td>
+</tr>
+<tr>
+<td>Ластик</td>
+<td><img src='img/easer.svg'></img></td>
+<td>2</td>
+<td>Удаляет фигуру. Перечеркните фигуру, чтобы удалить.</td>
+</tr>
+<td>Пипетка</td>
+<td><img src='img/pointer.svg'></img></td>
+<td>3</td>
+<td>Определяет цвет места, на которое вы нажали.</td>
+</tr>
+<tr>
+<td>Карандаш</td>
+<td><img src='img/pencil.svg'></img></td>
+<td>4</td>
+<td>Рисует кривые линии.</td>
+</tr>
+<tr>
+<td>Прямая</td>
+<td><img src='img/line.svg'></img></td>
+<td>5</td>
+<td>Рисует прямые линии. Чтобы добавить сегмент, нажмите на пробел или ПКМ.</td>
+</tr>
+<tr>
+<td>Круг</td>
+<td><img src='img/circle.svg'></img></td>
+<td>6</td>
+<td>Рисует ровный круг.</td>
+</tr>
+<tr>
+<td>Многоугольник</td>
+<td><img src='img/polygon.svg'></img></td>
+<td>7</td>
+<td>Рисует многоугольник. Чтобы добавить угол, нажмите на пробел или ПКМ.</td>
+</tr>
+<tr>
+<td>Прямоугольник</td>
+<td><img src='img/rect.svg'></img></td>
+<td>8</td>
+<td>Рисует прямоугольник.</td>
+</tr>
+<td>Сохранить</td>
+<td><img src='img/save.svg'></img></td>
+<td>(нет)</td>
+<td>Загружает изображение на ваш компьютер.</td>
+</tr>
+<tr>
+<td>Отменить</td>
+<td><img src='img/back.svg'></img></td>
+<td>Ctrl+Z</td>
+<td>Отменяет последнее дейсвие.</td>
+</tr>
+<tr>
+<td>Возвратить</td>
+<td><img src='img/forward.svg'></img></td>
+<td>Ctrl+Y</td>
+<td>Выполняет последнее отмененное действие.</td>
+</tr>
+</table>
+</div>
+<a href='#brush'>Настройка кисти, цвета, заливки</a><br>
+<div class='back' id='brush'>
+В редакторе достаточно параметров, которые можно изменить.
+ Чтобы сделать это, можно ввести в поле любое значение, или перетащить кнопку.
+ Все изменяемые параметры перечислены в таблице:<br>
+<table>
+<tr>
+<td>Вкладка</td>
+<td>Название</td>
+<td>Иконка</td>
+<td>значения</td> 
+<td>Описание</td>
+</tr>
+<tr>
+<td>Цвет</td>
+<td>Красный</td>
+<td>(нет)</td>
+<td>0-255</td> 
+<td>Изменяет красный оттенок кисти.</td>
+<tr>
+<td></td>
+<td>Зеленый</td>
+<td>(нет)</td>
+<td>0-255</td> 
+<td>Изменяет зеленый оттенок кисти.</td>
+</tr>
+<tr>
+<td></td>
+<td>Синий</td>
+<td>(нет)</td>
+<td>0-255</td> 
+<td>Изменяет синий оттенок кисти.</td>
+</tr>
+<tr>
+<td></td>
+<td>Прозрачность</td>
+<td>(нет)</td>
+<td>0-1</td> 
+<td>Изменяет прозрачность кисти.</td>
+</tr>
+<tr>
+<td></td>
+<td>Заливка</td>
+<td><img src='img/sf.svg'></img></td>
+<td></td> 
+<td>Выбирает объект для заливки цветом: заливка, обводка или тень.</td>
+</tr>
+<tr>
+<td>Размеры</td>
+<td>Конец линии</td>
+<td><img src='img/cap.svg'></img></td>
+<td></td> 
+<td>Выбирает конец линии: округлый, прямоугольный или острый.</td>
+</tr>
+<tr>
+<td></td>
+<td>Тень</td>
+<td><img src='img/shadow.svg'></img></td>
+<td>0-100</td> 
+<td>Устанавливает размер тени.</td>
+</tr>
+<tr>
+<td></td>
+<td>Обводка</td>
+<td><img src='img/swidth.svg'></img></td>
+<td>0-100</td> 
+<td>Устанавливает ширину обводки.</td>
+</tr>
+<tr>
+<td></td>
+<td>Сглаживание</td>
+<td><img src='img/smooth.svg'></img></td>
+<td>0.1-5</td> 
+<td>Устанавливает сглаживание линии (не работает при использования каранаша).</td>
+</tr>
+<tr>
+<td></td>
+<td>Замедление</td>
+<td><img src='img/slow.svg'></img></td>
+<td>1-100</td> 
+<td>Устанавливает замедление линии (работает только при использования каранаша).</td>
+</tr>
+<tr>
+<td>Изображение</td>
+<td>Выбрать</td>
+<td><img src='img/imageb.svg'></img></td>
+<td>(нет)</td> 
+<td>Выбирает файл изображения на компьютере.</td>
+</tr>
+<tr>
+<td></td>
+<td>Ширина</td>
+<td><img src='img/imgwidth.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает ширину изображения.</td>
+</tr>
+<tr>
+<td></td>
+<td>Длина</td>
+<td><img src='img/imgheight.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает длину изображения.</td>
+</tr>
+<tr>
+<td></td>
+<td>Отступ слева</td>
+<td><img src='img/imgx.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает отступ изображения от левой стороны рисунка.</td>
+</tr>
+<tr>
+<td></td>
+<td>Отступ сверху</td>
+<td><img src='img/imgy.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает отступ изображения от верхней стороны рисунка.</td>
+</tr>
+<tr>
+<td>Фигура</td>
+<td>Отступ слева</td>
+<td><img src='img/x.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает отступ фигуры от левой стороны рисунка.</td>
+</tr>
+<tr>
+<td></td>
+<td>Отступ сверху</td>
+<td><img src='img/y.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает отступ фигуры от верхней стороны рисунка.</td>
+</tr>
+<tr>
+<td></td>
+<td>Ширина</td>
+<td><img src='img/width.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает ширину фигуры.</td>
+</tr>
+<tr>
+<td></td>
+<td>Длина</td>
+<td><img src='img/height.svg'></img></td>
+<td>0-1000</td> 
+<td>Выбирает длину фигуры.</td>
+</tr>
+</table>
+</div>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-88405053-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <rect width="15.2" height="15.2" x=".4" y=".4" fill="none" stroke="#0f0f0f" stroke-width=".8" rx="3" stroke-linejoin="round"/>
+  <path fill="#0f0f0f" d="M8 2L6 3.3h1.6v9H6l2 1.4 2-1.4H8.4v-9H10z" style="text-indent:0;text-align:start;line-height:normal;text-transform:none;block-progression:tb;-inkscape-font-specification:Sans" color="#000" overflow="visible" font-family="Sans"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+  <path fill="none" stroke="#000" stroke-width=".3" d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(1.55463 .85233 -.77485 1.4133 7.893 -4.357)" color="#000" overflow="visible"/>
+  <path fill="none" stroke="#ddd" stroke-opacity=".9" stroke-width=".9" d="M 0.82695244,12.204961 15.391208,12.232985" stroke-linecap="round"/>
+  <path d="m 7,5.1875 a 1.25,1.375 0 1 1 -2.5,0 1.25,1.375 0 1 1 2.5,0 z" transform="matrix(1.55463 .85233 -.77485 1.4133 -1.42 -4.17)" color="#000" overflow="visible"/>
+</svg>
